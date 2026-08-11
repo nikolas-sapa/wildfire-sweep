@@ -10,6 +10,9 @@ import math
 import sys
 import time
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 
 CONFIG = {
@@ -209,6 +212,55 @@ def write_csv(rows, path="results.csv"):
         writer.writeheader()
         writer.writerows(rows)
     print(f"wrote {path} ({len(rows)} rows)")
+
+
+def pareto_front(rows):
+    """Configs where nothing else is both cheaper and faster."""
+    ordered = sorted(rows, key=lambda r: (r["eur_per_km2_yr"], r["p90_s"]))
+    front, best_p90 = [], float("inf")
+    for row in ordered:
+        if row["p90_s"] < best_p90:
+            front.append(row)
+            best_p90 = row["p90_s"]
+    return front
+
+
+def plot_pareto(rows, path="pareto.png"):
+    """One panel per ignition-density level, so density sensitivity is visible."""
+    densities = sorted({r["ignitions_per_season"] for r in rows})
+    fig, axes_grid = plt.subplots(
+        1, len(densities), figsize=(6 * len(densities), 5), squeeze=False
+    )
+
+    for ax, density in zip(axes_grid[0], densities):
+        subset = [r for r in rows if r["ignitions_per_season"] == density]
+        scatter = ax.scatter(
+            [r["eur_per_km2_yr"] for r in subset],
+            [r["p90_s"] / 60.0 for r in subset],
+            c=[r["spacing_km"] for r in subset],
+            cmap="viridis", s=14, alpha=0.55,
+        )
+        front = pareto_front(subset)
+        ax.plot(
+            [r["eur_per_km2_yr"] for r in front],
+            [r["p90_s"] / 60.0 for r in front],
+            color="#006bff", linewidth=2, marker="o", markersize=5,
+            label="Pareto frontier",
+        )
+        ax.set_xscale("log")
+        ax.set_xlabel("€ / km² / year")
+        ax.set_ylabel("p90 time-to-eyes-on (minutes)")
+        ax.set_title(f"{density:.0f} ignitions / season")
+        ax.grid(alpha=0.25)
+        ax.legend()
+        fig.colorbar(scatter, ax=ax, label="base spacing (km)")
+
+    fig.suptitle(
+        "Monitor swarm: response time vs cost (Tier 0 — costs are placeholders)"
+    )
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    print(f"wrote {path}")
 
 
 def check_world():
@@ -414,6 +466,30 @@ def check_sweep():
     assert tight["p90_s"] <= wide["p90_s"], "tighter grid not faster"
 
 
+def check_pareto():
+    # b is dominated by a (costs more, slower). c and a are both efficient.
+    rows = [
+        {"eur_per_km2_yr": 10.0, "p90_s": 500.0},   # a
+        {"eur_per_km2_yr": 20.0, "p90_s": 600.0},   # b: dominated
+        {"eur_per_km2_yr": 30.0, "p90_s": 200.0},   # c
+    ]
+    front = pareto_front(rows)
+    costs = sorted(r["eur_per_km2_yr"] for r in front)
+    assert costs == [10.0, 30.0], f"pareto front wrong: {costs}"
+
+    # The front is sorted by cost and strictly improves in p90.
+    assert all(
+        front[i]["p90_s"] > front[i + 1]["p90_s"] for i in range(len(front) - 1)
+    ), "front not strictly improving"
+
+    # An equal-cost tie keeps only the faster option.
+    tie = pareto_front([
+        {"eur_per_km2_yr": 10.0, "p90_s": 500.0},
+        {"eur_per_km2_yr": 10.0, "p90_s": 900.0},
+    ])
+    assert len(tie) == 1 and tie[0]["p90_s"] == 500.0, f"tie mishandled: {tie}"
+
+
 if __name__ == "__main__":
     validate_config(CONFIG)
     if "--check" in sys.argv:
@@ -424,7 +500,9 @@ if __name__ == "__main__":
         check_metrics()
         check_monotonicity()
         check_sweep()
+        check_pareto()
         print("all checks passed")
     else:
         rows = run_sweep(CONFIG)
         write_csv(rows)
+        plot_pareto(rows)
