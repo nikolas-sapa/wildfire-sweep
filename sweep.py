@@ -123,6 +123,21 @@ def dispatch(t_s, xy_km, bases_km, drones_per_base, launch_latency_s, cfg):
     return response_s, utilisation
 
 
+def season_metrics(response_s, is_real, cfg):
+    """Response statistics over real ignitions only.
+
+    False alarms consume drones but are not fires, so they never enter the
+    quality numbers. Returns (p50_s, p90_s, unserved_share); all nan when the
+    season contained no real ignition.
+    """
+    real_s = np.asarray(response_s)[np.asarray(is_real, dtype=bool)]
+    if real_s.size == 0:
+        return float("nan"), float("nan"), float("nan")
+    p50_s, p90_s = np.percentile(real_s, [50, 90])
+    unserved = float((real_s > cfg["unserved_threshold_s"]).mean())
+    return float(p50_s), float(p90_s), unserved
+
+
 def check_world():
     rng = np.random.default_rng(0)
     cfg = dict(CONFIG)
@@ -245,10 +260,67 @@ def check_dispatch():
     assert len(response_s) == 0 and util == 0.0, "empty season mishandled"
 
 
+def check_metrics():
+    cfg = dict(CONFIG)
+    cfg["unserved_threshold_s"] = 900.0
+
+    # Percentiles are computed over real ignitions only. The 10_000s response
+    # belongs to a false alarm and must not appear in the statistics.
+    response_s = np.array([100.0, 200.0, 300.0, 10_000.0])
+    is_real = np.array([True, True, True, False])
+    p50_s, p90_s, unserved = season_metrics(response_s, is_real, cfg)
+    assert abs(p50_s - 200.0) < 1e-9, f"p50 contaminated by false alarm: {p50_s}"
+    assert p90_s < 300.1, f"p90 contaminated by false alarm: {p90_s}"
+    assert unserved == 0.0, f"false alarm counted as unserved: {unserved}"
+
+    # Responses past the threshold count as misses.
+    response_s = np.array([100.0, 5_000.0])
+    is_real = np.array([True, True])
+    _, _, unserved = season_metrics(response_s, is_real, cfg)
+    assert abs(unserved - 0.5) < 1e-9, f"unserved share wrong: {unserved}"
+
+    # A season with no real ignitions yields nan rather than crashing.
+    p50_s, p90_s, unserved = season_metrics(
+        np.array([5.0]), np.array([False]), cfg
+    )
+    assert math.isnan(p50_s) and math.isnan(p90_s) and math.isnan(unserved)
+
+
+def check_monotonicity():
+    """The two sanity laws the whole sweep rests on."""
+    cfg = dict(CONFIG)
+    rng_seed = 11
+
+    def p90_for(spacing_km, drones_per_base):
+        p90s = []
+        for s in range(8):
+            rng = np.random.default_rng(rng_seed + s)
+            t_s, xy_km, is_real = generate_season(rng, cfg, 150.0, 0.2)
+            bases = base_grid(spacing_km, cfg["domain_km2"])
+            response_s, _ = dispatch(t_s, xy_km, bases, drones_per_base, 60.0, cfg)
+            _, p90_s, _ = season_metrics(response_s, is_real, cfg)
+            p90s.append(p90_s)
+        return float(np.nanmean(p90s))
+
+    # Law 1: tighter base spacing never makes response worse.
+    by_spacing = [p90_for(s, 2) for s in (40.0, 20.0, 10.0)]
+    assert by_spacing[0] >= by_spacing[1] >= by_spacing[2], (
+        f"tighter spacing worsened p90: {by_spacing}"
+    )
+
+    # Law 2: more drones per base never makes response worse.
+    by_drones = [p90_for(20.0, d) for d in (1, 2, 4)]
+    assert by_drones[0] >= by_drones[1] >= by_drones[2], (
+        f"more drones worsened p90: {by_drones}"
+    )
+
+
 if __name__ == "__main__":
     if "--check" in sys.argv:
         check_cost()
         check_bases()
         check_world()
         check_dispatch()
+        check_metrics()
+        check_monotonicity()
         print("all checks passed")
