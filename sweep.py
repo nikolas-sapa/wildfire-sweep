@@ -30,9 +30,15 @@ CONFIG = {
     "dwell_s": 120.0,             # time overhead the fire before returning
     "turnaround_s": 600.0,        # battery swap / dock cycle
     "unserved_threshold_s": 900.0,
+    "max_unserved_share": 0.10,   # quality floor: configs missing more than
+                                  # this share of real fires are excluded
+                                  # from the Pareto frontier as infeasible
     # --- run control ---
-    "seasons_per_config": 50,     # ponytail: 50 keeps the full sweep ~7min;
-                                  # raise toward 200 if the frontier looks noisy
+    "seasons_per_config": 200,    # spec's Monte Carlo count. At 50 the sweep
+                                  # took 4m19s; 200 lands near 17min, inside
+                                  # the 30min guard, and halves the sampling
+                                  # noise that common-random-numbers (FIX 2)
+                                  # relies on for fair config comparisons
     "seed": 20260811,
 }
 
@@ -48,6 +54,7 @@ def validate_config(cfg):
         assert cfg[key] > 0, f"CONFIG[{key!r}] must be positive, got {cfg[key]!r}"
     assert cfg["dwell_s"] >= 0, "CONFIG['dwell_s'] must be non-negative"
     assert 0.0 <= cfg["maintenance_frac"] <= 1.0, "maintenance_frac must be a fraction"
+    assert 0.0 <= cfg["max_unserved_share"] <= 1.0, "max_unserved_share must be a fraction"
 
 
 def cost_per_km2_yr(n_bases, drones_per_base, cfg):
@@ -76,19 +83,29 @@ def base_grid(spacing_km, domain_km2):
 def generate_season(rng, cfg, ignitions_per_season, fp_rate):
     """One fire season of alerts.
 
-    Ignition count is Poisson. Locations are uniform over the domain. Each
-    alert is either a real fire or a false alarm; false alarms consume drones
-    identically, which is the whole reason fp_rate is a sweep axis.
+    ignitions_per_season is the REAL fire count (Poisson). False alarms are
+    ADDITIONAL alerts drawn independently so that raising fp_rate never
+    deletes real fires, only adds drone load; the expected share of all
+    alerts that are fake equals fp_rate. Locations are uniform over the
+    domain; times are uniform over the season. False alarms consume drones
+    identically to real fires, which is the whole reason fp_rate is a sweep
+    axis.
 
-    Returns (t_s, xy_km, is_real) with t_s sorted ascending.
+    Returns (t_s, xy_km, is_real) with t_s sorted ascending and xy_km/is_real
+    kept in step with it.
     """
-    n = int(rng.poisson(ignitions_per_season))
+    if fp_rate >= 1.0:
+        raise ValueError(f"fp_rate must be < 1.0, got {fp_rate!r}")
+    n_real = int(rng.poisson(ignitions_per_season))
+    n_fake = int(rng.poisson(ignitions_per_season * fp_rate / (1.0 - fp_rate)))
+    n = n_real + n_fake
     season_s = cfg["season_days"] * 86400.0
-    t_s = np.sort(rng.uniform(0.0, season_s, n))
+    t_s = rng.uniform(0.0, season_s, n)
     side_km = math.sqrt(cfg["domain_km2"])
     xy_km = rng.uniform(0.0, side_km, size=(n, 2))
-    is_real = rng.random(n) >= fp_rate
-    return t_s, xy_km, is_real
+    is_real = np.concatenate([np.ones(n_real, dtype=bool), np.zeros(n_fake, dtype=bool)])
+    order = np.argsort(t_s)
+    return t_s[order], xy_km[order], is_real[order]
 
 
 def dispatch(t_s, xy_km, bases_km, drones_per_base, launch_latency_s, cfg):
@@ -163,13 +180,25 @@ def run_sweep(cfg, axes=None):
     rows = []
     started = time.monotonic()
 
+    # Only ignitions_per_season and fp_rate feed generate_season, so the seed
+    # must depend on their axis INDEX (not the float value) and on nothing
+    # else, so configs that share those two values draw the same seasons and
+    # can be compared without a winner's-curse bias. seasons_per_config is
+    # kept well under 1000 (spec: <= 999) so the `season` term never collides
+    # with the index terms above it.
+    density_idx_of = {v: i for i, v in enumerate(axes["ignitions_per_season"])}
+    fp_idx_of = {v: i for i, v in enumerate(axes["fp_rate"])}
+
     for idx, combo in enumerate(combos):
         params = dict(zip(names, combo))
         bases_km = base_grid(params["spacing_km"], cfg["domain_km2"])
         p50s, p90s, unserveds, utils = [], [], [], []
+        density_idx = density_idx_of[params["ignitions_per_season"]]
+        fp_idx = fp_idx_of[params["fp_rate"]]
 
         for season in range(cfg["seasons_per_config"]):
-            rng = np.random.default_rng(cfg["seed"] + idx * 10_000 + season)
+            seed = cfg["seed"] + season + 1000 * density_idx + 100_000 * fp_idx
+            rng = np.random.default_rng(seed)
             t_s, xy_km, is_real = generate_season(
                 rng, cfg, params["ignitions_per_season"], params["fp_rate"]
             )
@@ -214,9 +243,18 @@ def write_csv(rows, path="results.csv"):
     print(f"wrote {path} ({len(rows)} rows)")
 
 
-def pareto_front(rows):
-    """Configs where nothing else is both cheaper and faster."""
-    ordered = sorted(rows, key=lambda r: (r["eur_per_km2_yr"], r["p90_s"]))
+def pareto_front(rows, max_unserved_share=None):
+    """Configs where nothing else is both cheaper and faster.
+
+    If max_unserved_share is given, rows missing more than that share of
+    real fires are dropped before the dominance pass, so a cheap config that
+    quietly fails most fires can never front-run a slide.
+    """
+    eligible = (
+        rows if max_unserved_share is None
+        else [r for r in rows if r["unserved_share"] <= max_unserved_share]
+    )
+    ordered = sorted(eligible, key=lambda r: (r["eur_per_km2_yr"], r["p90_s"]))
     front, best_p90 = [], float("inf")
     for row in ordered:
         if row["p90_s"] < best_p90:
@@ -225,8 +263,14 @@ def pareto_front(rows):
     return front
 
 
-def plot_pareto(rows, path="pareto.png"):
-    """One panel per ignition-density level, so density sensitivity is visible."""
+def plot_pareto(rows, cfg=CONFIG, path="pareto.png"):
+    """One panel per ignition-density level, so density sensitivity is visible.
+
+    All points are plotted regardless of quality; the frontier line is drawn
+    through feasible points only (unserved_share <= max_unserved_share), so
+    cheap-but-broken configs cannot masquerade as the best value on the line.
+    """
+    max_unserved_share = cfg["max_unserved_share"]
     densities = sorted({r["ignitions_per_season"] for r in rows})
     fig, axes_grid = plt.subplots(
         1, len(densities), figsize=(6 * len(densities), 5), squeeze=False
@@ -240,19 +284,27 @@ def plot_pareto(rows, path="pareto.png"):
             c=[r["spacing_km"] for r in subset],
             cmap="viridis", s=14, alpha=0.55,
         )
-        front = pareto_front(subset)
-        ax.plot(
-            [r["eur_per_km2_yr"] for r in front],
-            [r["p90_s"] / 60.0 for r in front],
-            color="#006bff", linewidth=2, marker="o", markersize=5,
-            label="Pareto frontier",
-        )
+        front = pareto_front(subset, max_unserved_share=max_unserved_share)
+        if front:
+            ax.plot(
+                [r["eur_per_km2_yr"] for r in front],
+                [r["p90_s"] / 60.0 for r in front],
+                color="#006bff", linewidth=2, marker="o", markersize=5,
+                label=f"Pareto frontier (unserved ≤ {max_unserved_share:.0%})",
+            )
+        else:
+            ax.text(
+                0.5, 0.5, "no feasible configs\n(all miss quality floor)",
+                transform=ax.transAxes, ha="center", va="center",
+                color="#b00020", fontsize=10,
+            )
         ax.set_xscale("log")
         ax.set_xlabel("€ / km² / year")
         ax.set_ylabel("p90 time-to-eyes-on (minutes)")
         ax.set_title(f"{density:.0f} ignitions / season")
         ax.grid(alpha=0.25)
-        ax.legend()
+        if front:
+            ax.legend()
         fig.colorbar(scatter, ax=ax, label="base spacing (km)")
 
     fig.suptitle(
@@ -289,6 +341,13 @@ def check_world():
     a = generate_season(np.random.default_rng(7), cfg, 50.0, 0.1)
     b = generate_season(np.random.default_rng(7), cfg, 50.0, 0.1)
     assert np.array_equal(a[0], b[0]), "season not reproducible for a fixed seed"
+
+    # Raising fp_rate adds load: more total alerts for the same real-fire rate.
+    low_t, _, _ = generate_season(np.random.default_rng(42), cfg, 200.0, 0.05)
+    high_t, _, _ = generate_season(np.random.default_rng(42), cfg, 200.0, 0.50)
+    assert len(high_t) > len(low_t), (
+        f"raising fp_rate did not increase alert count: {len(low_t)} -> {len(high_t)}"
+    )
 
 
 def check_cost():
@@ -416,11 +475,11 @@ def check_monotonicity():
     cfg = dict(CONFIG)
     rng_seed = 11
 
-    def p90_for(spacing_km, drones_per_base):
+    def p90_for(spacing_km, drones_per_base, ignitions_per_season=150.0):
         p90s = []
         for s in range(8):
             rng = np.random.default_rng(rng_seed + s)
-            t_s, xy_km, is_real = generate_season(rng, cfg, 150.0, 0.2)
+            t_s, xy_km, is_real = generate_season(rng, cfg, ignitions_per_season, 0.2)
             bases = base_grid(spacing_km, cfg["domain_km2"])
             response_s, _ = dispatch(t_s, xy_km, bases, drones_per_base, 60.0, cfg)
             _, p90_s, _ = season_metrics(response_s, is_real, cfg)
@@ -433,8 +492,11 @@ def check_monotonicity():
         f"tighter spacing worsened p90: {by_spacing}"
     )
 
-    # Law 2: more drones per base never makes response worse.
-    by_drones = [p90_for(20.0, d) for d in (1, 2, 4)]
+    # Law 2: more drones per base never makes response worse. Uses a sparse
+    # grid (40 km spacing, few bases) with a high ignition load (400/season)
+    # so drones are actually contended; a light-load scenario passes this
+    # law on exact equality and guards nothing.
+    by_drones = [p90_for(40.0, d, ignitions_per_season=400.0) for d in (1, 2, 4)]
     assert by_drones[0] >= by_drones[1] >= by_drones[2], (
         f"more drones worsened p90: {by_drones}"
     )
@@ -465,6 +527,28 @@ def check_sweep():
     assert tight["eur_per_km2_yr"] > wide["eur_per_km2_yr"], "tighter grid not costlier"
     assert tight["p90_s"] <= wide["p90_s"], "tighter grid not faster"
 
+    # Common random numbers: two configs differing ONLY in spacing_km must
+    # see identical seasons. 40.0 and 50.0 spacing both floor to a single
+    # base on the 3808 km2 domain (side = 61.71 km), so geometry and cost
+    # are identical between them; under CRN the resulting p90_s must then be
+    # bit-identical too. Under the old idx-based seeding (or any seed that
+    # depended on spacing_km itself) these would diverge.
+    rows_crn = run_sweep(cfg, axes={
+        "spacing_km": [40.0, 50.0],
+        "drones_per_base": [1],
+        "launch_latency_s": [60.0],
+        "fp_rate": [0.2],
+        "ignitions_per_season": [50.0],
+    })
+    assert rows_crn[0]["n_bases"] == rows_crn[1]["n_bases"] == 1, (
+        "expected identical single-base geometry for spacing 40/50"
+    )
+    assert rows_crn[0]["p90_s"] == rows_crn[1]["p90_s"], (
+        "spacing-only configs with identical geometry drew different "
+        f"seasons (common random numbers broken): {rows_crn[0]['p90_s']} "
+        f"vs {rows_crn[1]['p90_s']}"
+    )
+
 
 def check_pareto():
     # b is dominated by a (costs more, slower). c and a are both efficient.
@@ -488,6 +572,22 @@ def check_pareto():
         {"eur_per_km2_yr": 10.0, "p90_s": 900.0},
     ])
     assert len(tie) == 1 and tie[0]["p90_s"] == 500.0, f"tie mishandled: {tie}"
+
+    # A quality floor excludes an infeasible-but-cheap row from the frontier,
+    # even though on cost/speed alone it would otherwise dominate everything.
+    quality_rows = [
+        {"eur_per_km2_yr": 5.0, "p90_s": 100.0, "unserved_share": 0.75},  # cheap, infeasible
+        {"eur_per_km2_yr": 40.0, "p90_s": 300.0, "unserved_share": 0.05},  # feasible
+    ]
+    feasible_front = pareto_front(quality_rows, max_unserved_share=0.10)
+    assert len(feasible_front) == 1 and feasible_front[0]["eur_per_km2_yr"] == 40.0, (
+        f"infeasible row not excluded from frontier: {feasible_front}"
+    )
+    # Without a floor the infeasible row still wins on cost/speed alone.
+    unfiltered_front = pareto_front(quality_rows)
+    assert any(r["eur_per_km2_yr"] == 5.0 for r in unfiltered_front), (
+        "sanity check failed: infeasible row should dominate without a floor"
+    )
 
 
 if __name__ == "__main__":
