@@ -56,7 +56,7 @@ and are swapped for real quotes later without touching any logic.
 | `hardware_life_yr` | 5 | amortisation period |
 | `domain_km2` | 3808 | Attica-sized square |
 | `season_days` | 120 | fire season |
-| `ignitions_per_season` | 50 | Poisson mean |
+| `ignitions_per_season` | swept | Poisson mean — see Sweep; **unverified**, no Greek source yet |
 | `dwell_s` | 120 | time overhead the fire before returning |
 | `turnaround_s` | 600 | battery swap / dock cycle |
 | `unserved_threshold_s` | 900 | above this counts as a miss |
@@ -100,10 +100,22 @@ amortised over `hardware_life_yr`, plus annual maintenance, divided by
 | drones per base | 1–6 |
 | launch latency | 30–180 s |
 | false-positive rate | 5–50% |
+| ignitions per season | 50 / 150 / 400 |
 
-≈960 configs × 200 Monte Carlo seasons each. Vectorised per season with
+≈2,880 configs × 200 Monte Carlo seasons each. Vectorised per season with
 numpy. Target: minutes on a laptop. If a full sweep exceeds ~30 minutes,
 reduce Monte Carlo count before reaching for parallelism.
+
+**Ignition density is swept, not assumed.** No verified Greek figure exists
+yet, and the number sets how hard the fleet is stressed and how much the
+false-positive rate bites. A single low guess would make thin configs look
+survivable when they are not. Three levels — a quiet season, a busy one, and
+a bad one — bracket the uncertainty, so the output shows *at what density* a
+given base spacing stops holding rather than asserting that it does.
+
+Getting a real Attica ignition-density figure (EFFIS or Hellenic Fire Service
+statistics) is a research task, not a blocker. When it lands, it selects which
+of the three levels is the headline chart; the sweep does not need rerunning.
 
 Cruise speed is a CONFIG constant, not an axis, and absorbs wind derating.
 
@@ -126,7 +138,9 @@ CONFIG ──> Cost(n_bases, D) ────────────────
 - `results.csv` — one row per config: all four axis values, p50, p90,
   unserved share, utilisation, €/km²/yr.
 - `pareto.png` — €/km²/yr on x, p90 time-to-eyes-on on y, points coloured by
-  spacing, Pareto frontier highlighted. This is the investor slide.
+  spacing, Pareto frontier highlighted. One panel per ignition-density level,
+  so the frontier's sensitivity to density is visible rather than hidden. This
+  is the investor slide.
 
 ## Error handling
 
