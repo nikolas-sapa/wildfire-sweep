@@ -67,6 +67,52 @@ def base_grid(spacing_km, domain_km2):
     return np.column_stack([xx.ravel(), yy.ravel()])
 
 
+def generate_season(rng, cfg, ignitions_per_season, fp_rate):
+    """One fire season of alerts.
+
+    Ignition count is Poisson. Locations are uniform over the domain. Each
+    alert is either a real fire or a false alarm; false alarms consume drones
+    identically, which is the whole reason fp_rate is a sweep axis.
+
+    Returns (t_s, xy_km, is_real) with t_s sorted ascending.
+    """
+    n = int(rng.poisson(ignitions_per_season))
+    season_s = cfg["season_days"] * 86400.0
+    t_s = np.sort(rng.uniform(0.0, season_s, n))
+    side_km = math.sqrt(cfg["domain_km2"])
+    xy_km = rng.uniform(0.0, side_km, size=(n, 2))
+    is_real = rng.random(n) >= fp_rate
+    return t_s, xy_km, is_real
+
+
+def check_world():
+    rng = np.random.default_rng(0)
+    cfg = dict(CONFIG)
+    cfg["domain_km2"] = 100.0
+    cfg["season_days"] = 10.0
+
+    t_s, xy_km, is_real = generate_season(rng, cfg, 200.0, 0.25)
+
+    assert len(t_s) == len(xy_km) == len(is_real), "ragged season arrays"
+    assert np.all(np.diff(t_s) >= 0), "ignition times not sorted"
+    assert t_s.min() >= 0.0 and t_s.max() <= 10.0 * 86400.0, "ignition outside season"
+    assert xy_km.min() >= 0.0 and xy_km.max() <= 10.0, "ignition outside domain"
+    assert is_real.dtype == bool, "is_real must be boolean"
+
+    # False-positive rate is honoured on average. 200 draws, 25% fake.
+    fake_share = float((~is_real).mean())
+    assert 0.15 < fake_share < 0.35, f"fp rate not honoured: {fake_share}"
+
+    # A zero false-positive rate produces no fake alerts at all.
+    _, _, all_real = generate_season(np.random.default_rng(1), cfg, 200.0, 0.0)
+    assert all_real.all(), "fp_rate=0 still produced fake alerts"
+
+    # Same seed, same season.
+    a = generate_season(np.random.default_rng(7), cfg, 50.0, 0.1)
+    b = generate_season(np.random.default_rng(7), cfg, 50.0, 0.1)
+    assert np.array_equal(a[0], b[0]), "season not reproducible for a fixed seed"
+
+
 def check_cost():
     cfg = dict(CONFIG)
     cfg["domain_km2"] = 1000.0
@@ -115,4 +161,5 @@ if __name__ == "__main__":
     if "--check" in sys.argv:
         check_cost()
         check_bases()
+        check_world()
         print("all checks passed")
