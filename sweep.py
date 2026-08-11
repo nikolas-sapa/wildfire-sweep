@@ -55,6 +55,14 @@ def validate_config(cfg):
     assert cfg["dwell_s"] >= 0, "CONFIG['dwell_s'] must be non-negative"
     assert 0.0 <= cfg["maintenance_frac"] <= 1.0, "maintenance_frac must be a fraction"
     assert 0.0 <= cfg["max_unserved_share"] <= 1.0, "max_unserved_share must be a fraction"
+    # The common-random-number seed in run_sweep packs season into the low
+    # three digits (seed + season + 1000*density_idx + 100_000*fp_idx). At 1000
+    # or more seasons it collides with density_idx and silently correlates
+    # configs that should be independent.
+    assert cfg["seasons_per_config"] < 1000, (
+        f"seasons_per_config must stay under 1000 to keep the CRN seeds "
+        f"distinct, got {cfg['seasons_per_config']!r}"
+    )
 
 
 def cost_per_km2_yr(n_bases, drones_per_base, cfg):
