@@ -4,8 +4,11 @@ Answers: time-to-eyes-on vs EUR/km2/yr for a monitor-drone base network.
 No terrain, no fire growth, no flight physics. See docs/superpowers/specs/.
 """
 
+import csv
+import itertools
 import math
 import sys
+import time
 
 import numpy as np
 
@@ -95,7 +98,9 @@ def dispatch(t_s, xy_km, bases_km, drones_per_base, launch_latency_s, cfg):
     busy it trades waiting against distance, which is what a real dispatcher
     would do. False alarms lock drones exactly like real fires.
 
-    Returns (response_s, utilisation).
+    Returns (response_s, utilisation). Utilisation is a workload ratio, not a
+    bounded fraction: it sums each job's full lock-up time even when that
+    window extends past the season end, so it can exceed 1.0 under saturation.
     """
     n_alerts = len(t_s)
     drone_xy_km = np.repeat(bases_km, drones_per_base, axis=0)
@@ -136,6 +141,74 @@ def season_metrics(response_s, is_real, cfg):
     p50_s, p90_s = np.percentile(real_s, [50, 90])
     unserved = float((real_s > cfg["unserved_threshold_s"]).mean())
     return float(p50_s), float(p90_s), unserved
+
+
+AXES = {
+    "spacing_km": [5.0, 8.0, 12.0, 16.0, 20.0, 26.0, 32.0, 40.0],
+    "drones_per_base": [1, 2, 3, 4, 5, 6],
+    "launch_latency_s": [30.0, 60.0, 120.0, 180.0],
+    "fp_rate": [0.05, 0.15, 0.25, 0.35, 0.50],
+    "ignitions_per_season": [50.0, 150.0, 400.0],
+}
+
+
+def run_sweep(cfg, axes=None):
+    """Monte Carlo every axis combination. Returns one row dict per config."""
+    axes = AXES if axes is None else axes
+    names = list(axes)
+    combos = list(itertools.product(*(axes[k] for k in names)))
+    rows = []
+    started = time.monotonic()
+
+    for idx, combo in enumerate(combos):
+        params = dict(zip(names, combo))
+        bases_km = base_grid(params["spacing_km"], cfg["domain_km2"])
+        p50s, p90s, unserveds, utils = [], [], [], []
+
+        for season in range(cfg["seasons_per_config"]):
+            rng = np.random.default_rng(cfg["seed"] + idx * 10_000 + season)
+            t_s, xy_km, is_real = generate_season(
+                rng, cfg, params["ignitions_per_season"], params["fp_rate"]
+            )
+            response_s, utilisation = dispatch(
+                t_s, xy_km, bases_km,
+                params["drones_per_base"], params["launch_latency_s"], cfg,
+            )
+            p50_s, p90_s, unserved = season_metrics(response_s, is_real, cfg)
+            p50s.append(p50_s)
+            p90s.append(p90_s)
+            unserveds.append(unserved)
+            utils.append(utilisation)
+
+        rows.append({
+            **params,
+            "n_bases": len(bases_km),
+            "p50_s": float(np.nanmean(p50s)),
+            "p90_s": float(np.nanmean(p90s)),
+            "unserved_share": float(np.nanmean(unserveds)),
+            "utilisation": float(np.mean(utils)),
+            "eur_per_km2_yr": cost_per_km2_yr(
+                len(bases_km), params["drones_per_base"], cfg
+            ),
+        })
+
+        if (idx + 1) % 100 == 0:
+            elapsed = time.monotonic() - started
+            rate = (idx + 1) / elapsed
+            print(
+                f"  {idx + 1}/{len(combos)} configs "
+                f"({elapsed:.0f}s elapsed, ~{(len(combos) - idx - 1) / rate:.0f}s left)"
+            )
+
+    return rows
+
+
+def write_csv(rows, path="results.csv"):
+    with open(path, "w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"wrote {path} ({len(rows)} rows)")
 
 
 def check_world():
@@ -315,7 +388,34 @@ def check_monotonicity():
     )
 
 
+def check_sweep():
+    cfg = dict(CONFIG)
+    cfg["seasons_per_config"] = 2
+    rows = run_sweep(cfg, axes={
+        "spacing_km": [20.0, 10.0],
+        "drones_per_base": [1],
+        "launch_latency_s": [60.0],
+        "fp_rate": [0.2],
+        "ignitions_per_season": [50.0],
+    })
+    assert len(rows) == 2, f"expected 2 configs, got {len(rows)}"
+
+    expected_keys = {
+        "spacing_km", "drones_per_base", "launch_latency_s", "fp_rate",
+        "ignitions_per_season", "n_bases", "p50_s", "p90_s",
+        "unserved_share", "utilisation", "eur_per_km2_yr",
+    }
+    assert set(rows[0]) == expected_keys, f"row keys wrong: {set(rows[0])}"
+
+    # Tighter spacing costs more and responds faster.
+    wide = next(r for r in rows if r["spacing_km"] == 20.0)
+    tight = next(r for r in rows if r["spacing_km"] == 10.0)
+    assert tight["eur_per_km2_yr"] > wide["eur_per_km2_yr"], "tighter grid not costlier"
+    assert tight["p90_s"] <= wide["p90_s"], "tighter grid not faster"
+
+
 if __name__ == "__main__":
+    validate_config(CONFIG)
     if "--check" in sys.argv:
         check_cost()
         check_bases()
@@ -323,4 +423,8 @@ if __name__ == "__main__":
         check_dispatch()
         check_metrics()
         check_monotonicity()
+        check_sweep()
         print("all checks passed")
+    else:
+        rows = run_sweep(CONFIG)
+        write_csv(rows)
