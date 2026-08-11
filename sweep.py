@@ -4,7 +4,10 @@ Answers: time-to-eyes-on vs EUR/km2/yr for a monitor-drone base network.
 No terrain, no fire growth, no flight physics. See docs/superpowers/specs/.
 """
 
+import math
 import sys
+
+import numpy as np
 
 CONFIG = {
     # --- costs: ponytail: placeholder, swap for real quotes ---
@@ -50,6 +53,20 @@ def cost_per_km2_yr(n_bases, drones_per_base, cfg):
     return annual / cfg["domain_km2"]
 
 
+def base_grid(spacing_km, domain_km2):
+    """Square grid of base positions over a square domain.
+
+    Returns an (n, 2) array of km coordinates. Bases sit at cell centres, so
+    none land on the domain edge. Always returns at least one base.
+    """
+    side_km = math.sqrt(domain_km2)
+    n = max(1, int(side_km // spacing_km))
+    step = side_km / n
+    centres = (np.arange(n) + 0.5) * step
+    xx, yy = np.meshgrid(centres, centres)
+    return np.column_stack([xx.ravel(), yy.ravel()])
+
+
 def check_cost():
     cfg = dict(CONFIG)
     cfg["domain_km2"] = 1000.0
@@ -73,7 +90,29 @@ def check_cost():
     assert cost_per_km2_yr(1, 2, cfg) > cost_per_km2_yr(1, 1, cfg)
 
 
+def check_bases():
+    # 100 km2 domain is a 10x10 km square. At 5 km spacing that is a 2x2 grid.
+    bases = base_grid(5.0, 100.0)
+    assert bases.shape == (4, 2), f"expected 4 bases, got {bases.shape}"
+
+    # Centres sit at 2.5 and 7.5 km on each axis.
+    xs = sorted(set(round(float(v), 6) for v in bases[:, 0]))
+    assert xs == [2.5, 7.5], f"base x-centres wrong: {xs}"
+
+    # All bases fall strictly inside the domain.
+    side = 10.0
+    assert bases.min() > 0.0 and bases.max() < side, "base outside domain"
+
+    # Spacing wider than the domain still yields one base, never zero.
+    assert base_grid(500.0, 100.0).shape == (1, 2), "wide spacing must yield 1 base"
+
+    # Tighter spacing never yields fewer bases.
+    counts = [len(base_grid(s, 3808.0)) for s in (40.0, 20.0, 10.0, 5.0)]
+    assert counts == sorted(counts), f"base count not monotonic in spacing: {counts}"
+
+
 if __name__ == "__main__":
     if "--check" in sys.argv:
         check_cost()
+        check_bases()
         print("all checks passed")
