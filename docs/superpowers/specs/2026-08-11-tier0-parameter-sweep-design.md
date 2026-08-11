@@ -65,10 +65,24 @@ and are swapped for real quotes later without touching any logic.
 
 Five units, each with one purpose, each independently testable.
 
-**1. World.** Generates one season: Poisson-distributed ignition events over
-`season_days`. Each event has a uniform-random location in the domain and a
-boolean `is_real`. The false-alarm share is a swept parameter, so a season is
-generated per-config rather than shared.
+**1. World.** Generates one season over `season_days`. Real fires and false
+alarms are drawn as **two independent Poisson processes**:
+
+- `n_real ~ Poisson(ignitions_per_season)` — so `ignitions_per_season` means
+  REAL fires, not total alerts.
+- `n_fake ~ Poisson(ignitions_per_season × fp_rate / (1 − fp_rate))` — false
+  alarms are ADDITIONAL alerts on top of the real ones. The multiplier makes
+  the expected false-alarm share of all alerts equal `fp_rate`.
+
+Both get uniform-random locations and times; the combined arrays are sorted
+together by time, since `dispatch` consumes alerts in time order.
+
+> **Corrected 2026-08-11 after the final review.** The original wording here
+> drew the TOTAL alert count as Poisson and then relabelled an `fp_rate` share
+> as fake. That made the false-positive axis inert: raising `fp_rate` deleted
+> real fires instead of adding drone load, the opposite of the intent stated
+> below. Measured on the first full sweep, fp 0.05→0.50 moved p90 by −0.4%
+> and utilisation by −0.00001. Tier 1 must not reintroduce this.
 
 **2. Bases.** Square grid at spacing `S` over the domain. `n_bases` derives
 from `S` and `domain_km2`. Each base holds `D` drones.
