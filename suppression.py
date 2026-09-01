@@ -46,10 +46,21 @@ CONFIG = {
     # regardless of how much water arrives; crews and helicopters are pulled
     # for the same reason. Used as a hard time window, not a modelled term.
     "intensity_limit_kw_per_m": 4000.0,
-    "intensity_growth_kw_per_m_per_min": 200.0,  # coarse ramp to the limit
+    # ponytail: Byram's I = H * w * ROS says fireline intensity scales
+    # linearly with rate of spread; a fixed-time window ignores that, so the
+    # growth rate is quoted at a reference ROS and scaled linearly with the
+    # swept ros_m_per_min instead. Ceiling: this is still a linear stand-in,
+    # not Byram's formula with real fuel load/heat yield - upgrade path is
+    # Tier 1 with cited fuel data.
+    "intensity_growth_kw_per_m_per_min_at_ref_ros": 200.0,
+    "ref_ros_m_per_min": 1.0,
     # --- response ---
     "response_delay_min": (5.0, 15.0, 30.0),  # ignition -> first water on fire
     "payload_l": (5.0, 10.0, 25.0, 50.0),     # 5L toy .. 50L heavy-lift
+    # Share of the perimeter direct attack must hold. 1.0 = full ring
+    # (worst case, wetting the entire growing circle forever); 0.5 = head
+    # and flanks only, crediting progressive containment on the rest.
+    "perimeter_share": 1.0,
     # --- the incumbent we are being compared to ---
     "heli_drop_l": 3000.0,
     "heli_cycle_s": 900.0,
@@ -63,7 +74,8 @@ def validate_config(cfg):
     """Fail loud at startup rather than mid-sweep."""
     positive = [
         "cruise_mps", "drop_s", "refill_s", "water_source_km",
-        "intensity_limit_kw_per_m", "intensity_growth_kw_per_m_per_min",
+        "intensity_limit_kw_per_m", "intensity_growth_kw_per_m_per_min_at_ref_ros",
+        "ref_ros_m_per_min", "perimeter_share",
         "heli_drop_l", "heli_cycle_s", "drone_cost",
     ]
     for key in positive:
@@ -88,15 +100,21 @@ def perimeter_m(ros_m_per_min, t_min):
     return 2.0 * math.pi * ros_m_per_min * t_min
 
 
-def hold_flow_lps(ros_m_per_min, water_l_per_m):
-    """Flow needed to WET new perimeter as fast as the fire creates it.
+def hold_flow_lps(ros_m_per_min, water_l_per_m, perimeter_share=1.0):
+    """Flow needed to WET the held share of new perimeter as fast as the
+    fire creates it.
 
     dP/dt = 2*pi*ROS is constant for a circular fire, so the holding
     requirement is a constant flow rate independent of when you arrive.
     Arriving late does not raise this rate; it raises the one-off knockdown
     volume below.
+
+    perimeter_share defaults to 1.0: the worst case of wetting the whole
+    growing ring forever. Real direct attack concentrates on the unheld
+    arc (head and flanks), often well under half the circle - pass a
+    smaller share to credit progressive containment on the rest.
     """
-    return 2.0 * math.pi * ros_m_per_min * water_l_per_m / 60.0
+    return 2.0 * math.pi * ros_m_per_min * water_l_per_m * perimeter_share / 60.0
 
 
 def knockdown_l(ros_m_per_min, water_l_per_m, t_min):
@@ -104,10 +122,17 @@ def knockdown_l(ros_m_per_min, water_l_per_m, t_min):
     return perimeter_m(ros_m_per_min, t_min) * water_l_per_m
 
 
-def window_min(cfg):
+def window_min(ros_m_per_min, cfg):
     """Minutes from ignition until fireline intensity passes the point where
-    water stops working. Beyond this the fleet size is academic."""
-    return cfg["intensity_limit_kw_per_m"] / cfg["intensity_growth_kw_per_m_per_min"]
+    water stops working. Beyond this the fleet size is academic.
+
+    Byram's I = H * w * ROS: intensity scales linearly with rate of spread,
+    so a faster fire must hit the limit sooner. Growth rate is quoted at a
+    reference ROS and scaled linearly - see ponytail on CONFIG.
+    """
+    growth = (cfg["intensity_growth_kw_per_m_per_min_at_ref_ros"]
+              * ros_m_per_min / cfg["ref_ros_m_per_min"])
+    return cfg["intensity_limit_kw_per_m"] / growth
 
 
 def fleet_size(payload_l, ros_m_per_min, water_l_per_m, delay_min, cfg):
@@ -116,9 +141,9 @@ def fleet_size(payload_l, ros_m_per_min, water_l_per_m, delay_min, cfg):
     Knockdown must land inside the remaining window before intensity passes
     the limit, so it too becomes a flow requirement, not just a volume.
     """
-    remaining_min = window_min(cfg) - delay_min
+    remaining_min = window_min(ros_m_per_min, cfg) - delay_min
     per_drone = drone_flow_lps(payload_l, cfg)
-    hold = hold_flow_lps(ros_m_per_min, water_l_per_m)
+    hold = hold_flow_lps(ros_m_per_min, water_l_per_m, cfg["perimeter_share"])
     if remaining_min <= 0.0:
         # Arrived after water stops working. No fleet size succeeds.
         return None, hold / per_drone, float("inf")
@@ -137,9 +162,11 @@ def run_sweep(cfg=CONFIG):
     axes = itertools.product(
         cfg["payload_l"], cfg["ros_m_per_min"], cfg["water_l_per_m"], cfg["response_delay_min"]
     )
+    half_cfg = dict(cfg, perimeter_share=0.5)
     for payload_l, ros, wpm, delay in axes:
         n, hold_drones, knock_drones = fleet_size(payload_l, ros, wpm, delay, cfg)
         feasible = n is not None
+        n_half, _, _ = fleet_size(payload_l, ros, wpm, delay, half_cfg)
         rows.append({
             "payload_l": payload_l,
             "ros_m_per_min": ros,
@@ -154,6 +181,9 @@ def run_sweep(cfg=CONFIG):
                 round(n * drone_flow_lps(payload_l, cfg) / heli_equivalent(cfg), 2)
                 if feasible else ""
             ),
+            # perimeter_share=0.5: head-and-flanks direct attack instead of
+            # the full-ring worst case. See CONFIG["perimeter_share"].
+            "fleet_drones_half_perimeter": n_half if n_half is not None else "",
         })
     return rows
 
@@ -205,14 +235,21 @@ def report(rows, cfg=CONFIG):
     mid_delay = sorted(cfg["response_delay_min"])[len(cfg["response_delay_min"]) // 2]
     best_payload = max(cfg["payload_l"])
     n, _, _ = fleet_size(best_payload, mid_ros, mid_wpm, mid_delay, cfg)
+    n_half, _, _ = fleet_size(best_payload, mid_ros, mid_wpm, mid_delay,
+                               dict(cfg, perimeter_share=0.5))
     lines = [
-        f"Water stops working ~{window_min(cfg):g} min after ignition "
-        f"({cfg['intensity_limit_kw_per_m']:g} kW/m at "
-        f"{cfg['intensity_growth_kw_per_m_per_min']:g} kW/m/min).",
+        f"Water stops working ~{window_min(mid_ros, cfg):g} min after ignition at "
+        f"{mid_ros:g} m/min ({cfg['intensity_limit_kw_per_m']:g} kW/m at "
+        f"{cfg['intensity_growth_kw_per_m_per_min_at_ref_ros']:g} kW/m/min "
+        f"quoted at {cfg['ref_ros_m_per_min']:g} m/min, scaled linearly with spread).",
         f"One drone cycle is {cycle_s(cfg) / 60.0:.1f} min for "
         f"{best_payload:g} L -> {drone_flow_lps(best_payload, cfg):.2f} L/s sustained.",
         f"One helicopter sustains {heli_lps:.1f} L/s "
         f"= {heli_lps / drone_flow_lps(best_payload, cfg):.0f} of those drones.",
+        f"Fleet sizes assume the full-ring worst case (perimeter_share="
+        f"{cfg['perimeter_share']:g}: wetting the entire growing perimeter "
+        f"continuously). Crediting head-and-flanks direct attack only "
+        f"(perimeter_share=0.5) roughly halves the requirement.",
     ]
     if n is None:
         lines.append(
@@ -220,10 +257,12 @@ def report(rows, cfg=CONFIG):
             f"NO fleet size works - water arrives after the window closes."
         )
     else:
+        half_txt = f"{n_half} at perimeter_share=0.5" if n_half is not None else "still infeasible at 0.5"
         lines.append(
             f"At {mid_ros:g} m/min, {mid_wpm:g} L/m, {mid_delay:g} min response: "
             f"{n} x {best_payload:g}L drones = EUR {n * cfg['drone_cost']:,.0f} capex "
-            f"to match roughly {n * drone_flow_lps(best_payload, cfg) / heli_lps:.1f} helicopters."
+            f"to match roughly {n * drone_flow_lps(best_payload, cfg) / heli_lps:.1f} helicopters "
+            f"({half_txt})."
         )
     infeasible = sum(1 for r in rows if not r["feasible"])
     lines.append(f"{infeasible}/{len(rows)} configs cannot be held at any fleet size.")
@@ -263,7 +302,7 @@ def check_knockdown_grows_with_delay():
 def check_fleet_monotonic():
     """Every axis must push fleet size the way physics says, or an axis is
     inert - the exact defect that survived six reviews in Tier 0."""
-    base = dict(payload_l=25.0, ros_m_per_min=1.0, water_l_per_m=2.0, delay_min=10.0, cfg=CONFIG)
+    base = dict(payload_l=25.0, ros_m_per_min=1.0, water_l_per_m=2.0, delay_min=5.0, cfg=CONFIG)
     n0, _, _ = fleet_size(**base)
     assert n0 is not None and n0 > 0, n0
     bigger, _, _ = fleet_size(**dict(base, payload_l=50.0))
@@ -281,11 +320,36 @@ def check_fleet_monotonic():
 def check_window_closes():
     """Past the intensity limit, no fleet works. Must return None, not a
     large number - a large number would read as 'expensive but possible'."""
-    late = window_min(CONFIG) + 1.0
+    late = window_min(1.0, CONFIG) + 1.0
     n, _, _ = fleet_size(25.0, 1.0, 2.0, late, CONFIG)
     assert n is None, n
-    n, _, _ = fleet_size(25.0, 1.0, 2.0, window_min(CONFIG) - 1.0, CONFIG)
+    n, _, _ = fleet_size(25.0, 1.0, 2.0, window_min(1.0, CONFIG) - 1.0, CONFIG)
     assert n is not None and n > 0, n
+
+
+def check_window_shrinks_with_spread():
+    """window_min must depend on ros_m_per_min, not just restate the limit
+    and growth-rate config values - the exact defect this file shipped
+    with: a 'derived' number that was actually a constant."""
+    slow = window_min(0.5, CONFIG)
+    ref = window_min(1.0, CONFIG)
+    fast = window_min(2.0, CONFIG)
+    assert fast < ref < slow, (slow, ref, fast)
+    # linear ramp -> window scales exactly inversely with ROS
+    assert abs(fast - ref / 2.0) < 1e-9, (fast, ref)
+    assert abs(slow - ref * 2.0) < 1e-9, (slow, ref)
+
+
+def check_perimeter_share_moves_fleet():
+    """perimeter_share must actually reduce the holding requirement and
+    fleet size, or the knob is decorative."""
+    full = hold_flow_lps(1.0, 2.0, perimeter_share=1.0)
+    half = hold_flow_lps(1.0, 2.0, perimeter_share=0.5)
+    assert half == full / 2.0, (full, half)
+    n_full, _, _ = fleet_size(25.0, 1.0, 2.0, 10.0, CONFIG)
+    n_half, _, _ = fleet_size(25.0, 1.0, 2.0, 10.0, dict(CONFIG, perimeter_share=0.5))
+    assert n_full is not None and n_half is not None, (n_full, n_half)
+    assert n_half < n_full, f"halving perimeter_share must need fewer drones: {n_half} vs {n_full}"
 
 
 def check_sweep_shape():
@@ -298,7 +362,8 @@ def check_sweep_shape():
 
 def run_checks():
     for fn in (check_flow, check_hold_is_arrival_independent, check_knockdown_grows_with_delay,
-               check_fleet_monotonic, check_window_closes, check_sweep_shape):
+               check_fleet_monotonic, check_window_closes, check_window_shrinks_with_spread,
+               check_perimeter_share_moves_fleet, check_sweep_shape):
         fn()
         print(f"ok  {fn.__name__}")
     print("all checks passed")
