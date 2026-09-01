@@ -82,24 +82,15 @@ CONFIG = {
                                   # this share of real fires are excluded
                                   # from the Pareto frontier as infeasible
     # --- run control ---
-    "seasons_per_config": 50,     # Measured at ~5.9s/config at 200 seasons =
-                                  # ~4hr for the 2880-config sweep, far past
-                                  # the 30min guard. Cost rose because the
-                                  # ignition axis moved from old guesses
-                                  # (50/150/400) to the researched anchor
-                                  # (154/307/614): roughly double the alerts
-                                  # per season, which saturates drones and
-                                  # makes the earliest-arrival dispatch search
-                                  # do much more work per season, so runtime
-                                  # grew far more than proportionally with the
-                                  # ignition rate. 50 is the build-log
-                                  # documented prior setting (4m19s), not a
-                                  # new guess. Tradeoff: ~2x the sampling
-                                  # noise on individual config p90s vs 200;
-                                  # the Pareto frontier's SHAPE, which is what
-                                  # the sweep is used for, is robust to it.
-                                  # Use 200 (needs ~4hr) for a higher-quality
-                                  # final pass.
+    "seasons_per_config": 200,    # The 50-season run let a config sit ON the
+                                  # max_unserved_share gate and flip in and out
+                                  # of feasibility with fp_rate, which cannot
+                                  # affect response time. At 200 that config
+                                  # fails cleanly at every fp_rate, so the gate
+                                  # artifact was noise, not a result. Measured
+                                  # ~30 min on a quiet machine; an earlier
+                                  # ~4h projection was contention from parallel
+                                  # agents, not the workload. Keep 200.
     "seed": 20260811,
 }
 
