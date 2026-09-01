@@ -143,6 +143,81 @@ def flyability_verdict(spacing_km, endurance_min, reserve_frac, cfg=CONFIG):
     return {**geo, **mt, "usable_endurance_min": usable_s / 60.0, "margin": margin, "verdict": verdict}
 
 
+# --- wind ---
+# 12 m/s is the Matrice 4TD's cited MAX WIND RESISTANCE, a different quantity
+# from cruise speed. What actually matters for response time is ground
+# speed: outbound into a headwind w is (airspeed - w), the return leg with a
+# tailwind is (airspeed + w). A round trip in wind is slower than the
+# still-air round trip even though the return leg alone is faster -- that
+# asymmetry is what this section adds; the earlier cruise_mps sweep only
+# ever varied the airspeed uniformly and never modelled headwind at all.
+WIND_RATED_MAX_MPS = 12.0  # above this the aircraft is outside its rated
+                            # envelope entirely -- see the grounding note
+                            # below, this stops being a response-time
+                            # question and becomes an availability one.
+WIND_AIRSPEEDS_MPS = [18.0, 20.0]  # 18 = sustainable figure, 20 = optimistic
+                                    # ceiling (21 m/s is the cited maximum)
+WIND_HEADWINDS_MPS = [0.0, 4.0, 8.0, 12.0]
+
+# ponytail: wind speed is not the only thing this model omits. Above
+# WIND_RATED_MAX_MPS the aircraft cannot fly AT ALL, not just more slowly --
+# some number of days per fire season will exceed 12 m/s wind (Greek meltemi
+# routinely does), and on those days the fleet is grounded, not merely
+# slower. "Days per season grounded by wind" is not modelled anywhere in
+# this file or in sweep.py and is arguably a bigger risk to the pitch than
+# any of the response-time derating computed here -- flagged as a gap for a
+# future pass, not attempted here.
+
+
+def wind_effective_cruise_mps(airspeed_mps, headwind_mps):
+    """Effective symmetric speed that reproduces the TRUE round-trip flight
+    time under a headwind opposing the outbound leg (and aiding the return).
+
+    True round-trip time for one-way distance d is d/(v-w) + d/(v+w)
+    = d * 2v / (v^2 - w^2). Solving 2d/v_eff for that same time gives
+    v_eff = v - w^2/v -- independent of d, so a single number can stand in
+    for cruise_mps in dispatch() without needing the mission distance.
+
+    ponytail: this equalises ROUND-TRIP time exactly, but dispatch()'s
+    response time is the OUTBOUND leg alone (time to first reach the fire),
+    which under a real headwind is genuinely slower than v_eff (v_eff
+    blends in the faster tailwind return). Using v_eff for both response and
+    busy-time is therefore mildly OPTIMISTIC on p90 specifically, not exact
+    -- a true fix would split outbound/return speed inside dispatch() itself,
+    which means editing sweep.py and is out of scope here.
+    """
+    if headwind_mps >= airspeed_mps:
+        return 0.0  # cannot make headway outbound at all
+    return airspeed_mps - headwind_mps ** 2 / airspeed_mps
+
+
+def wind_round_trip_geometry(one_way_km, airspeed_mps, headwind_mps, dwell_s):
+    """True asymmetric round-trip time for one leg length under wind.
+
+    Returns (out_s, back_s, total_s). If headwind_mps >= airspeed_mps the
+    aircraft cannot complete the outbound leg at all: out_s and total_s are
+    inf.
+    """
+    if headwind_mps >= airspeed_mps:
+        return float("inf"), 0.0, float("inf")
+    out_s = one_way_km * 1000.0 / (airspeed_mps - headwind_mps)
+    back_s = one_way_km * 1000.0 / (airspeed_mps + headwind_mps)
+    return out_s, back_s, out_s + back_s + dwell_s
+
+
+def find_crossing_headwind(p90_fn, headwinds, threshold_min=15.0):
+    """First headwind (from an ascending, caller-sorted list) at which
+    p90_fn(headwind) exceeds threshold_min. None if nothing in the list
+    crosses. Generic over p90_fn so the search logic itself can be
+    mutation-tested against a deterministic stand-in, independent of the
+    stochastic Monte Carlo evaluation used for the real answer.
+    """
+    for w in headwinds:
+        if p90_fn(w) > threshold_min:
+            return w
+    return None
+
+
 # ---------------------------------------------------------------------------
 # Analysis 2: sensitivity of the headline
 # ---------------------------------------------------------------------------
@@ -200,6 +275,62 @@ def evaluate_config(spacing_km, drones_per_base, cfg, n_seasons=None, seed_base=
         p90s.append(p90_s)
         unserveds.append(unserved)
     return float(np.nanmean(p90s)), float(np.nanmean(unserveds))
+
+
+def evaluate_config_ext(
+    spacing_km, drones_per_base, cfg, ignitions_per_season, fp_rate,
+    n_seasons=None, seed_base=None,
+):
+    """Like evaluate_config, but with the ignition density and false-alarm
+    rate as explicit parameters (not fixed to ANCHOR) and utilisation
+    returned alongside p90/unserved_share, so turnaround's effect can be
+    read off against fleet workload instead of assumed.
+    """
+    n_seasons = n_seasons or ANCHOR["seasons"]
+    seed_base = cfg["seed"] if seed_base is None else seed_base
+    bases_km = base_grid(spacing_km, cfg["domain_km2"])
+    p90s, unserveds, utils = [], [], []
+    for season in range(n_seasons):
+        rng = np.random.default_rng(seed_base + season)
+        t_s, xy_km, is_real = generate_season(
+            rng, cfg, ignitions_per_season, fp_rate
+        )
+        response_s, utilisation = dispatch(
+            t_s, xy_km, bases_km, drones_per_base, ANCHOR["launch_latency_s"], cfg
+        )
+        _, p90_s, unserved = season_metrics(response_s, is_real, cfg)
+        p90s.append(p90_s)
+        unserveds.append(unserved)
+        utils.append(utilisation)
+    return float(np.nanmean(p90s)), float(np.nanmean(unserveds)), float(np.mean(utils))
+
+
+TURNAROUND_PANEL_S = [300.0, 600.0, TURNAROUND_CITED_S, 2400.0]
+
+SATURATION_PANEL = dict(ignitions_per_season=614.0, fp_rate=0.50)
+
+
+def run_turnaround_panel(ignitions_per_season, fp_rate, n_seasons=None):
+    """Turnaround sweep (300/600/1620/2400s) for both frontier configs at a
+    given ignition density and false-positive rate, with utilisation
+    reported alongside p90/unserved_share.
+    """
+    rows = []
+    for fc in FRONTIER_CONFIGS:
+        for turnaround_s in TURNAROUND_PANEL_S:
+            cfg = dict(CONFIG, turnaround_s=turnaround_s)
+            p90_s, unserved, utilisation = evaluate_config_ext(
+                fc["spacing_km"], fc["drones_per_base"], cfg,
+                ignitions_per_season, fp_rate, n_seasons,
+            )
+            rows.append({
+                "config": fc["label"], "turnaround_s": turnaround_s,
+                "p90_min": p90_s / 60.0, "unserved_share": unserved,
+                "utilisation": utilisation,
+                "crosses_15min": p90_s / 60.0 > 15.0,
+                "crosses_gate": unserved > CONFIG["max_unserved_share"],
+            })
+    return rows
 
 
 def run_sensitivity(n_seasons=None):
@@ -342,6 +473,68 @@ def check_flyability_verdict():
     )
 
 
+def check_wind_effective_cruise():
+    # Zero headwind must reproduce the airspeed exactly.
+    assert wind_effective_cruise_mps(20.0, 0.0) == 20.0, "no wind must equal airspeed"
+
+    # Known value: v=20, w=12 -> v_eff = 20 - 144/20 = 12.8.
+    got = wind_effective_cruise_mps(20.0, 12.0)
+    assert abs(got - 12.8) < 1e-9, f"v_eff wrong: {got}"
+
+    # Headwind at or above airspeed means no headway at all.
+    assert wind_effective_cruise_mps(20.0, 20.0) == 0.0, "headwind == airspeed must ground it"
+    assert wind_effective_cruise_mps(20.0, 25.0) == 0.0, "headwind > airspeed must ground it"
+
+    # Strictly monotonic decreasing in headwind.
+    v0 = wind_effective_cruise_mps(18.0, 0.0)
+    v4 = wind_effective_cruise_mps(18.0, 4.0)
+    v8 = wind_effective_cruise_mps(18.0, 8.0)
+    assert v0 > v4 > v8, f"v_eff not monotonic decreasing in headwind: {v0}, {v4}, {v8}"
+
+
+def check_wind_round_trip_geometry():
+    # No headwind: outbound and return legs are identical and match the
+    # symmetric mission_time computation.
+    out_s, back_s, total_s = wind_round_trip_geometry(10.0, 20.0, 0.0, 120.0)
+    assert abs(out_s - back_s) < 1e-9, f"legs should match with no wind: {out_s} vs {back_s}"
+    mt = mission_time(10.0, dict(CONFIG, cruise_mps=20.0, dwell_s=120.0))
+    assert abs(total_s - mt["mission_time_min"] * 60.0) < 1e-6, (
+        f"no-wind round trip diverged from mission_time: {total_s} vs {mt['mission_time_min'] * 60.0}"
+    )
+
+    # A real headwind makes the outbound leg strictly slower than the return.
+    out_w, back_w, total_w = wind_round_trip_geometry(10.0, 20.0, 8.0, 120.0)
+    assert out_w > back_w, f"headwind did not slow the outbound leg more: {out_w} vs {back_w}"
+
+    # Wind always costs time overall: the round trip with wind is never
+    # faster than the still-air round trip (harmonic-mean inequality).
+    assert total_w > total_s, (
+        f"wind round trip should be slower than still air: {total_w} vs {total_s}"
+    )
+
+    # Headwind >= airspeed: cannot complete the outbound leg.
+    out_inf, back_inf, total_inf = wind_round_trip_geometry(10.0, 20.0, 20.0, 120.0)
+    assert math.isinf(out_inf) and math.isinf(total_inf), "grounded case must be inf"
+    assert back_inf == 0.0, f"grounded case still returned a finite back leg: {back_inf}"
+
+
+def check_find_crossing_headwind():
+    # Deterministic, monotonic stand-in for p90_fn: p90 == headwind itself.
+    headwinds = [0.0, 5.0, 10.0, 14.0, 16.0]
+    got = find_crossing_headwind(lambda w: w, headwinds, threshold_min=15.0)
+    assert got == 16.0, f"expected first crossing at 16.0, got {got}"
+
+    # Exactly-at-threshold must NOT count as crossing (strict >), so the
+    # crossing is reported one step later.
+    headwinds2 = [0.0, 15.0, 16.0]
+    got2 = find_crossing_headwind(lambda w: w, headwinds2, threshold_min=15.0)
+    assert got2 == 16.0, f"exact-threshold value wrongly counted as crossing: {got2}"
+
+    # Never crossing returns None.
+    got3 = find_crossing_headwind(lambda w: 1.0, headwinds, threshold_min=15.0)
+    assert got3 is None, f"expected no crossing, got {got3}"
+
+
 def check_evaluate_config():
     # Same config, same seed, same result (reproducibility).
     a = evaluate_config(20.0, 1, CONFIG, n_seasons=5)
@@ -379,12 +572,114 @@ def check_evaluate_config():
     )
 
 
+def check_evaluate_config_ext():
+    # At the anchor density (307/season), evaluate_config and
+    # evaluate_config_ext must agree on p90/unserved when given the same
+    # ignitions/fp/seed, since evaluate_config_ext is a strict generalisation.
+    p90_a, unserved_a = evaluate_config(16.0, 1, CONFIG, n_seasons=5)
+    p90_b, unserved_b, util_b = evaluate_config_ext(
+        16.0, 1, CONFIG, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=5
+    )
+    assert abs(p90_a - p90_b) < 1e-9, f"evaluate_config_ext diverged on p90: {p90_a} vs {p90_b}"
+    assert abs(unserved_a - unserved_b) < 1e-9, (
+        f"evaluate_config_ext diverged on unserved: {unserved_a} vs {unserved_b}"
+    )
+    assert 0.0 <= util_b, f"utilisation must be non-negative: {util_b}"
+
+    # Exact reproducibility: reimplement one season of the same loop directly
+    # from base_grid/generate_season/dispatch and confirm util_b's underlying
+    # single-season utilisation matches bit-for-bit, so a constant-factor
+    # scaling bug in evaluate_config_ext's own utilisation bookkeeping cannot
+    # slip past.
+    bases_km = base_grid(16.0, CONFIG["domain_km2"])
+    rng = np.random.default_rng(CONFIG["seed"])
+    t_s, xy_km, is_real = generate_season(
+        rng, CONFIG, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"]
+    )
+    _, util_direct = dispatch(t_s, xy_km, bases_km, 1, ANCHOR["launch_latency_s"], CONFIG)
+    _, _, util_one_season = evaluate_config_ext(
+        16.0, 1, CONFIG, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=1
+    )
+    assert abs(util_one_season - util_direct) < 1e-9, (
+        f"evaluate_config_ext utilisation diverged from direct dispatch: "
+        f"{util_one_season} vs {util_direct}"
+    )
+
+    # Utilisation must rise sharply between the anchor density and the
+    # saturation panel (614 ignitions, fp=0.50 roughly triples total alert
+    # volume: more real fires plus an equal-sized false-alarm stream).
+    _, _, util_anchor = evaluate_config_ext(
+        16.0, 1, CONFIG, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=5
+    )
+    _, _, util_sat = evaluate_config_ext(
+        16.0, 1, CONFIG, SATURATION_PANEL["ignitions_per_season"],
+        SATURATION_PANEL["fp_rate"], n_seasons=5,
+    )
+    assert util_sat > util_anchor, (
+        f"saturation panel did not raise utilisation over the anchor: "
+        f"{util_anchor} -> {util_sat}"
+    )
+
+    # Utilisation must also rise with a longer turnaround, holding load
+    # fixed: locking a drone longer per job raises total busy time.
+    cfg_short = dict(CONFIG, turnaround_s=300.0)
+    cfg_long = dict(CONFIG, turnaround_s=2400.0)
+    _, _, util_short = evaluate_config_ext(
+        16.0, 1, cfg_short, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=5
+    )
+    _, _, util_long = evaluate_config_ext(
+        16.0, 1, cfg_long, ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=5
+    )
+    assert util_long > util_short, (
+        f"longer turnaround did not raise utilisation: {util_short} -> {util_long}"
+    )
+
+
+def check_run_turnaround_panel():
+    rows = run_turnaround_panel(
+        ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons=5
+    )
+    # 2 configs x 4 turnaround values.
+    assert len(rows) == 8, f"expected 8 rows, got {len(rows)}"
+    expected_keys = {
+        "config", "turnaround_s", "p90_min", "unserved_share", "utilisation",
+        "crosses_15min", "crosses_gate",
+    }
+    assert set(rows[0]) == expected_keys, f"row keys wrong: {set(rows[0])}"
+    # The cited 1620s figure must actually be one of the swept values.
+    assert 1620.0 in TURNAROUND_PANEL_S, "cited 27min turnaround missing from panel"
+    # Within one config, utilisation must be non-decreasing as turnaround_s
+    # rises across the sorted panel (longer lockup per job never frees up
+    # fleet capacity).
+    for fc in FRONTIER_CONFIGS:
+        cfg_rows = sorted(
+            (r for r in rows if r["config"] == fc["label"]),
+            key=lambda r: r["turnaround_s"],
+        )
+        utils = [r["utilisation"] for r in cfg_rows]
+        assert all(utils[i] <= utils[i + 1] for i in range(len(utils) - 1)), (
+            f"utilisation not monotonic in turnaround_s for {fc['label']}: {utils}"
+        )
+        # Must be a STRICT rise end-to-end (300s -> 2400s), not merely
+        # non-decreasing -- catches a mutant that silently drops the
+        # turnaround_s override and leaves every row identical.
+        assert utils[-1] > utils[0], (
+            f"utilisation did not actually rise with turnaround_s for "
+            f"{fc['label']}: {utils}"
+        )
+
+
 def run_checks():
     check_mission_geometry()
     check_mission_time()
     check_max_flyable_spacing()
     check_flyability_verdict()
+    check_wind_effective_cruise()
+    check_wind_round_trip_geometry()
+    check_find_crossing_headwind()
     check_evaluate_config()
+    check_evaluate_config_ext()
+    check_run_turnaround_panel()
     print("all checks passed")
 
 
@@ -397,48 +692,74 @@ def print_flyability_report():
     print("ANALYSIS 1: PHYSICAL FEASIBILITY")
     print("=" * 78)
     print(
-        f"Cited DJI Matrice 4TD specs: max flight time ~46-49 min (using "
-        f"{ENDURANCE_MIN_CITED:.1f} min midpoint), max horizontal speed 21 m/s, "
-        f"MTOM ~2090g, operating range -30..50C, max wind resistance 12 m/s "
-        f"(also the takeoff/landing/operation limit). The model has NO "
-        f"reserve margin anywhere; SORA practice expects 20-30%. Reported "
-        f"both with reserve_frac=1.00 (no reserve, matches the model as-is) "
-        f"and reserve_frac={RESERVE_FRAC_SORA:.2f} (25% SORA reserve)."
+        f"Published DJI Matrice 4TD specs (not a placeholder): max flight time "
+        f"{ENDURANCE_MIN_BRACKET[0]:.0f}-{ENDURANCE_MIN_BRACKET[1]:.0f} min, "
+        f"max horizontal speed 21 m/s, MTOM ~2090g, operating range -30..50C, "
+        f"max wind resistance 12 m/s (also the takeoff/landing/operation limit). "
+        f"The model has NO reserve margin anywhere; SORA practice expects "
+        f"20-30% reserve. Bracketed below at both ends of the published "
+        f"endurance range and at 20% and 25% reserve."
     )
     print()
-    header = (
-        f"{'nominal':>8} {'actual':>8} {'bases':>6} {'worst_km':>9} "
-        f"{'worst_min':>10} {'margin_noRsv':>13} {'verdict_noRsv':>14} "
-        f"{'margin_25pct':>13} {'verdict_25pct':>14}"
-    )
-    print(header)
-    for spacing in FRONTIER_SPACINGS_KM:
-        geo = mission_geometry(spacing)
-        worst_mt = mission_time(geo["worst_km"])
-        v_none = flyability_verdict(spacing, ENDURANCE_MIN_CITED, RESERVE_FRAC_NONE)
-        v_sora = flyability_verdict(spacing, ENDURANCE_MIN_CITED, RESERVE_FRAC_SORA)
-        print(
-            f"{spacing:>8.1f} {geo['actual_spacing_km']:>8.2f} {geo['n_bases']:>6d} "
-            f"{geo['worst_km']:>9.2f} {worst_mt['mission_time_min']:>10.1f} "
-            f"{v_none['margin']:>+12.0%} {v_none['verdict']:>14} "
-            f"{v_sora['margin']:>+12.0%} {v_sora['verdict']:>14}"
+    reserve_scenarios = [
+        ("no reserve", RESERVE_FRAC_NONE),
+        ("20% reserve", RESERVE_FRAC_SORA_20),
+        ("25% reserve", RESERVE_FRAC_SORA),
+    ]
+    for endurance_min in ENDURANCE_MIN_BRACKET:
+        print(f"--- endurance = {endurance_min:.0f} min ---")
+        header = (
+            f"{'nominal':>8} {'actual':>8} {'bases':>6} {'worst_km':>9} "
+            f"{'worst_min':>10} " + " ".join(
+                f"{'margin_' + lbl.split()[0]:>13} {'verdict_' + lbl.split()[0]:>13}"
+                for lbl, _ in reserve_scenarios
+            )
         )
+        print(header)
+        for spacing in FRONTIER_SPACINGS_KM:
+            geo = mission_geometry(spacing)
+            worst_mt = mission_time(geo["worst_km"])
+            cells = []
+            for _, reserve in reserve_scenarios:
+                v = flyability_verdict(spacing, endurance_min, reserve)
+                cells.append(f"{v['margin']:>+13.0%} {v['verdict']:>13}")
+            print(
+                f"{spacing:>8.1f} {geo['actual_spacing_km']:>8.2f} {geo['n_bases']:>6d} "
+                f"{geo['worst_km']:>9.2f} {worst_mt['mission_time_min']:>10.1f} " + " ".join(cells)
+            )
+        print()
+
+    print("Max flyable nominal spacing, by scenario:")
+    for endurance_min in ENDURANCE_MIN_BRACKET:
+        for label, reserve in reserve_scenarios:
+            max_spacing = max_flyable_spacing_km(endurance_min, reserve)
+            print(
+                f"  endurance={endurance_min:.0f}min, {label}: "
+                f"{max_spacing} km" if max_spacing else
+                f"  endurance={endurance_min:.0f}min, {label}: NONE of the swept spacings fit."
+            )
+
     print()
-    for label, reserve in (("no reserve", RESERVE_FRAC_NONE), ("25% SORA reserve", RESERVE_FRAC_SORA)):
-        max_spacing = max_flyable_spacing_km(ENDURANCE_MIN_CITED, reserve)
-        print(
-            f"Max flyable nominal spacing ({label}): "
-            f"{max_spacing} km" if max_spacing else
-            f"Max flyable nominal spacing ({label}): NONE of the swept spacings fit."
-        )
-    for label, reserve in (("no reserve", RESERVE_FRAC_NONE), ("25% SORA reserve", RESERVE_FRAC_SORA)):
-        headline = flyability_verdict(16.0, ENDURANCE_MIN_CITED, reserve)
-        print(
-            f"HEADLINE ({label}, 9-base / 16 km nominal, "
-            f"{headline['actual_spacing_km']:.1f} km actual): worst-case mission "
-            f"{headline['mission_time_min']:.1f} min vs {headline['usable_endurance_min']:.1f} "
-            f"min usable budget -> VERDICT: {headline['verdict'].upper()}"
-        )
+    print("HEADLINE (9-base / 16 km nominal) across the full bracket:")
+    for endurance_min in ENDURANCE_MIN_BRACKET:
+        for label, reserve in reserve_scenarios:
+            headline = flyability_verdict(16.0, endurance_min, reserve)
+            print(
+                f"  endurance={endurance_min:.0f}min, {label}: worst-case mission "
+                f"{headline['mission_time_min']:.1f} min vs {headline['usable_endurance_min']:.1f} "
+                f"min usable budget, margin {headline['margin']:+.0%} "
+                f"-> VERDICT: {headline['verdict'].upper()}"
+            )
+
+    pessimistic = flyability_verdict(16.0, ENDURANCE_MIN_BRACKET[0], RESERVE_FRAC_SORA)
+    print(
+        f"\nPESSIMISTIC CORNER (46 min endurance, 25% reserve): "
+        f"9-base/16km headline worst-case mission {pessimistic['mission_time_min']:.1f} min "
+        f"vs {pessimistic['usable_endurance_min']:.1f} min usable budget, "
+        f"margin {pessimistic['margin']:+.0%} "
+        f"-> {'SURVIVES' if pessimistic['verdict'] == 'feasible' else 'DOES NOT SURVIVE'} "
+        f"({pessimistic['verdict']})."
+    )
 
 
 def print_sensitivity_report(n_seasons=None):
@@ -468,6 +789,119 @@ def print_sensitivity_report(n_seasons=None):
     return rows
 
 
+def print_turnaround_panel_report(n_seasons=None):
+    print()
+    print("=" * 78)
+    print(
+        "TURNAROUND PANEL, 307 ignitions / fp=0.05 (anchor) -- p90/unserved/"
+        "utilisation at 300/600/1620/2400s turnaround"
+    )
+    print("=" * 78)
+    anchor_rows = run_turnaround_panel(
+        ANCHOR["ignitions_per_season"], ANCHOR["fp_rate"], n_seasons
+    )
+    _print_turnaround_rows(anchor_rows)
+
+    print()
+    print("=" * 78)
+    print(
+        f"TURNAROUND PANEL, SATURATION CASE ({SATURATION_PANEL['ignitions_per_season']:.0f} "
+        f"ignitions / fp={SATURATION_PANEL['fp_rate']:.2f}) -- honest stress test of "
+        "one-drone-per-base: a false alarm occupies a dock for a full "
+        "turnaround exactly like a real fire"
+    )
+    print("=" * 78)
+    sat_rows = run_turnaround_panel(
+        SATURATION_PANEL["ignitions_per_season"], SATURATION_PANEL["fp_rate"], n_seasons
+    )
+    _print_turnaround_rows(sat_rows)
+    return anchor_rows, sat_rows
+
+
+def _print_turnaround_rows(rows):
+    print(f"{'config':<28} {'turnaround_s':>13} {'p90_min':>8} {'unserved':>9} {'utilisation':>11} {'>15min':>7} {'>gate':>6}")
+    for r in rows:
+        print(
+            f"{r['config']:<28} {r['turnaround_s']:>13.0f} "
+            f"{r['p90_min']:>8.2f} {r['unserved_share']:>9.3%} {r['utilisation']:>11.4f} "
+            f"{'YES' if r['crosses_15min'] else '.':>7} "
+            f"{'YES' if r['crosses_gate'] else '.':>6}"
+        )
+
+
+def print_wind_report(n_seasons=None):
+    print()
+    print("=" * 78)
+    print("WIND: headwind on the outbound leg vs still-air cruise")
+    print("=" * 78)
+    print(
+        f"12 m/s is the Matrice 4TD's cited MAX WIND RESISTANCE, not a cruise "
+        f"speed. Above it the aircraft is outside its rated envelope and is "
+        f"GROUNDED, not just slower -- 'days per season grounded by wind' is "
+        f"not modelled here (see ponytail note near WIND_RATED_MAX_MPS) and "
+        f"is arguably a bigger risk than any response-time derating below."
+    )
+    print()
+    print("Asymmetric round-trip geometry at the 9-base headline's worst-case leg (14.47 km):")
+    geo = mission_geometry(16.0)
+    header = f"{'airspeed':>9} {'headwind':>9} {'out_min':>8} {'back_min':>9} {'total_min':>10} {'vs still-air':>13}"
+    print(header)
+    for airspeed in WIND_AIRSPEEDS_MPS:
+        still_air_total = mission_time(geo["worst_km"], dict(CONFIG, cruise_mps=airspeed))["mission_time_min"]
+        for headwind in WIND_HEADWINDS_MPS:
+            out_s, back_s, total_s = wind_round_trip_geometry(
+                geo["worst_km"], airspeed, headwind, CONFIG["dwell_s"]
+            )
+            total_min = total_s / 60.0
+            delta = total_min - still_air_total
+            print(
+                f"{airspeed:>9.1f} {headwind:>9.1f} {out_s / 60.0:>8.1f} "
+                f"{back_s / 60.0:>9.1f} {total_min:>10.1f} {delta:>+12.1f}m"
+            )
+    print()
+
+    print(f"9-base headline (16km) p90/unserved by airspeed x headwind ({n_seasons or ANCHOR['seasons']} seasons):")
+    header2 = f"{'airspeed':>9} {'headwind':>9} {'v_eff':>7} {'p90_min':>8} {'unserved':>9} {'>15min':>7}"
+    print(header2)
+    p90_cache = {}
+    for airspeed in WIND_AIRSPEEDS_MPS:
+        for headwind in WIND_HEADWINDS_MPS:
+            v_eff = wind_effective_cruise_mps(airspeed, headwind)
+            cfg = dict(CONFIG, cruise_mps=v_eff)
+            p90_s, unserved = evaluate_config(16.0, 1, cfg, n_seasons)
+            p90_min = p90_s / 60.0
+            p90_cache[(airspeed, headwind)] = p90_min
+            print(
+                f"{airspeed:>9.1f} {headwind:>9.1f} {v_eff:>7.2f} "
+                f"{p90_min:>8.2f} {unserved:>9.3%} "
+                f"{'YES' if p90_min > 15.0 else '.':>7}"
+            )
+
+    print()
+    fine_headwinds = [0.5 * i for i in range(0, 25)]  # 0.0 .. 12.0 step 0.5
+    for airspeed in (18.0,):
+        def p90_fn(w, _airspeed=airspeed):
+            v_eff = wind_effective_cruise_mps(_airspeed, w)
+            cfg = dict(CONFIG, cruise_mps=v_eff)
+            p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons)
+            return p90_s / 60.0
+
+        crossing = find_crossing_headwind(p90_fn, fine_headwinds, threshold_min=15.0)
+        if crossing is None:
+            print(
+                f"At airspeed={airspeed:.0f} m/s: p90 never crosses 15 min "
+                f"within the rated wind envelope (0-{WIND_RATED_MAX_MPS:.0f} m/s)."
+            )
+        else:
+            print(
+                f"HEADWIND CROSSING at airspeed={airspeed:.0f} m/s: p90 first "
+                f"exceeds 15 min at headwind = {crossing:.1f} m/s "
+                f"({'within' if crossing <= WIND_RATED_MAX_MPS else 'ABOVE'} "
+                f"the {WIND_RATED_MAX_MPS:.0f} m/s rated wind envelope)."
+            )
+    return p90_cache
+
+
 if __name__ == "__main__":
     import sys
     if "--check" in sys.argv:
@@ -475,3 +909,6 @@ if __name__ == "__main__":
     else:
         print_flyability_report()
         print_sensitivity_report()
+        print_turnaround_panel_report()
+        print_wind_report()
+        print_turnaround_panel_report()
