@@ -16,12 +16,60 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 CONFIG = {
-    # --- costs: ponytail: placeholder, swap for real quotes ---
-    "drone_cost": 15_000.0,       # multirotor + thermal payload
-    "base_cost": 35_000.0,        # ruggedised drone-in-a-box, power, comms
-    "install_cost": 20_000.0,     # civil works, connectivity, permitting
-    "maintenance_frac": 0.15,     # of capex, per year
-    "hardware_life_yr": 5.0,
+    # --- costs ---
+    # Researched 2026-09-01. Hardware is list price, so it is real. Everything
+    # below the hardware line is still a placeholder: no published figure
+    # exists for drone-in-a-box insurance, site lease, or Mediterranean
+    # replacement life. See docs/2026-09-01-research-pass-3.md for sources
+    # and confidence per line.
+    "drone_cost": 21_500.0,       # DJI Matrice 4TD, thermal (list, 2026)
+    "base_cost": 14_600.0,        # DJI Dock 3 (list, 2026)
+    "install_cost": 12_000.0,     # ponytail: no drone-specific breakdown is
+                                  # published anywhere (EU tenders, EIB
+                                  # drone finance guide, Percepto/Flytbase
+                                  # case studies all silent). Proxy: telecom
+                                  # remote-site / small-cell install (power
+                                  # drop, mount, backhaul) runs EUR 8-15k;
+                                  # using the midpoint.
+    "maintenance_frac": 0.25,     # of capex, per year. Industry rule of thumb
+                                  # for medium-high utilisation is 20-30%.
+    "hardware_life_yr": 3.0,      # ponytail: no vendor MTBF or multi-year
+                                  # hot-climate field data exists. DJI
+                                  # warrants the Dock 3 for 1 year standard
+                                  # and sells paid Care Enterprise Plus
+                                  # extensions (up to 2 battery swaps/yr) —
+                                  # a manufacturer monetising extensions
+                                  # past year 1 is not expecting trouble-free
+                                  # 5yr life. Dock is IP56/50C rated so heat
+                                  # itself isn't the constraint. 3yr is a
+                                  # supported planning assumption, not a
+                                  # measured figure.
+    # Recurring opex, which the original model omitted entirely and which
+    # dominates the answer. Reported EU dock-based BVLOS operations run
+    # EUR 30-50k per base per year all-in. That bundle is split in two here
+    # because the two halves scale differently:
+    "opex_per_base_yr": 8_000.0,  # ponytail: assembled from proxies, not
+                                  # quoted. Insurance ~EUR 2-3k/yr per
+                                  # dock+aircraft (built up from EU Reg
+                                  # 785/2004 minimum 3rd-party liability,
+                                  # market cover ~EUR 650-750/yr at a
+                                  # EUR 1.3M limit, hull cover at 6-12% of
+                                  # declared value, +~25% BVLOS loading; no
+                                  # broker publishes a drone-in-a-box rate).
+                                  # Site lease ~EUR 1.5-3k/yr, proxied off
+                                  # Greek telecom mast colocation (siting on
+                                  # an existing mast/substation/water tank
+                                  # avoids new forestry permitting; no Greek
+                                  # forestry-service permit tariff is
+                                  # published). Remainder covers connectivity
+                                  # and scheduled service. Scales with base
+                                  # count.
+    "ops_staff_yr": 60_000.0,     # remote-pilot / ops desk for the WHOLE
+                                  # fleet. Does NOT scale with base count.
+                                  # Splitting it out is the point: if remote
+                                  # supervision were charged per base, a dense
+                                  # swarm would be penalised for the very
+                                  # thing that makes it work.
     # --- world ---
     "domain_km2": 3808.0,         # Attica-sized square
     "season_days": 120.0,
@@ -34,11 +82,24 @@ CONFIG = {
                                   # this share of real fires are excluded
                                   # from the Pareto frontier as infeasible
     # --- run control ---
-    "seasons_per_config": 200,    # spec's Monte Carlo count. At 50 the sweep
-                                  # took 4m19s; 200 lands near 17min, inside
-                                  # the 30min guard, and halves the sampling
-                                  # noise that common-random-numbers (FIX 2)
-                                  # relies on for fair config comparisons
+    "seasons_per_config": 50,     # Measured at ~5.9s/config at 200 seasons =
+                                  # ~4hr for the 2880-config sweep, far past
+                                  # the 30min guard. Cost rose because the
+                                  # ignition axis moved from old guesses
+                                  # (50/150/400) to the researched anchor
+                                  # (154/307/614): roughly double the alerts
+                                  # per season, which saturates drones and
+                                  # makes the earliest-arrival dispatch search
+                                  # do much more work per season, so runtime
+                                  # grew far more than proportionally with the
+                                  # ignition rate. 50 is the build-log
+                                  # documented prior setting (4m19s), not a
+                                  # new guess. Tradeoff: ~2x the sampling
+                                  # noise on individual config p90s vs 200;
+                                  # the Pareto frontier's SHAPE, which is what
+                                  # the sweep is used for, is robust to it.
+                                  # Use 200 (needs ~4hr) for a higher-quality
+                                  # final pass.
     "seed": 20260811,
 }
 
@@ -53,6 +114,8 @@ def validate_config(cfg):
     for key in positive:
         assert cfg[key] > 0, f"CONFIG[{key!r}] must be positive, got {cfg[key]!r}"
     assert cfg["dwell_s"] >= 0, "CONFIG['dwell_s'] must be non-negative"
+    for key in ("opex_per_base_yr", "ops_staff_yr"):
+        assert cfg[key] >= 0, f"CONFIG[{key!r}] must be non-negative, got {cfg[key]!r}"
     assert 0.0 <= cfg["maintenance_frac"] <= 1.0, "maintenance_frac must be a fraction"
     assert 0.0 <= cfg["max_unserved_share"] <= 1.0, "max_unserved_share must be a fraction"
     # The common-random-number seed in run_sweep packs season into the low
@@ -66,11 +129,20 @@ def validate_config(cfg):
 
 
 def cost_per_km2_yr(n_bases, drones_per_base, cfg):
-    """Annualised total cost of ownership per km2 of covered domain."""
+    """Annualised total cost of ownership per km2 of covered domain.
+
+    Three terms: amortised capex, per-base recurring opex, and one fleet-wide
+    ops-staff cost that does not scale with base count.
+    """
     capex = n_bases * (
         cfg["base_cost"] + cfg["install_cost"] + drones_per_base * cfg["drone_cost"]
     )
-    annual = capex / cfg["hardware_life_yr"] + capex * cfg["maintenance_frac"]
+    annual = (
+        capex / cfg["hardware_life_yr"]
+        + capex * cfg["maintenance_frac"]
+        + n_bases * cfg["opex_per_base_yr"]
+        + cfg["ops_staff_yr"]
+    )
     return annual / cfg["domain_km2"]
 
 
@@ -176,7 +248,13 @@ AXES = {
     "drones_per_base": [1, 2, 3, 4, 5, 6],
     "launch_latency_s": [30.0, 60.0, 120.0, 180.0],
     "fp_rate": [0.05, 0.15, 0.25, 0.35, 0.50],
-    "ignitions_per_season": [50.0, 150.0, 400.0],
+    # Anchored 2026-09-01 on the Hellenic Fire Service national figure:
+    # ~10,640 forest fire incidents per season over 131,957 km2 = 80.6 per
+    # 1000 km2, so 307 over this 3808 km2 domain. Attica runs hotter than the
+    # national average (wildland-urban interface, human ignition) but no
+    # citable Attica multiplier was found, so the axis brackets the anchor
+    # rather than asserting one: half it, it, and a 2x Attica assumption.
+    "ignitions_per_season": [154.0, 307.0, 614.0],
 }
 
 
@@ -366,6 +444,8 @@ def check_cost():
     cfg["drone_cost"] = 15_000.0
     cfg["hardware_life_yr"] = 5.0
     cfg["maintenance_frac"] = 0.15
+    cfg["opex_per_base_yr"] = 0.0
+    cfg["ops_staff_yr"] = 0.0
 
     # One base, one drone: capex = 35k + 20k + 15k = 70k.
     # Annual = 70k/5 + 70k*0.15 = 14_000 + 10_500 = 24_500.
@@ -373,12 +453,32 @@ def check_cost():
     got = cost_per_km2_yr(1, 1, cfg)
     assert abs(got - 24.5) < 1e-9, f"one-base cost wrong: {got}"
 
-    # Cost is linear in base count.
+    # With both opex terms zeroed, cost is linear in base count.
     got10 = cost_per_km2_yr(10, 1, cfg)
     assert abs(got10 - 245.0) < 1e-9, f"cost not linear in bases: {got10}"
 
     # More drones per base costs strictly more.
     assert cost_per_km2_yr(1, 2, cfg) > cost_per_km2_yr(1, 1, cfg)
+
+    # Per-base opex scales with base count: +1k/base/yr over 1000 km2 is
+    # +1.0 per km2 at one base and +10.0 at ten.
+    scaled = dict(cfg, opex_per_base_yr=1_000.0)
+    assert abs(cost_per_km2_yr(1, 1, scaled) - (24.5 + 1.0)) < 1e-9
+    assert abs(cost_per_km2_yr(10, 1, scaled) - (245.0 + 10.0)) < 1e-9
+
+    # Fleet-wide ops staff does NOT scale with base count: the same absolute
+    # amount is added at one base and at ten. If this ever starts scaling,
+    # dense networks get wrongly penalised and the density argument dies.
+    fixed = dict(cfg, ops_staff_yr=60_000.0)
+    assert abs(cost_per_km2_yr(1, 1, fixed) - (24.5 + 60.0)) < 1e-9
+    assert abs(cost_per_km2_yr(10, 1, fixed) - (245.0 + 60.0)) < 1e-9
+
+    # Shortening hardware_life_yr spreads capex over fewer years, so the
+    # annual cost must go up. Guards the term that was tightened 5.0 -> 3.0.
+    short_life = dict(cfg, hardware_life_yr=3.0)
+    assert cost_per_km2_yr(1, 1, short_life) > cost_per_km2_yr(1, 1, cfg), (
+        "shortening hardware_life_yr did not raise annual cost"
+    )
 
 
 def check_bases():
