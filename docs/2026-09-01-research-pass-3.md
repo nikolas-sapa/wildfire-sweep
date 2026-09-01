@@ -12,9 +12,9 @@ CONFIG — do not re-derive them from memory later, come back here.
 | --- | --- | --- | --- |
 | `drone_cost` | 15,000 | 21,500 | DJI Matrice 4TD list price ($23,409, 2026) |
 | `base_cost` | 35,000 | 14,600 | DJI Dock 3 list price ($15,890, 2026), dock only |
-| `install_cost` | 20,000 | 20,000 (unchanged) | not found, still a guess |
+| `install_cost` | 20,000 | 12,000 | proxy, not a drone-specific figure — see below |
 | `maintenance_frac` | 0.15 | 0.25 | midpoint of the 20-30%/yr hardware maintenance rule of thumb |
-| `hardware_life_yr` | 5.0 | 5.0 (unchanged) | not found for Mediterranean heat/salt conditions |
+| `hardware_life_yr` | 5.0 | 3.0 | assumption, supported — see below |
 | `opex_per_base_yr` | — (didn't exist) | 8,000 | new term, see below |
 | `ops_staff_yr` | — (didn't exist) | 60,000 | new term, see below |
 | ignition axis | 50 / 150 / 400 | 154 / 307 / 614 | derived Attica ignition density, ±1 doubling |
@@ -37,6 +37,66 @@ lease, scheduled service — scales with base count) and `ops_staff_yr =
 60,000` (remote-pilot + ops desk for the whole fleet — flat, fleet-wide).
 This split is our judgment call, not a sourced breakdown — flag it as such
 whenever the CONFIG is cited externally.
+
+**Known limitation: `ops_staff_yr` assumes unbounded remote-supervision
+capacity.** It's a flat EUR 60,000/yr fleet-wide desk with no cap on how
+many bases or drones one desk can supervise — the same flat figure is
+applied whether the sweep is at 4 bases or at 144 bases (288 drones), and
+no sourced pilot-to-drone or pilot-to-base ratio exists anywhere in the
+research, so any capacity breakpoint is an estimate, not a researched
+figure. Reconciling this split back against the sourced
+EUR 30,000-50,000/base/yr bundle only works at the high end: at one base
+the full annualized per-base cost (hardware amortization + maintenance +
+`opex_per_base_yr` + that base's share of `ops_staff_yr`) works out to
+about EUR 96,000/base/yr — nearly double the top of the sourced range —
+converging to about EUR 36,500/base at 144 bases, which lands inside the
+range. So the decomposition reconciles with the source for larger fleets,
+not small ones.
+
+What this actually costs the pitched number, if the cap is bounded rather
+than left unbounded: `ops_staff_yr` is flat, so its per-km²/yr
+contribution is identical on every row (60,000 / 3,808 km² ≈ EUR 15.76),
+and stepping it to "one desk per K bases" adds
+`(ceil(n_bases/K) - 1) × 15.76` to a row's cost with no rerun needed. At
+one desk per 25 bases: the 4-base and 9-base configs are unchanged (they
+need only one desk each); 49 bases rises 479.70 -> 495.46 (+3.3%); 144
+bases rises 1,379.30 -> 1,458.08 (+5.7%). At one desk per 50 bases:
+everything up to 49 bases is unchanged; 144 bases rises 1,379.30 ->
+1,410.81 (+2.3%). **The pitched 9-base EUR 101/km²/yr config survives
+either stepping untouched**, since 9 bases sits far below any plausible
+desk-capacity threshold — the unbounded-supervision assumption bites only
+the high-density tail of the frontier, above roughly 25 bases, not the
+headline claim. Disclose the assumption itself whenever the density
+argument is pitched (no sourced capacity ratio exists), but the pitched
+number does not depend on how it's resolved.
+
+`hardware_life_yr` was tightened 5.0 -> 3.0 after this doc was first
+written; the table above previously said "unchanged" and that was stale.
+Reasoning: DJI warrants the Dock 3 for one year standard and sells DJI Care
+Enterprise Plus extensions covering up to two battery replacements per
+aircraft per year; the dock is IP56 and rated to 50C so heat itself isn't
+the constraint. No vendor publishes an MTBF and no multi-year field-failure
+data exists from any hot-climate operator. A manufacturer that warrants one
+year and monetises extensions past it is not expecting five trouble-free
+years, so 3 is a supported planning assumption — labelled "assumption,
+supported," not "not found," since that's the honest category for a
+reasoned estimate with no primary figure behind it.
+
+`install_cost` was similarly tightened 20,000 -> 12,000. Reasoning: no
+drone-in-a-box deployment publishes an itemised install breakdown — not in
+EU tender documents, not the EIB drone finance guide, not Percepto or
+Flytbase case studies. Comparable remote-site telecom and small-cell
+installation (power drop, mount, backhaul) runs EUR 8,000-15,000; 12,000 is
+the midpoint. Label it a proxy, not a drone-specific figure.
+
+**Reverting either of these to the original values would LOWER the
+headline cost figures**, not raise them — worth stating plainly since an
+undocumented deviation that happened to make our own numbers look better
+would be a red flag, and this isn't that. At `hardware_life_yr=5.0` and
+`install_cost=20,000`, the 4-base/1-drone-per-base config drops from
+~54 to ~50.7 EUR/km²/yr and the 9-base/1-drone-per-base config drops from
+~101 to ~94.3 EUR/km²/yr. The tightened assumptions made the pitch numbers
+worse, not better.
 
 The ignition axis moved from round-number guesses (50/150/400) to values
 bracketing a derived Attica estimate (154/307/614 = half/anchor/2x). See
@@ -101,9 +161,20 @@ Comparables, for pricing our EUR/km²/yr output against the market:
   above anything in our monitoring model.
   [spaintenders](https://www.spaintenders.com/blogs/andalusia-awards-major-aerial-firefighting-332/)
 
-Not found, do not guess: dock/drone useful life under Mediterranean heat and
-salt air (no vendor MTBF published); insurance per base per year (no
-published figure anywhere); site lease and permitting cost per base.
+Not found: insurance per base per year (no published figure anywhere); site
+lease and permitting cost per base. These two stay unguessed — no proxy was
+found close enough to defend.
+
+Dock/drone useful life under Mediterranean heat and salt air, and the
+drone-specific install cost, are no longer in this "not found" category:
+no primary figure exists for either (still true, no vendor MTBF, no
+itemised install breakdown anywhere), but both now carry a reasoned
+estimate in CONFIG — `hardware_life_yr=3.0` (assumption, supported, see
+"What changed in CONFIG and why" above) and `install_cost=12,000` (proxy
+from comparable telecom/small-cell installs, same section). The honest
+label for these is "assumption, supported" or "proxy," not "not found" —
+that phrase is reserved for the two items above where no defensible
+estimate exists at all.
 
 ## Area 2: startup graveyard
 
@@ -294,8 +365,6 @@ that caveat wherever this number is used.
 
 ## What we still could not find
 
-- Dock/drone useful life under Mediterranean heat and salt air (no vendor
-  MTBF anywhere).
 - Insurance per base per year (no published figure at all).
 - Site lease and permitting cost per base.
 - Attica-specific ignition count (only burn-extent data exists).
@@ -339,3 +408,43 @@ The ignition-density number (307/season over the Attica-sized domain) is
 now a derived floor with a stated 2x uncertainty band, not a guess — that's
 the single most load-bearing correction from this pass, since it's the
 input the whole cost-per-km² result depends on.
+
+## Withdrawn: the ~EUR 54/km2/yr frontier point
+
+The 4-base / 1-drone / 26 km config that appears at the cheap end of the
+Pareto frontier is **a gate artifact and must not be cited.**
+
+It sits exactly on the `max_unserved_share = 0.10` quality gate. At the
+307-ignition anchor with a 30 s launch latency, its unserved share across the
+five false-alarm rates reads:
+
+| fp_rate | unserved_share | gate |
+|---|---|---|
+| 0.05 | 0.1039 | fail |
+| 0.15 | 0.1023 | fail |
+| 0.25 | 0.0985 | **pass, by 0.0015** |
+| 0.35 | 0.1076 | fail |
+| 0.50 | 0.1110 | fail |
+
+It clears the gate in one case out of five. It reached the frontier by winning
+a coin flip against the feasibility test at `seasons_per_config = 50`, not by
+being feasible. A config whose feasibility flips with the false-alarm rate —
+which cannot improve response time, only consume drones — is a sampling
+artifact.
+
+This also sharpens the earlier caveat about `fp_rate` values appearing on the
+frontier. The noise is not perturbing p90; it is crossing the feasibility
+threshold. Confirming that reading: a different `fp_rate` "wins" in different
+density panels (0.25 gives the lowest p90 in the 307 panel, 0.35 in the 154
+panel), which is what pure sampling noise looks like and what a real
+false-alarm effect would not.
+
+The comparison at lines above — that reverting `hardware_life_yr` and
+`install_cost` to this doc's original values would move ~54 to ~50.7 — remains
+valid as a cost-sensitivity check, but the ~54 figure it references is a
+withdrawn row.
+
+**EUR 101/km2/yr (9 bases, 1 drone each) is the sole defensible headline.**
+Across the same five false-alarm rates its unserved share is 0.00104, 0.00119,
+0.00159, 0.00151, 0.00201 and its p90 is 10.05 to 10.15 minutes — insensitive
+on both axes, and nowhere near the gate.
