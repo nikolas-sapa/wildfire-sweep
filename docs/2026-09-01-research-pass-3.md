@@ -409,42 +409,93 @@ now a derived floor with a stated 2x uncertainty band, not a guess — that's
 the single most load-bearing correction from this pass, since it's the
 input the whole cost-per-km² result depends on.
 
-## Withdrawn: the ~EUR 54/km2/yr frontier point
+## 200-season rerun: EUR 54/km2/yr confirmed infeasible, EUR 67/km2/yr replaces it
 
-The 4-base / 1-drone / 26 km config that appears at the cheap end of the
-Pareto frontier is **a gate artifact and must not be cited.**
+The sweep was rerun at `seasons_per_config = 200` (the setting this doc
+originally specified before it was cut to 50 to fit a 30-minute guard — see
+below for why that cut is now reversed). The 200-season run resolves both
+open questions from the 50-season pass: whether the 4-base/1-drone config
+was really feasible, and whether the fp_rate noise on the frontier was
+sampling artifact or signal.
 
-It sits exactly on the `max_unserved_share = 0.10` quality gate. At the
-307-ignition anchor with a 30 s launch latency, its unserved share across the
-five false-alarm rates reads:
+**The `seasons_per_config` cut to 50 was itself a measurement error, not a
+real tradeoff.** The ~4h projection for 200 seasons at 2880 configs was
+contention from six parallel research agents running on the same machine
+that day, not the workload itself. On a quiet machine the same run takes
+about 30 minutes. There was no real accuracy-vs-time tradeoff to accept —
+200 stays as the setting going forward.
+
+**The 4-base / 1-drone / 26 km config (~EUR 54/km2/yr) is now confirmed
+infeasible, not merely suspect.** At 50 seasons it passed the
+`max_unserved_share = 0.10` gate in one of five false-alarm draws, by
+0.0015 — the "gate artifact, do not cite" label was a hedge pending a
+higher-precision rerun. At 200 seasons it fails at every false-alarm rate:
 
 | fp_rate | unserved_share | gate |
 |---|---|---|
-| 0.05 | 0.1039 | fail |
-| 0.15 | 0.1023 | fail |
-| 0.25 | 0.0985 | **pass, by 0.0015** |
-| 0.35 | 0.1076 | fail |
-| 0.50 | 0.1110 | fail |
+| 0.05 | 0.1038 | fail |
+| 0.15 | 0.1034 | fail |
+| 0.25 | 0.1022 | fail |
+| 0.35 | 0.1083 | fail |
+| 0.50 | 0.1114 | fail |
 
-It clears the gate in one case out of five. It reached the frontier by winning
-a coin flip against the feasibility test at `seasons_per_config = 50`, not by
-being feasible. A config whose feasibility flips with the false-alarm rate —
-which cannot improve response time, only consume drones — is a sampling
-artifact.
+This is a vindication of the check, not a downgrade: the gate was right to
+be suspicious of a config passing in only one of five draws, and the
+200-season run shows why — it was infeasible all along, and sampling noise
+at 50 seasons was letting it onto the frontier. The row stays withdrawn.
+Cite it as "confirmed infeasible at 200 seasons," not "gate artifact."
 
-This also sharpens the earlier caveat about `fp_rate` values appearing on the
-frontier. The noise is not perturbing p90; it is crossing the feasibility
-threshold. Confirming that reading: a different `fp_rate` "wins" in different
-density panels (0.25 gives the lowest p90 in the 307 panel, 0.35 in the 154
-panel), which is what pure sampling noise looks like and what a real
-false-alarm effect would not.
+**EUR 67/km2/yr (4 bases, 2 drones/base, p90 14.76 min) replaces it as the
+cheap end of the frontier, and it is a genuine frontier point.** It passes
+the gate at every false-alarm rate:
 
-The comparison at lines above — that reverting `hardware_life_yr` and
-`install_cost` to this doc's original values would move ~54 to ~50.7 — remains
-valid as a cost-sensitivity check, but the ~54 figure it references is a
-withdrawn row.
+| fp_rate | unserved_share | gate |
+|---|---|---|
+| 0.05 | 0.0930 | pass |
+| 0.15 | 0.0917 | pass |
+| 0.25 | 0.0890 | pass |
+| 0.35 | 0.0923 | pass |
+| 0.50 | 0.0909 | pass |
 
-**EUR 101/km2/yr (9 bases, 1 drone each) is the sole defensible headline.**
-Across the same five false-alarm rates its unserved share is 0.00104, 0.00119,
-0.00159, 0.00151, 0.00201 and its p90 is 10.05 to 10.15 minutes — insensitive
-on both axes, and nowhere near the gate.
+It still misses about 9% of real fires — it is the cheap option, not the
+recommended one.
+
+This also resolves the earlier `fp_rate`-on-the-frontier caveat, rather
+than just restating it. At 50 seasons, different fp_rate values "winning"
+different density panels was correctly diagnosed as sampling noise crossing
+the feasibility threshold, not a real false-alarm effect. The 200-season
+run confirms that diagnosis: it no longer changes which configs are
+feasible. `fp_rate` still varies across frontier rows at 200 seasons (the
+EUR 101 row shows fp=0.05, the EUR 131 row fp=0.50) because ties and
+near-ties still resolve arbitrarily — nobody should read a false-alarm rate
+off the frontier as meaningful — but that variation is now cosmetic, not a
+threat to feasibility.
+
+The comparison earlier in this doc — that reverting `hardware_life_yr` and
+`install_cost` to the original values would move ~54 to ~50.7 — still holds
+as a cost-sensitivity check on that config's price, independent of its
+feasibility status.
+
+**EUR 101/km2/yr (9 bases, 1 drone each) remains the number to present,
+now confirmed at 200 seasons.** Unserved share across the five false-alarm
+rates is 0.0010, 0.0011, 0.0014, 0.0018, 0.0022, p90 10.08 min —
+completely insensitive to false-alarm rate. All existing framing around it
+holds: roughly EUR 385,000/yr over the 3,808 km2 domain, versus roughly
+EUR 870,000/yr for Washington DNR's 21 Pano AI cameras, against a Greek
+20-30 minute ignition-to-alert baseline and the 15-minute threshold
+officials cite.
+
+**Updated frontier table, 307-ignition anchor panel, cheapest six of 11
+configs:**
+
+| EUR/km2/yr | p90 | bases | drones/base | unserved |
+|---|---|---|---|---|
+| 67 | 14.76 min | 4 | 2 | 0.0890 |
+| 80 | 14.76 min | 4 | 3 | 0.0889 |
+| 101 | 10.08 min | 9 | 1 | 0.0010 |
+| 131 | 10.02 min | 9 | 2 | 0.0000 |
+| 160 | 10.02 min | 9 | 3 | 0.0000 |
+| 252 | 6.23 min | 25 | 1 | 0.0000 |
+
+The Tier 0 finding that dense networks absorb false alarms better than
+thin ones was also measured at 200 seasons and stands.
