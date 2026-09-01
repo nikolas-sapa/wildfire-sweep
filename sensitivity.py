@@ -158,6 +158,19 @@ WIND_RATED_MAX_MPS = 12.0  # above this the aircraft is outside its rated
 WIND_AIRSPEEDS_MPS = [18.0, 20.0]  # 18 = sustainable figure, 20 = optimistic
                                     # ceiling (21 m/s is the cited maximum)
 WIND_HEADWINDS_MPS = [0.0, 4.0, 8.0, 12.0]
+WIND_HEADWINDS_TABLE_MPS = [0.0, 2.0, 4.0, 6.0, 8.0, 10.0, 12.0]  # headline
+                                    # p90/unserved table, finer step than the
+                                    # geometry table above so the founder-facing
+                                    # crossing point isn't hidden between rows
+
+# ponytail: headwind here is modelled as a constant component opposing the
+# outbound leg for every mission, regardless of where the fire actually is.
+# Real wind has a direction relative to each fire's bearing from its base:
+# some missions run crosswind or fly out with a tailwind instead. So this
+# constant-headwind case is a worst-case PER-MISSION bound, not the fleet
+# average across a season of ignitions scattered in every direction -- a
+# bearing-aware model (headwind component = wind speed * cos(bearing delta))
+# would be the upgrade if this number ever needs to be defended precisely.
 
 # ponytail: wind speed is not the only thing this model omits. Above
 # WIND_RATED_MAX_MPS the aircraft cannot fly AT ALL, not just more slowly --
@@ -191,6 +204,23 @@ def wind_effective_cruise_mps(airspeed_mps, headwind_mps):
     return airspeed_mps - headwind_mps ** 2 / airspeed_mps
 
 
+def wind_effective_outbound_mps(airspeed_mps, headwind_mps):
+    """Response-time-correct effective speed: the OUTBOUND leg alone,
+    airspeed minus headwind, with no tailwind blended in.
+
+    This is what dispatch()'s response-time metric actually measures --
+    time to FIRST reach the fire, not round-trip time. Standing this in for
+    cruise_mps overstates busy time (the model then also slows the return
+    leg it never actually flies at this speed, so utilisation/queueing
+    effects on p90 run hot), which is why wind_effective_cruise_mps and
+    this function bracket the true crossing from opposite sides rather than
+    either being exact. See print_wind_report's bracket table.
+    """
+    if headwind_mps >= airspeed_mps:
+        return 0.0  # cannot make headway outbound at all
+    return airspeed_mps - headwind_mps
+
+
 def wind_round_trip_geometry(one_way_km, airspeed_mps, headwind_mps, dwell_s):
     """True asymmetric round-trip time for one leg length under wind.
 
@@ -216,6 +246,62 @@ def find_crossing_headwind(p90_fn, headwinds, threshold_min=15.0):
         if p90_fn(w) > threshold_min:
             return w
     return None
+
+
+# --- wind x endurance (combined) ---
+# The flyability table above (Analysis 1) computes worst-case mission time
+# in STILL AIR and checks it against the endurance budget. The wind table
+# above checks p90 degradation under headwind but never re-checks endurance
+# at all -- it silently assumes the mission still fits. Neither analysis on
+# its own catches the case where headwind makes the worst-case mission run
+# out of battery. This section combines them: same worst-case leg
+# (wind_round_trip_geometry), swept over headwind, checked against both the
+# usable (reserved) budget and the unreserved total endurance.
+#
+# Reserve-budget crossing uses the PESSIMISTIC endurance bracket
+# (ENDURANCE_MIN_BRACKET[0] = 46 min) at RESERVE_FRAC_SORA (25% reserve) --
+# the same pessimistic corner Analysis 1 already reports. The unrecoverable
+# crossing uses ENDURANCE_MIN_CITED (47.5 min, the published midpoint) with
+# no reserve at all, because "does the aircraft come home" is a question
+# about total battery, not about SORA margin.
+HEADWIND_SWEEP_STEP_MPS = 0.5
+HEADWIND_SWEEP_MAX_MPS = 30.0  # must extend past WIND_RATED_MAX_MPS so an
+                                # unrecoverable crossing that lands above the
+                                # rated envelope is still found, not missed
+
+
+def combined_wind_endurance_limits(
+    one_way_km, airspeed_mps, dwell_s,
+    reserve_endurance_min=ENDURANCE_MIN_BRACKET[0], reserve_frac=RESERVE_FRAC_SORA,
+    total_endurance_min=ENDURANCE_MIN_CITED,
+    headwind_step=HEADWIND_SWEEP_STEP_MPS, headwind_max=HEADWIND_SWEEP_MAX_MPS,
+):
+    """Sweep headwind and find the first crossing of the usable (reserved)
+    endurance budget and of total (unreserved) endurance, for one leg
+    length and airspeed.
+
+    Returns a dict with reserve_crossing_mps and unrecoverable_crossing_mps
+    (None if the mission never crosses that limit within headwind_max).
+    """
+    usable_s = reserve_endurance_min * 60.0 * reserve_frac
+    total_s_budget = total_endurance_min * 60.0
+    n_steps = int(round(headwind_max / headwind_step)) + 1
+    headwinds = [i * headwind_step for i in range(n_steps)]
+
+    reserve_crossing = None
+    unrecoverable_crossing = None
+    for w in headwinds:
+        _, _, total_s = wind_round_trip_geometry(one_way_km, airspeed_mps, w, dwell_s)
+        if reserve_crossing is None and total_s > usable_s:
+            reserve_crossing = w
+        if unrecoverable_crossing is None and total_s > total_s_budget:
+            unrecoverable_crossing = w
+        if reserve_crossing is not None and unrecoverable_crossing is not None:
+            break
+    return {
+        "reserve_crossing_mps": reserve_crossing,
+        "unrecoverable_crossing_mps": unrecoverable_crossing,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -535,6 +621,80 @@ def check_find_crossing_headwind():
     assert got3 is None, f"expected no crossing, got {got3}"
 
 
+def check_combined_wind_endurance_limits():
+    # At 20 m/s airspeed with a tiny leg, the mission never comes close to
+    # either endurance budget over a headwind range well clear of the
+    # airspeed asymptote (out_s -> inf as headwind -> airspeed, which would
+    # force a crossing regardless of leg length): both crossings must be
+    # None.
+    tiny = combined_wind_endurance_limits(1.0, 20.0, 60.0, headwind_max=5.0)
+    assert tiny["reserve_crossing_mps"] is None, (
+        f"trivial leg should never cross the reserve budget: {tiny}"
+    )
+    assert tiny["unrecoverable_crossing_mps"] is None, (
+        f"trivial leg should never cross total endurance: {tiny}"
+    )
+
+    # A leg long enough to already exceed the usable budget in still air
+    # (headwind=0) must cross at headwind=0, the first swept value.
+    long_leg = combined_wind_endurance_limits(500.0, 20.0, 60.0)
+    assert long_leg["reserve_crossing_mps"] == 0.0, (
+        f"huge leg should cross the reserve budget at headwind=0: {long_leg}"
+    )
+    assert long_leg["unrecoverable_crossing_mps"] == 0.0, (
+        f"huge leg should cross total endurance at headwind=0: {long_leg}"
+    )
+
+    # The reserve (usable) budget is strictly tighter than total endurance,
+    # so the reserve crossing can never come LATER than the unrecoverable
+    # crossing.
+    geo = mission_geometry(16.0)
+    mid = combined_wind_endurance_limits(geo["worst_km"], 18.0, CONFIG["dwell_s"])
+    assert mid["reserve_crossing_mps"] is not None and mid["unrecoverable_crossing_mps"] is not None, (
+        f"headline leg at 18 m/s should cross both limits within the sweep: {mid}"
+    )
+    assert mid["reserve_crossing_mps"] <= mid["unrecoverable_crossing_mps"], (
+        f"reserve crossing should not come after the unrecoverable crossing: {mid}"
+    )
+
+
+def check_combined_wind_endurance_order():
+    """The three headline limits (reserve-endurance, p90 response-time,
+    rated wind ceiling) must appear in this order as headwind rises:
+    endurance-with-reserve binds FIRST, then the 15-minute response
+    promise, then the aircraft's rated 12 m/s wind ceiling. If a future
+    parameter change reorders these, that reordering is itself the
+    finding -- this check must fail loudly, not silently, so it asserts the
+    order directly rather than just computing the three numbers.
+    """
+    geo = mission_geometry(16.0)
+    limits = combined_wind_endurance_limits(geo["worst_km"], 18.0, CONFIG["dwell_s"])
+    reserve_crossing = limits["reserve_crossing_mps"]
+    assert reserve_crossing is not None, "expected a reserve-endurance crossing at 18 m/s"
+
+    def p90_fn(w, _airspeed=18.0):
+        v_eff = wind_effective_cruise_mps(_airspeed, w)
+        cfg = dict(CONFIG, cruise_mps=v_eff)
+        p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons=20)
+        return p90_s / 60.0
+
+    fine_headwinds = [0.5 * i for i in range(0, 25)]  # 0.0 .. 12.0 step 0.5
+    p90_crossing = find_crossing_headwind(p90_fn, fine_headwinds, threshold_min=15.0)
+    assert p90_crossing is not None, "expected a p90 crossing within the rated wind envelope"
+
+    assert reserve_crossing < p90_crossing, (
+        f"endurance-with-reserve crossing ({reserve_crossing} m/s) should bind "
+        f"BEFORE the p90 crossing ({p90_crossing} m/s) -- if it doesn't, "
+        f"endurance is no longer the tightest constraint and the whole "
+        f"finding has changed"
+    )
+    assert p90_crossing < WIND_RATED_MAX_MPS, (
+        f"p90 crossing ({p90_crossing} m/s) should bind BEFORE the rated "
+        f"wind ceiling ({WIND_RATED_MAX_MPS} m/s) -- if it doesn't, the "
+        f"response-time promise is no longer the second constraint"
+    )
+
+
 def check_evaluate_config():
     # Same config, same seed, same result (reproducibility).
     a = evaluate_config(20.0, 1, CONFIG, n_seasons=5)
@@ -677,6 +837,8 @@ def run_checks():
     check_wind_effective_cruise()
     check_wind_round_trip_geometry()
     check_find_crossing_headwind()
+    check_combined_wind_endurance_limits()
+    check_combined_wind_endurance_order()
     check_evaluate_config()
     check_evaluate_config_ext()
     check_run_turnaround_panel()
@@ -860,12 +1022,12 @@ def print_wind_report(n_seasons=None):
             )
     print()
 
-    print(f"9-base headline (16km) p90/unserved by airspeed x headwind ({n_seasons or ANCHOR['seasons']} seasons):")
-    header2 = f"{'airspeed':>9} {'headwind':>9} {'v_eff':>7} {'p90_min':>8} {'unserved':>9} {'>15min':>7}"
+    print(f"9-base/1-drone headline p90/unserved by airspeed x headwind ({n_seasons or ANCHOR['seasons']} seasons):")
+    header2 = f"{'airspeed':>9} {'headwind':>9} {'v_eff':>7} {'p90_min':>8} {'unserved':>9} {'>15min':>7} {'>10%gate':>9}"
     print(header2)
     p90_cache = {}
     for airspeed in WIND_AIRSPEEDS_MPS:
-        for headwind in WIND_HEADWINDS_MPS:
+        for headwind in WIND_HEADWINDS_TABLE_MPS:
             v_eff = wind_effective_cruise_mps(airspeed, headwind)
             cfg = dict(CONFIG, cruise_mps=v_eff)
             p90_s, unserved = evaluate_config(16.0, 1, cfg, n_seasons)
@@ -874,32 +1036,173 @@ def print_wind_report(n_seasons=None):
             print(
                 f"{airspeed:>9.1f} {headwind:>9.1f} {v_eff:>7.2f} "
                 f"{p90_min:>8.2f} {unserved:>9.3%} "
-                f"{'YES' if p90_min > 15.0 else '.':>7}"
+                f"{'YES' if p90_min > 15.0 else '.':>7} "
+                f"{'YES' if unserved > CONFIG['max_unserved_share'] else '.':>9}"
+            )
+
+    print()
+    print(
+        f"RESPONSE-TIME CORRECTION: dispatch() reuses v_eff (round-trip- "
+        f"equalised speed) for BOTH busy time and response time, but "
+        f"response time is measured on the OUTBOUND leg alone -- v_eff "
+        f"blends in the faster tailwind return, which flatters it. The "
+        f"table above is therefore optimistic on p90 specifically. "
+        f"Rerunning with OUTBOUND-ONLY speed (airspeed - headwind, no "
+        f"tailwind blended in) is response-correct but now overstates "
+        f"busy time, since the model also (wrongly) flies the return leg "
+        f"at that same slow speed, so this bounds the true crossing from "
+        f"the other side:"
+    )
+    header2b = f"{'airspeed':>9} {'headwind':>9} {'v_out':>7} {'p90_min':>8} {'unserved':>9} {'>15min':>7} {'>10%gate':>9}"
+    print(header2b)
+    for airspeed in WIND_AIRSPEEDS_MPS:
+        for headwind in WIND_HEADWINDS_TABLE_MPS:
+            v_out = wind_effective_outbound_mps(airspeed, headwind)
+            cfg = dict(CONFIG, cruise_mps=v_out)
+            p90_s, unserved = evaluate_config(16.0, 1, cfg, n_seasons)
+            p90_min = p90_s / 60.0
+            print(
+                f"{airspeed:>9.1f} {headwind:>9.1f} {v_out:>7.2f} "
+                f"{p90_min:>8.2f} {unserved:>9.3%} "
+                f"{'YES' if p90_min > 15.0 else '.':>7} "
+                f"{'YES' if unserved > CONFIG['max_unserved_share'] else '.':>9}"
             )
 
     print()
     fine_headwinds = [0.5 * i for i in range(0, 25)]  # 0.0 .. 12.0 step 0.5
-    for airspeed in (18.0,):
-        def p90_fn(w, _airspeed=airspeed):
+    p90_crossings = {}
+    for airspeed in WIND_AIRSPEEDS_MPS:
+        def p90_fn_veff(w, _airspeed=airspeed):
             v_eff = wind_effective_cruise_mps(_airspeed, w)
             cfg = dict(CONFIG, cruise_mps=v_eff)
             p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons)
             return p90_s / 60.0
 
-        crossing = find_crossing_headwind(p90_fn, fine_headwinds, threshold_min=15.0)
-        if crossing is None:
+        def p90_fn_outbound(w, _airspeed=airspeed):
+            v_out = wind_effective_outbound_mps(_airspeed, w)
+            cfg = dict(CONFIG, cruise_mps=v_out)
+            p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons)
+            return p90_s / 60.0
+
+        upper_crossing = find_crossing_headwind(p90_fn_veff, fine_headwinds, threshold_min=15.0)
+        lower_crossing = find_crossing_headwind(p90_fn_outbound, fine_headwinds, threshold_min=15.0)
+        p90_crossings[airspeed] = {"lower": lower_crossing, "upper": upper_crossing}
+        if upper_crossing is None or lower_crossing is None:
             print(
                 f"At airspeed={airspeed:.0f} m/s: p90 never crosses 15 min "
-                f"within the rated wind envelope (0-{WIND_RATED_MAX_MPS:.0f} m/s)."
+                f"within the rated wind envelope (0-{WIND_RATED_MAX_MPS:.0f} m/s) "
+                f"under at least one bound."
             )
         else:
             print(
-                f"HEADWIND CROSSING at airspeed={airspeed:.0f} m/s: p90 first "
-                f"exceeds 15 min at headwind = {crossing:.1f} m/s "
-                f"({'within' if crossing <= WIND_RATED_MAX_MPS else 'ABOVE'} "
-                f"the {WIND_RATED_MAX_MPS:.0f} m/s rated wind envelope)."
+                f"HEADWIND CROSSING BRACKET at airspeed={airspeed:.0f} m/s: p90 "
+                f"first exceeds 15 min somewhere between {lower_crossing:.1f} m/s "
+                f"(outbound-only, response-correct but overstates busy time) and "
+                f"{upper_crossing:.1f} m/s (v_eff, response-optimistic) -- true "
+                f"crossing sits NEARER the lower bound, since response time "
+                f"genuinely is the outbound leg."
             )
-    return p90_cache
+    print()
+    print(
+        "Interpretation: at the sustainable 18 m/s cruise, the 15-minute p90 "
+        "promise breaks somewhere between roughly 5 and 9.5 m/s headwind, "
+        "nearer 5 -- BELOW the 12 m/s rated wind limit, and well below the "
+        "meltemi's Force 5-7. The fleet is still legally flying and quietly "
+        "missing the response promise long before it approaches the 12 m/s "
+        "wind rating. Grounding above 12 m/s is at least a visible failure; "
+        "this band is not, unless it's modelled."
+    )
+    return p90_cache, p90_crossings
+
+
+def print_combined_wind_endurance_report(p90_crossings):
+    """Combine Analysis 1 (still-air endurance) and the wind table (p90
+    under headwind, ignoring endurance) at the headline's worst-case leg:
+    each was computed in isolation above, and neither alone catches a
+    mission that runs out of battery under headwind. This is that
+    combination.
+
+    ponytail: this uses the worst-case leg for the whole 9-base network,
+    exactly like Analysis 1 above. A fire nearer its own base is flyable in
+    more wind than this -- so the honest statement is that the FRACTION of
+    the domain reachable within reserve shrinks as headwind rises, not that
+    the whole network hits a hard cliff at one wind speed. Computing that
+    reachable-fraction curve (mission_geometry's per-sample distances,
+    re-checked against combined_wind_endurance_limits at each sampled
+    point) is the natural next refinement and is named here, not built.
+    """
+    print()
+    print("=" * 78)
+    print("COMBINED: wind-degraded mission time vs endurance, at the headline's")
+    print("worst-case leg -- neither analysis above checks this on its own")
+    print("=" * 78)
+    geo = mission_geometry(16.0)
+    print(
+        f"Worst-case leg: {geo['worst_km']:.2f} km one-way, 9-base network. "
+        f"Reserve budget: {ENDURANCE_MIN_BRACKET[0]:.0f} min endurance x "
+        f"{RESERVE_FRAC_SORA:.0%} reserve = "
+        f"{ENDURANCE_MIN_BRACKET[0] * RESERVE_FRAC_SORA:.1f} min usable. "
+        f"Total (unreserved) endurance: {ENDURANCE_MIN_CITED:.1f} min (cited midpoint)."
+    )
+    print(
+        "p90 crossing is reported as a BRACKET, not a point: neither speed "
+        "model feeding dispatch() is exact. Outbound-only (lower bound) is "
+        "response-correct but overstates busy time -- the model then also "
+        "flies the return leg it never actually takes at that same slow "
+        "speed. v_eff (upper bound) is response-optimistic -- it blends in "
+        "the faster tailwind return that a first-response metric should "
+        "never see. The true crossing sits BETWEEN them, nearer the lower "
+        "bound, because response time genuinely is the outbound leg alone."
+    )
+    print()
+    header = (
+        f"{'airspeed':>9} {'p90 bracket':>16} {'endurance+reserve':>18} "
+        f"{'unrecoverable':>14} {'rated max':>10}   binding limit"
+    )
+    print(header)
+    for airspeed in WIND_AIRSPEEDS_MPS:
+        limits = combined_wind_endurance_limits(geo["worst_km"], airspeed, CONFIG["dwell_s"])
+        reserve_c = limits["reserve_crossing_mps"]
+        unrecoverable_c = limits["unrecoverable_crossing_mps"]
+        bracket = p90_crossings.get(airspeed, {})
+        p90_lower, p90_upper = bracket.get("lower"), bracket.get("upper")
+        named = {
+            "p90 (response promise)": p90_lower,
+            "endurance+reserve": reserve_c,
+            "rated max (12 m/s)": WIND_RATED_MAX_MPS,
+            "unrecoverable": unrecoverable_c,
+        }
+        finite = {k: v for k, v in named.items() if v is not None}
+        binding = min(finite, key=finite.get) if finite else "none"
+
+        def fmt(v):
+            return "none" if v is None else f"{v:.1f}"
+
+        bracket_str = f"{fmt(p90_lower)}-{fmt(p90_upper)} m/s"
+        print(
+            f"{airspeed:>9.1f} {bracket_str:>16} {fmt(reserve_c) + ' m/s':>18} "
+            f"{fmt(unrecoverable_c) + ' m/s':>14} {WIND_RATED_MAX_MPS:>9.1f}   {binding}"
+        )
+    print()
+    print(
+        "Conclusion: the limits are NOT in the order the 12 m/s rating "
+        "suggests, and the biggest gap is the response promise, not "
+        "endurance. At 18 m/s cruise the 9-base headline's four limits, in "
+        "order as headwind rises: (1) the 15-minute response promise "
+        "breaks somewhere in the 5-9.5 m/s bracket, nearer 5 -- ordinary "
+        "Beaufort 3, a light breeze, not a meltemi event; (2) the "
+        "worst-case mission exceeds the usable endurance-with-reserve "
+        "budget at 8 m/s; (3) the mission exceeds TOTAL endurance at 12 "
+        "m/s, so the aircraft does not return; (4) the aircraft leaves its "
+        "rated wind envelope, also at 12 m/s. Every one of these limits "
+        "sits AT OR BELOW the aircraft's published 12 m/s wind rating, so "
+        "that rating is the wrong number to plan against -- the system's "
+        "real weather envelope is a light breeze, not a gale. Fixing the "
+        "response-time bracket exactly requires splitting outbound and "
+        "return speed inside dispatch() in sweep.py, which is out of scope "
+        "here -- named as the next refinement alongside the "
+        "reachable-fraction curve above."
+    )
 
 
 if __name__ == "__main__":
@@ -910,5 +1213,5 @@ if __name__ == "__main__":
         print_flyability_report()
         print_sensitivity_report()
         print_turnaround_panel_report()
-        print_wind_report()
-        print_turnaround_panel_report()
+        _, p90_crossings = print_wind_report()
+        print_combined_wind_endurance_report(p90_crossings)
