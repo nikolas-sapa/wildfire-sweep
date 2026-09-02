@@ -17,7 +17,7 @@ import math
 import numpy as np
 
 from sweep import (
-    CONFIG, base_grid, generate_season, dispatch, season_metrics,
+    CONFIG, base_grid, cost_per_km2_yr, generate_season, dispatch, season_metrics,
 )
 
 # ---------------------------------------------------------------------------
@@ -302,6 +302,156 @@ def combined_wind_endurance_limits(
         "reserve_crossing_mps": reserve_crossing,
         "unrecoverable_crossing_mps": unrecoverable_crossing,
     }
+
+
+# --- reachable-fraction curve ---
+# Every wind limit computed above (Analysis 1's flyability, the p90 wind
+# table, combined_wind_endurance_limits) uses the WORST-CASE leg: a fire in
+# a cell corner. That is the right number for "does the network ever fail",
+# but it is pessimistic for "how much of the domain is actually reachable
+# at wind w" -- a fire near its own base is flyable in far more wind than
+# one at the corner. This section answers the honest question: at a given
+# spacing and headwind, what FRACTION of the domain area is reachable
+# within budget, and what does buying a higher fraction cost.
+#
+# ponytail: headwind is still modelled as a constant component opposing
+# every outbound leg, same simplification flagged above -- a fire directly
+# downwind of its base flies the identical mission as one crosswind or
+# upwind in this model. So reachable_area_fraction below is a per-mission
+# WORST-CASE-BEARING fraction (every fire in the domain assumed to need the
+# same headwind on its outbound leg), not a fleet average over the mix of
+# bearings a real season of ignitions would actually present. A
+# bearing-aware refinement (headwind component = wind speed * cos(bearing))
+# would let missions with a tailwind or crosswind component reach further,
+# so this fraction is a lower bound on the true reachable fraction, not a
+# point estimate.
+
+def cell_geometry(spacing_km, cfg=CONFIG):
+    """Actual cell side length and base count for a nominal spacing, in
+    closed form -- the same side_km/n derivation mission_geometry uses, but
+    without mission_geometry's 600x600 sample grid (that grid is built to
+    find a worst-case CORNER distance; the reachable-fraction curve below
+    only needs the cell's side length, which is exact algebra, so skipping
+    the sampling keeps this section near-instant across every spacing x
+    headwind cell in the tables below instead of re-sampling 900+ bases per
+    cell).
+    """
+    side_km = math.sqrt(cfg["domain_km2"])
+    n = max(1, int(side_km // spacing_km))
+    actual_spacing_km = side_km / n
+    return actual_spacing_km, n * n
+
+
+def circle_in_square_fraction(d_km, side_km):
+    """Fraction of a square's area (side side_km, centred on a base) within
+    distance d_km of the centre.
+
+    Three exact regimes, by the distance from centre to the nearest edge
+    (a = side/2) and to a corner (a*sqrt(2)):
+      d <= a:            circle wholly inside the square -> pi*d^2 / side^2
+      a < d <= a*sqrt(2): circle pokes past all four edges but not yet past
+                          any corner (the four "beyond an edge" regions
+                          never overlap in this range, since a point beyond
+                          two edges at once is already farther than
+                          a*sqrt(2) from centre) -> full circle area minus
+                          four identical circular segments, one per edge
+      d >= a*sqrt(2):     circle covers every corner -> whole square, 1.0
+    """
+    a = side_km / 2.0
+    if d_km <= 0.0:
+        return 0.0
+    if d_km <= a:
+        area = math.pi * d_km * d_km
+    elif d_km <= a * math.sqrt(2.0):
+        # Circular segment beyond one edge line at distance a from centre:
+        # seg = d^2 * arccos(a/d) - a * sqrt(d^2 - a^2). Four edges, no
+        # overlap in this regime (see docstring).
+        seg = d_km * d_km * math.acos(a / d_km) - a * math.sqrt(d_km * d_km - a * a)
+        area = math.pi * d_km * d_km - 4.0 * seg
+    else:
+        area = side_km * side_km
+    frac = area / (side_km * side_km)
+    return min(1.0, max(0.0, frac))
+
+
+def max_reachable_distance_endurance_km(airspeed_mps, headwind_mps, endurance_min, reserve_frac, dwell_s):
+    """Largest one-way distance whose round-trip mission (out at v-w, dwell,
+    back at v+w) fits the usable (reserved) endurance budget.
+
+    Closed form: total_s(d) = d_km*1000*(1/(v-w) + 1/(v+w)) + dwell_s, so
+    d_max solves total_s(d_max) = usable_s exactly -- same algebra as
+    wind_round_trip_geometry, inverted rather than swept (see
+    check_max_reachable_distance_endurance, which plugs d_max back into
+    wind_round_trip_geometry to confirm the two agree).
+    """
+    if headwind_mps >= airspeed_mps:
+        return 0.0
+    usable_s = endurance_min * 60.0 * reserve_frac
+    flight_budget_s = usable_s - dwell_s
+    if flight_budget_s <= 0.0:
+        return 0.0
+    rate_s_per_km = 1000.0 * (1.0 / (airspeed_mps - headwind_mps) + 1.0 / (airspeed_mps + headwind_mps))
+    return flight_budget_s / rate_s_per_km
+
+
+def max_reachable_distance_response_km(airspeed_mps, headwind_mps, threshold_min=15.0):
+    """Largest one-way distance whose OUTBOUND leg alone (time to first
+    reach the fire) fits the response-time threshold. No tailwind blended
+    in -- this is the response-correct outbound-only speed, matching
+    wind_effective_outbound_mps.
+    """
+    if headwind_mps >= airspeed_mps:
+        return 0.0
+    return threshold_min * 60.0 * (airspeed_mps - headwind_mps) / 1000.0
+
+
+def reachable_area_fraction_endurance(
+    spacing_km, airspeed_mps, headwind_mps,
+    endurance_min=ENDURANCE_MIN_BRACKET[0], reserve_frac=RESERVE_FRAC_SORA,
+    cfg=CONFIG,
+):
+    """Fraction of the domain area reachable within the usable endurance
+    budget at this spacing and headwind -- 'can the drone do the job
+    safely'.
+    """
+    side_km, _ = cell_geometry(spacing_km, cfg)
+    d_max = max_reachable_distance_endurance_km(
+        airspeed_mps, headwind_mps, endurance_min, reserve_frac, cfg["dwell_s"]
+    )
+    return circle_in_square_fraction(d_max, side_km)
+
+
+def reachable_area_fraction_response(spacing_km, airspeed_mps, headwind_mps, threshold_min=15.0, cfg=CONFIG):
+    """Fraction of the domain area reachable within the 15-minute p90
+    response threshold at this spacing and headwind -- 'can the drone do it
+    fast enough'.
+    """
+    side_km, _ = cell_geometry(spacing_km, cfg)
+    d_max = max_reachable_distance_response_km(airspeed_mps, headwind_mps, threshold_min)
+    return circle_in_square_fraction(d_max, side_km)
+
+
+REACHABLE_HEADWINDS_MPS = WIND_HEADWINDS_TABLE_MPS  # 0, 2, 4, 6, 8, 10, 12
+REACHABLE_AIRSPEED_MPS = 18.0
+SERVICE_LEVELS = [0.90, 0.99]
+
+
+def reachable_fraction_configs(cfg=CONFIG):
+    """The five frontier nominal spacings with their actual spacing, base
+    count, and EUR/km2/yr at 1 drone/base -- computed from sweep.py's own
+    cost_per_km2_yr, not hardcoded, so a CONFIG change moves this table too.
+    """
+    configs = []
+    for spacing in FRONTIER_SPACINGS_KM:
+        side_km, n_bases = cell_geometry(spacing, cfg)
+        cost = cost_per_km2_yr(n_bases, 1, cfg)
+        configs.append({
+            "nominal_spacing_km": spacing,
+            "actual_spacing_km": side_km,
+            "n_bases": n_bases,
+            "eur_per_km2_yr": cost,
+        })
+    return configs
 
 
 # ---------------------------------------------------------------------------
@@ -659,40 +809,190 @@ def check_combined_wind_endurance_limits():
 
 
 def check_combined_wind_endurance_order():
-    """The three headline limits (reserve-endurance, p90 response-time,
-    rated wind ceiling) must appear in this order as headwind rises:
-    endurance-with-reserve binds FIRST, then the 15-minute response
-    promise, then the aircraft's rated 12 m/s wind ceiling. If a future
-    parameter change reorders these, that reordering is itself the
-    finding -- this check must fail loudly, not silently, so it asserts the
-    order directly rather than just computing the three numbers.
+    """The four headline limits must appear in this order as headwind
+    rises: the p90 response-time promise binds FIRST (bracketed between
+    the response-correct outbound-only speed and the response-optimistic
+    v_eff speed, since dispatch() cannot split them exactly), then
+    endurance-with-reserve, then total (unrecoverable) endurance, then the
+    aircraft's rated 12 m/s wind ceiling. If a future parameter change
+    reorders these, that reordering is itself the finding -- this check
+    must fail loudly, not silently, so it asserts the order directly
+    rather than just computing the numbers.
     """
     geo = mission_geometry(16.0)
     limits = combined_wind_endurance_limits(geo["worst_km"], 18.0, CONFIG["dwell_s"])
     reserve_crossing = limits["reserve_crossing_mps"]
+    unrecoverable_crossing = limits["unrecoverable_crossing_mps"]
     assert reserve_crossing is not None, "expected a reserve-endurance crossing at 18 m/s"
+    assert unrecoverable_crossing is not None, "expected an unrecoverable crossing at 18 m/s"
 
-    def p90_fn(w, _airspeed=18.0):
+    def p90_fn_veff(w, _airspeed=18.0):
         v_eff = wind_effective_cruise_mps(_airspeed, w)
         cfg = dict(CONFIG, cruise_mps=v_eff)
         p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons=20)
         return p90_s / 60.0
 
-    fine_headwinds = [0.5 * i for i in range(0, 25)]  # 0.0 .. 12.0 step 0.5
-    p90_crossing = find_crossing_headwind(p90_fn, fine_headwinds, threshold_min=15.0)
-    assert p90_crossing is not None, "expected a p90 crossing within the rated wind envelope"
+    def p90_fn_outbound(w, _airspeed=18.0):
+        v_out = wind_effective_outbound_mps(_airspeed, w)
+        cfg = dict(CONFIG, cruise_mps=v_out)
+        p90_s, _ = evaluate_config(16.0, 1, cfg, n_seasons=20)
+        return p90_s / 60.0
 
-    assert reserve_crossing < p90_crossing, (
-        f"endurance-with-reserve crossing ({reserve_crossing} m/s) should bind "
-        f"BEFORE the p90 crossing ({p90_crossing} m/s) -- if it doesn't, "
-        f"endurance is no longer the tightest constraint and the whole "
-        f"finding has changed"
+    fine_headwinds = [0.5 * i for i in range(0, 25)]  # 0.0 .. 12.0 step 0.5
+    p90_upper = find_crossing_headwind(p90_fn_veff, fine_headwinds, threshold_min=15.0)
+    p90_lower = find_crossing_headwind(p90_fn_outbound, fine_headwinds, threshold_min=15.0)
+    assert p90_upper is not None and p90_lower is not None, (
+        "expected both p90 bracket bounds to cross within the rated wind envelope"
     )
-    assert p90_crossing < WIND_RATED_MAX_MPS, (
-        f"p90 crossing ({p90_crossing} m/s) should bind BEFORE the rated "
-        f"wind ceiling ({WIND_RATED_MAX_MPS} m/s) -- if it doesn't, the "
-        f"response-time promise is no longer the second constraint"
+    assert p90_lower <= p90_upper, (
+        f"the response-correct (outbound-only) bound ({p90_lower} m/s) should "
+        f"never come AFTER the response-optimistic (v_eff) bound "
+        f"({p90_upper} m/s) -- outbound-only is always slower"
     )
+
+    assert p90_lower < reserve_crossing, (
+        f"p90 lower bound ({p90_lower} m/s) should bind BEFORE the "
+        f"endurance-with-reserve crossing ({reserve_crossing} m/s) -- if it "
+        f"doesn't, the response promise is no longer the tightest "
+        f"constraint and the whole finding has changed"
+    )
+    assert reserve_crossing <= unrecoverable_crossing, (
+        f"endurance-with-reserve crossing ({reserve_crossing} m/s) should "
+        f"bind at or before total (unrecoverable) endurance "
+        f"({unrecoverable_crossing} m/s) -- reserve is a strictly tighter "
+        f"budget than total endurance, so it can never bind later"
+    )
+    assert unrecoverable_crossing <= WIND_RATED_MAX_MPS, (
+        f"unrecoverable crossing ({unrecoverable_crossing} m/s) should sit "
+        f"AT OR BELOW the rated wind ceiling ({WIND_RATED_MAX_MPS} m/s) -- "
+        f"if it doesn't, the rated ceiling is no longer the last-listed limit"
+    )
+    assert p90_upper <= WIND_RATED_MAX_MPS, (
+        f"p90 upper bound ({p90_upper} m/s) should sit AT OR BELOW the "
+        f"rated wind ceiling ({WIND_RATED_MAX_MPS} m/s) -- the headline "
+        f"claim is that every limit sits at or below the aircraft's rating"
+    )
+
+
+def check_circle_in_square_fraction():
+    side = 20.0
+    a = side / 2.0
+
+    # Zero distance -> zero area.
+    assert circle_in_square_fraction(0.0, side) == 0.0, "d=0 should reach nothing"
+
+    # At d == half the cell side, the circle is exactly inscribed: fraction
+    # must be pi/4 (the required self-check value).
+    got_inscribed = circle_in_square_fraction(a, side)
+    assert abs(got_inscribed - math.pi / 4.0) < 1e-9, (
+        f"circle inscribed in square (d=a) should be pi/4, got {got_inscribed}"
+    )
+
+    # At d == the half-diagonal, the circle exactly covers every corner:
+    # fraction must be 1.0.
+    got_half_diag = circle_in_square_fraction(a * math.sqrt(2.0), side)
+    assert abs(got_half_diag - 1.0) < 1e-9, (
+        f"circle at half-diagonal should cover the whole square (1.0), got {got_half_diag}"
+    )
+
+    # Beyond the half-diagonal, still exactly 1.0 (whole-square regime).
+    got_beyond = circle_in_square_fraction(a * 3.0, side)
+    assert got_beyond == 1.0, f"circle far beyond the corner should be exactly 1.0, got {got_beyond}"
+
+    # The CLIPPING regime, which the three points above never exercise: a
+    # wrong segment formula still passes pi/4 and 1.0 and stays monotonic.
+    # Derived independently: (pi r^2 - 4 * segment) / side^2, with
+    # segment = 0.5 r^2 (th - sin th) and th = 2 acos(a / r).
+    r = 1.2 * a
+    th = 2.0 * math.acos(a / r)
+    seg = 0.5 * r * r * (th - math.sin(th))
+    expect_clipped = (math.pi * r * r - 4.0 * seg) / (side * side)
+    got_clipped = circle_in_square_fraction(r, side)
+    assert abs(got_clipped - expect_clipped) < 1e-12, (
+        f"clipped regime wrong: got {got_clipped}, analytic {expect_clipped}"
+    )
+
+    # Monotonic in d across all three regimes (inscribed, clipping, full).
+    ds = [0.1 * a * i for i in range(0, 40)]  # 0 .. 3.9a, crosses all regimes
+    fracs = [circle_in_square_fraction(d, side) for d in ds]
+    for i in range(1, len(fracs)):
+        assert fracs[i] >= fracs[i - 1] - 1e-12, (
+            f"fraction must be monotonic in d: {fracs[i-1]} at d={ds[i-1]} "
+            f"then {fracs[i]} at d={ds[i]}"
+        )
+
+    # Mid-clipping regime sanity: strictly between pi/4 and 1.0.
+    mid = circle_in_square_fraction(a * 1.2, side)
+    assert math.pi / 4.0 < mid < 1.0, f"mid-clipping fraction should be strictly between pi/4 and 1.0, got {mid}"
+
+
+def check_max_reachable_distance_endurance():
+    # Plugging d_max back into wind_round_trip_geometry must exactly hit
+    # the usable endurance budget -- ties the closed-form inversion here to
+    # the already-verified round-trip geometry function.
+    airspeed, headwind, endurance_min, reserve, dwell_s = 18.0, 6.0, 46.0, 0.75, CONFIG["dwell_s"]
+    d_max = max_reachable_distance_endurance_km(airspeed, headwind, endurance_min, reserve, dwell_s)
+    _, _, total_s = wind_round_trip_geometry(d_max, airspeed, headwind, dwell_s)
+    usable_s = endurance_min * 60.0 * reserve
+    assert abs(total_s - usable_s) < 1e-6, (
+        f"d_max should exactly exhaust the usable budget: total_s={total_s}, usable_s={usable_s}"
+    )
+
+    # Headwind at or above airspeed: cannot fly at all.
+    assert max_reachable_distance_endurance_km(18.0, 18.0, endurance_min, reserve, dwell_s) == 0.0
+    assert max_reachable_distance_endurance_km(18.0, 20.0, endurance_min, reserve, dwell_s) == 0.0
+
+    # More headwind never increases the reachable distance.
+    d_low = max_reachable_distance_endurance_km(18.0, 0.0, endurance_min, reserve, dwell_s)
+    d_high = max_reachable_distance_endurance_km(18.0, 10.0, endurance_min, reserve, dwell_s)
+    assert d_high < d_low, f"more headwind should shrink d_max: {d_low} (0 m/s) vs {d_high} (10 m/s)"
+
+
+def check_max_reachable_distance_response():
+    # Outbound-only leg at d_max must land exactly on the threshold.
+    airspeed, headwind, threshold_min = 18.0, 6.0, 15.0
+    d_max = max_reachable_distance_response_km(airspeed, headwind, threshold_min)
+    out_s, _, _ = wind_round_trip_geometry(d_max, airspeed, headwind, 0.0)
+    assert abs(out_s - threshold_min * 60.0) < 1e-6, (
+        f"d_max should land exactly on the response threshold: out_s={out_s}, threshold_s={threshold_min*60.0}"
+    )
+    assert max_reachable_distance_response_km(18.0, 18.0, threshold_min) == 0.0
+    assert max_reachable_distance_response_km(18.0, 20.0, threshold_min) == 0.0
+
+
+def check_reachable_area_fraction():
+    # More headwind never increases the reachable fraction, at fixed
+    # spacing, for both the endurance and response-time metrics.
+    fracs_end = [
+        reachable_area_fraction_endurance(16.0, 18.0, w) for w in REACHABLE_HEADWINDS_MPS
+    ]
+    for i in range(1, len(fracs_end)):
+        assert fracs_end[i] <= fracs_end[i - 1] + 1e-12, (
+            f"endurance-reachable fraction must not rise with headwind: {fracs_end}"
+        )
+    fracs_resp = [
+        reachable_area_fraction_response(16.0, 18.0, w) for w in REACHABLE_HEADWINDS_MPS
+    ]
+    for i in range(1, len(fracs_resp)):
+        assert fracs_resp[i] <= fracs_resp[i - 1] + 1e-12, (
+            f"response-reachable fraction must not rise with headwind: {fracs_resp}"
+        )
+
+    # A denser network (tighter spacing, smaller cells) reaches at least as
+    # much of the domain as a sparser one at the same headwind.
+    dense = reachable_area_fraction_endurance(5.0, 18.0, 8.0)
+    sparse = reachable_area_fraction_endurance(26.0, 18.0, 8.0)
+    assert dense >= sparse, f"denser spacing should reach at least as much area: dense={dense}, sparse={sparse}"
+
+    # Headwind at or above airspeed: nothing is reachable.
+    assert reachable_area_fraction_endurance(16.0, 18.0, 18.0) == 0.0
+    assert reachable_area_fraction_response(16.0, 18.0, 18.0) == 0.0
+
+    # Every fraction is a valid probability.
+    for w in REACHABLE_HEADWINDS_MPS:
+        for spacing in FRONTIER_SPACINGS_KM:
+            f = reachable_area_fraction_endurance(spacing, 18.0, w)
+            assert 0.0 <= f <= 1.0, f"fraction out of range: spacing={spacing}, w={w}, f={f}"
 
 
 def check_evaluate_config():
@@ -839,6 +1139,10 @@ def run_checks():
     check_find_crossing_headwind()
     check_combined_wind_endurance_limits()
     check_combined_wind_endurance_order()
+    check_circle_in_square_fraction()
+    check_max_reachable_distance_endurance()
+    check_max_reachable_distance_response()
+    check_reachable_area_fraction()
     check_evaluate_config()
     check_evaluate_config_ext()
     check_run_turnaround_panel()
@@ -1205,6 +1509,99 @@ def print_combined_wind_endurance_report(p90_crossings):
     )
 
 
+def print_reachable_fraction_report():
+    """Closed-form area fraction reachable within budget, by frontier
+    config x headwind -- named as the next refinement in
+    print_combined_wind_endurance_report above, built here. Two tables
+    (endurance, response-time), then the purchasable answer: cheapest
+    config that holds a target service level at each wind speed.
+    """
+    print()
+    print("=" * 78)
+    print("REACHABLE-FRACTION CURVE: fraction of domain area reachable, by")
+    print("spacing x headwind (closed-form circle-in-square, not sampled)")
+    print("=" * 78)
+    print(
+        "Every limit above uses the WORST-CASE leg -- a fire in a cell "
+        "corner. That answers 'does the network ever fail', not 'how much "
+        "of the domain is reachable right now'. This section computes the "
+        "latter exactly: for each base's square cell, the reachable area is "
+        "a circle of radius d_max clipped to the cell (pi*d^2/side^2 while "
+        "wholly inside; a clipped-segment correction once it pokes past the "
+        "edges; 1.0 once it covers every corner)."
+    )
+    configs = reachable_fraction_configs()
+    print()
+    print(f"Configs (1 drone/base), costs from sweep.cost_per_km2_yr:")
+    for c in configs:
+        print(
+            f"  nominal {c['nominal_spacing_km']:>5.1f} km -> actual "
+            f"{c['actual_spacing_km']:>6.2f} km, {c['n_bases']:>3d} bases, "
+            f"EUR {c['eur_per_km2_yr']:>7.2f} / km2 / yr"
+        )
+
+    def print_table(title, fraction_fn):
+        print()
+        print(title)
+        header = f"{'nominal_km':>10} {'EUR/km2/yr':>11} " + " ".join(
+            f"{w:>6.0f}ms" for w in REACHABLE_HEADWINDS_MPS
+        )
+        print(header)
+        for c in configs:
+            cells = " ".join(
+                f"{fraction_fn(c['nominal_spacing_km'], REACHABLE_AIRSPEED_MPS, w):>8.1%}"
+                for w in REACHABLE_HEADWINDS_MPS
+            )
+            print(
+                f"{c['nominal_spacing_km']:>10.1f} {c['eur_per_km2_yr']:>11.2f} {cells}"
+            )
+
+    print_table(
+        f"ENDURANCE-REACHABLE fraction (46 min endurance, 25% reserve, "
+        f"{REACHABLE_AIRSPEED_MPS:.0f} m/s airspeed) -- can the drone do the job safely:",
+        reachable_area_fraction_endurance,
+    )
+    print_table(
+        f"RESPONSE-REACHABLE fraction (15 min p90 threshold, "
+        f"{REACHABLE_AIRSPEED_MPS:.0f} m/s airspeed) -- can it do it fast enough:",
+        reachable_area_fraction_response,
+    )
+
+    print()
+    print(
+        "CHEAPEST CONFIG PER SERVICE LEVEL (endurance-reachable fraction -- "
+        "'can the drone do the job safely'):"
+    )
+    for level in SERVICE_LEVELS:
+        print(f"  target: {level:.0%} of domain reachable")
+        for w in REACHABLE_HEADWINDS_MPS:
+            eligible = [
+                c for c in configs
+                if reachable_area_fraction_endurance(c["nominal_spacing_km"], REACHABLE_AIRSPEED_MPS, w) >= level
+            ]
+            if eligible:
+                cheapest = min(eligible, key=lambda c: c["eur_per_km2_yr"])
+                print(
+                    f"    headwind {w:>4.1f} m/s: nominal {cheapest['nominal_spacing_km']:>5.1f} km "
+                    f"({cheapest['n_bases']:>3d} bases), EUR {cheapest['eur_per_km2_yr']:>7.2f} / km2 / yr"
+                )
+            else:
+                print(
+                    f"    headwind {w:>4.1f} m/s: NO swept config holds {level:.0%} "
+                    f"reachable at this wind"
+                )
+
+    still_air_9base = reachable_area_fraction_endurance(16.0, REACHABLE_AIRSPEED_MPS, 0.0)
+    print()
+    print(
+        f"HEADLINE: the 9-base/EUR 101/km2/yr config reaches "
+        f"{still_air_9base:.1%} of the domain in still air. Wind tolerance "
+        f"is a density purchase, not a fixed property of the aircraft -- "
+        f"the tables above are the price list."
+    )
+    return configs
+
+
 if __name__ == "__main__":
     import sys
     if "--check" in sys.argv:
@@ -1215,3 +1612,4 @@ if __name__ == "__main__":
         print_turnaround_panel_report()
         _, p90_crossings = print_wind_report()
         print_combined_wind_endurance_report(p90_crossings)
+        print_reachable_fraction_report()
