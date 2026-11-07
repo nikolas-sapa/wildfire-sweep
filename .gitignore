@@ -3,3 +3,5 @@ __pycache__/
 results.csv
 *.png
 suppression.csv
+.venv/
+research-runs/

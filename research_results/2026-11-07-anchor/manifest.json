@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "study_type": "synthetic Monte Carlo, not field validation",
+  "seasons": 200,
+  "seed": 20260811,
+  "ignitions_per_season": 307.0,
+  "false_alarm_fraction": 0.15,
+  "launch_latency_s": 60.0,
+  "legacy_config": {
+    "drone_cost": 21500.0,
+    "base_cost": 14600.0,
+    "install_cost": 12000.0,
+    "maintenance_frac": 0.25,
+    "hardware_life_yr": 3.0,
+    "opex_per_base_yr": 8000.0,
+    "ops_staff_yr": 60000.0,
+    "domain_km2": 3808.0,
+    "season_days": 120.0,
+    "cruise_mps": 20.0,
+    "dwell_s": 120.0,
+    "turnaround_s": 600.0,
+    "unserved_threshold_s": 900.0,
+    "max_unserved_share": 0.1,
+    "seasons_per_config": 200,
+    "seed": 20260811
+  },
+  "physical_defaults": {
+    "airspeed_mps": 20.0,
+    "wind_mps": [
+      0.0,
+      0.0
+    ],
+    "endurance_min": 46.0,
+    "reserve_fraction": 0.25,
+    "max_wind_mps": 12.0
+  },
+  "scenarios": [
+    [
+      "legacy",
+      20.0,
+      0.0
+    ],
+    [
+      "physical",
+      18.0,
+      0.0
+    ],
+    [
+      "physical",
+      18.0,
+      4.0
+    ],
+    [
+      "physical",
+      18.0,
+      8.0
+    ],
+    [
+      "physical",
+      18.0,
+      12.0
+    ],
+    [
+      "physical",
+      20.0,
+      0.0
+    ],
+    [
+      "physical",
+      20.0,
+      4.0
+    ],
+    [
+      "physical",
+      20.0,
+      8.0
+    ],
+    [
+      "physical",
+      20.0,
+      12.0
+    ]
+  ],
+  "python": "3.13.12",
+  "numpy": "2.2.6",
+  "git_parent_revision": "ffe930d39fe3583d31491ea1228442099720a1fa",
+  "source_sha256": {
+    "research.py": "45ddfd1837602061adc2914b575787498921a276110c6cbee33d312b38fa5301",
+    "sweep.py": "88b6fc6f35b068c813a19c800d608cea73e4bbacdae5bb8fa84074c4d2700d5e"
+  },
+  "alerts_sha256": "9c68fdd4def9c4306ab64e60690dfde842b2214d27cb2c0266efebc7b5c013bd",
+  "metric": "event-weighted alert-to-arrival; all real alerts, including rejection",
+  "quantile": "pooled nearest rank; blank p90 with p90_unreachable=True means infinity",
+  "interval": "1000 season-cluster percentile bootstrap draws, 95%; Monte Carlo error only",
+  "assumptions": [
+    "Uniform locations/times, Poisson ignitions; no terrain, obstacles or fire growth.",
+    "Wind vector blows toward positive x in km-coordinate frame; constant throughout each season.",
+    "Track-holding constant airspeed, flat 2D geometry; not a power/drag or gust model.",
+    "Airborne time includes outbound, dwell and return; launch and turnaround use no airborne budget.",
+    "Full usable battery after each turnaround; no battery ageing or temperature derating.",
+    "Weather/battery-infeasible alerts rejected immediately, no future weather retry.",
+    "External alerts already exist; upstream detection latency and missed detections excluded.",
+    "Legacy costs retained, including unbounded fleet supervision and proxy operating costs.",
+    "Intervals exclude model, cost and environmental uncertainty; scenarios are not weather probabilities.",
+    "Nearest-rank pooled quantiles differ from legacy mean-of-season interpolated quantiles."
+  ]
+}

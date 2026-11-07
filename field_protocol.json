@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "status": "proposed research protocol, not flight authorization or demonstrated performance",
+  "purpose": "Measure the missing links between externally triggered alerts, thermal confirmation and safe return. Keep recorded-video detection separate from aircraft response experiments.",
+  "non_goals": [
+    "No autonomous fire dispatch or aircraft control from this repository.",
+    "No intentionally ignited fires, suppression drops or public emergency-response deployment.",
+    "No BVLOS operation until a qualified operator obtains applicable authorization.",
+    "No claim that simulator endurance fractions equal measured battery energy."
+  ],
+  "preconditions": [
+    "Named qualified operator and site owner approve a site-specific risk assessment, flight limits and abort procedure.",
+    "Operator verifies current local airspace, environmental, privacy, insurance and aviation requirements.",
+    "Begin with ground replay and then authorized VLOS flights, not a BVLOS fleet demonstration.",
+    "Use existing lawfully captured burns or professionally managed events only with organizer permission; do not create burns for this project.",
+    "Record aircraft, sensor, firmware, batteries, camera settings and clock synchronization before collection.",
+    "Treat vendor maximum endurance and wind ratings as upper limits, never routine planning targets."
+  ],
+  "stages": [
+    {
+      "name": "recorded_data_baseline",
+      "minimum_collection_target": {
+        "independent_fire_recordings": 20,
+        "independent_no_fire_recordings": 20,
+        "sites": 3,
+        "capture_dates": 2,
+        "negative_video_hours": 2
+      },
+      "split_unit": "Entire recording/event and site, not individual frames. Keep adjacent clips from one burn in one split.",
+      "annotations": [
+        "Sample-index fire labels for the existing baseline evaluator, independently reviewed.",
+        "Event onset and end, visible flame versus smoke-only, occlusion, altitude and approximate target range.",
+        "Source/license, recording group, site/date, sensor modality and train/validation/test designation."
+      ],
+      "proposed_research_targets_not_results": {
+        "event_recall_min": 0.9,
+        "false_alarm_episodes_per_negative_hour_max": 1.0,
+        "event_detection_delay_p90_s_max": 10.0
+      },
+      "analysis_rules": [
+        "Freeze thresholds on validation recordings before examining held-out test recordings.",
+        "Report raw event counts, exposure hours and uncertainty clustered by recording.",
+        "Report flame-visible and smoke-only cases separately; the RGB baseline does not detect smoke.",
+        "Define an alarm episode as a maximal contiguous run of sampled alarms; never substitute positive-frame counts for episodes.",
+        "Current software reports frame metrics only. Event matching and episode evaluation are not yet implemented.",
+        "Failure to meet a target is a research finding, not permission to retune on the test set."
+      ]
+    },
+    {
+      "name": "authorized_vlos_flight_measurements",
+      "minimum_collection_target": {
+        "repeat_missions_per_approved_condition": 10,
+        "distinct_batteries": 2,
+        "launch_latency_measurements": 20
+      },
+      "conditions": [
+        "Operator-approved short paths, progressively extended only after measured safe return.",
+        "Log outbound, return and crosswind tracks separately; do not deliberately seek high-wind conditions.",
+        "Record steady wind and gusts at available sites/altitudes, airspeed, ground speed and actual path length.",
+        "Ground target/sensor exercise first; thermal confirmation at a real fire only under separate event authorization."
+      ],
+      "required_measurements": [
+        "Alert receipt, operator decision, launch, arrival, confirmed observation, return and ready-again timestamps.",
+        "Battery start/end percent, measured energy where available, temperature, health and reserve at landing.",
+        "GPS/altitude, trajectory, communications interruptions, gusts, aircraft health and aborts.",
+        "External first-alert latency and missed alerts, when ground-truth ignition timing exists."
+      ],
+      "proposed_acceptance_criteria": [
+        "100% of flown missions return within the operator-approved battery and weather envelope.",
+        "0 unresolved telemetry/clock gaps on missions included in model calibration.",
+        "Report prediction errors for outbound time, return time and ready-again time individually, not only total flight time.",
+        "Record all aborts and rejected missions in denominators. Never discard them to improve response statistics."
+      ],
+      "stop_conditions": [
+        "Any required authorization, observer, communication link or safe landing option unavailable.",
+        "Wind/gust, visibility, reserve, battery temperature or aircraft-health condition reaches the operator's approved abort boundary.",
+        "Unexpected persons, aircraft, fire behavior or other hazards enter the operating area."
+      ]
+    },
+    {
+      "name": "calibrated_network_study",
+      "entry_gate": "Complete prior stages and lock measured inputs with provenance; flight authorization alone is insufficient.",
+      "deliverables": [
+        "Replace proxy launch/turnaround/endurance and operating costs with measured distributions or quotes.",
+        "Use historical local wind, terrain, ignition and upstream alert data with documented spatial/temporal coverage.",
+        "Compare external-alert-only and external-alert-plus-drone workflows on confirmation value, missed incidents and cost.",
+        "Publish sensitivity and negative results, clearly separated from field measurements and regulatory approvals."
+      ]
+    }
+  ],
+  "dataset_candidates": [
+    {
+      "name": "FLAME 3",
+      "paper": "https://arxiv.org/abs/2412.02831",
+      "dataport": "https://ieee-dataport.org/open-access/flame-3-radiometric-thermal-uav-imagery-wildfire-management",
+      "caution": "Verify download terms before acquisition; single-burn imagery cannot establish cross-site generalization."
+    },
+    {
+      "name": "FLAME original",
+      "repository": "https://github.com/AlirezaShamsoshoara/Fire-Detection-UAV-Aerial-Image-Classification-Segmentation-UnmannedAerialVehicle",
+      "dataport": "https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs",
+      "caution": "Repository README restricts academic/non-commercial use while LICENSE reports GPL-2.0; verify dataset terms independently. Demo animations contain processed outputs, not independent ground-truth validation."
+    }
+  ]
+}

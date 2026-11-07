@@ -1,0 +1,12 @@
+{
+  "purpose": "I/O smoke test on processed research visualization; not detector validation",
+  "source_repository": "https://github.com/AlirezaShamsoshoara/Fire-Detection-UAV-Aerial-Image-Classification-Segmentation-UnmannedAerialVehicle",
+  "source_revision": "40e950b8eea89145f5dd1df07b7ba921434e3fcc",
+  "source_path": "Output/flame_compressed.gif",
+  "source_blob_sha1": "800cf85acc5e93fc01fcbd9f5faf7457adbb7c34",
+  "input_sha256": "c883bc13d348a2f5db1322fd1eb67e12f10be8078f557d84064b543d2dfde4f0",
+  "media_redistributed": false,
+  "license_note": "README academic/non-commercial statement and GPL-2.0 repository LICENSE conflict; no rights inference for dataset files",
+  "ground_truth_available": false,
+  "claims": "Confirms local decode and baseline inference only. No accuracy, sensitivity, specificity or generalization estimate."
+}

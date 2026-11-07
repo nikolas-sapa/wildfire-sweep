@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "baseline": "exploratory RGB color + consecutive-sample persistence",
+  "config": {
+    "min_fraction": 0.002,
+    "consecutive_frames": 3,
+    "red_min": 150,
+    "green_min": 60,
+    "red_green_gap": 20,
+    "red_blue_gap": 60
+  },
+  "input_name": "flame-original-demo-decoded.gif",
+  "input_sha256": "c883bc13d348a2f5db1322fd1eb67e12f10be8078f557d84064b543d2dfde4f0",
+  "recording_id": "flame-processed-demo",
+  "sample_fps": 1.0,
+  "max_frames": 60,
+  "decoded_frames": 40,
+  "geometry": "640x360 resampled RGB; aspect ratio normalized",
+  "numpy": "2.2.6",
+  "source_sha256": {
+    "detection.py": "e7750b3db4c378b8dc1b918e4008bcf27771d6dbd96141370e6a99bfd4eca49d",
+    "video_io.py": "8552065467bfa475aca6290826c97e98157d91d150ea4d042c99a779fd28c007"
+  },
+  "labels_sha256": null,
+  "metrics": null,
+  "limitations": [
+    "Thresholds are declared engineering assumptions, not fitted or validated on drone data.",
+    "Pixel fraction is not probability/confidence. Orange objects and sunlight can trigger it.",
+    "Smoke, obscured flames, thermal imagery, tiny distant fires and camera motion are not modelled.",
+    "Persistence delays alarms and does not track spatially consistent fire regions.",
+    "No labels means no accuracy claim. One recording cannot establish generalisation.",
+    "Sample times use the resampled video timeline, not source sensor capture timestamps.",
+    "No autonomous dispatch, camera control, network service or flight integration."
+  ]
+}
