@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" role="img" aria-labelledby="title desc">
+  <title id="title">Frozen anchor timely-share results under fixed wind</title>
+  <desc id="desc">At 18 meters per second airspeed, within-15-minute shares are 99.76 percent for 9 bases at zero wind, 91.08 percent at 8 meters per second wind, 60.11 percent at 12 meters per second wind, and 97.51 percent for 25 bases at 12 meters per second wind. These are synthetic fixed-wind scenarios, not field validation.</desc>
+  <rect width="1120" height="560" fill="#fff"/>
+  <text x="48" y="52" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="30" font-weight="700">Captured anchor · alert-to-arrival</text>
+  <text x="48" y="82" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="17">18 m/s airspeed · 25% reserve · fixed wind</text>
+
+  <g fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="15">
+    <text x="413" y="117" text-anchor="middle">0%</text>
+    <text x="517" y="117" text-anchor="middle">20%</text>
+    <text x="621" y="117" text-anchor="middle">40%</text>
+    <text x="725" y="117" text-anchor="middle">60%</text>
+    <text x="829" y="117" text-anchor="middle">80%</text>
+    <text x="933" y="117" text-anchor="middle">100%</text>
+  </g>
+  <g stroke="#e2e8f0" stroke-width="1">
+    <path d="M413 130v338M517 130v338M621 130v338M725 130v338M829 130v338M933 130v338"/>
+  </g>
+
+  <g font-family="Geist, system-ui, sans-serif">
+    <text x="48" y="166" fill="#14243a" font-size="18" font-weight="650">9 bases · 1 drone/base</text>
+    <text x="48" y="192" fill="#64748b" font-size="16">0 m/s wind · 100.98 EUR/km²/yr</text>
+    <rect x="413" y="148" width="519" height="30" fill="#006bff"/>
+    <text x="950" y="170" fill="#14243a" font-size="21" font-weight="700">99.76%</text>
+
+    <text x="48" y="255" fill="#14243a" font-size="18" font-weight="650">9 bases · 1 drone/base</text>
+    <text x="48" y="281" fill="#64748b" font-size="16">8 m/s wind · 100.98 EUR/km²/yr</text>
+    <rect x="413" y="237" width="474" height="30" fill="#006bff"/>
+    <text x="905" y="259" fill="#14243a" font-size="21" font-weight="700">91.08%</text>
+
+    <text x="48" y="344" fill="#14243a" font-size="18" font-weight="650">9 bases · 1 drone/base</text>
+    <text x="48" y="370" fill="#64748b" font-size="16">12 m/s wind · 100.98 EUR/km²/yr</text>
+    <rect x="413" y="326" width="313" height="30" fill="#006bff"/>
+    <text x="744" y="348" fill="#14243a" font-size="21" font-weight="700">60.11%</text>
+
+    <text x="48" y="433" fill="#14243a" font-size="18" font-weight="650">25 bases · 1 drone/base</text>
+    <text x="48" y="459" fill="#64748b" font-size="16">12 m/s wind · 252.48 EUR/km²/yr</text>
+    <rect x="413" y="415" width="507" height="30" fill="#1e3a5f"/>
+    <text x="938" y="437" fill="#14243a" font-size="21" font-weight="700">97.51%</text>
+  </g>
+
+  <path d="M48 486h1024" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="48" y="515" fill="#475569" font-family="Geist, system-ui, sans-serif" font-size="15">Source: research_results/2026-11-07-anchor/summary.csv</text>
+  <text x="48" y="542" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="16" font-weight="650">Synthetic fixed-wind scenarios. Not field validation.</text>
+</svg>

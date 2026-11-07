@@ -1,5 +1,7 @@
 # Flight physics and thermal detection: does the airframe support the model?
 
+> Historical analysis (August/September 2026). Retained for provenance; assumptions and numerical framing may predate the current research track. Start with the current [research overview](../README.md) and [captured anchor](../research_results/2026-11-07-anchor/summary.csv).
+
 The cost model prices a DJI Matrice 4TD in a DJI Dock 3 across a spacing/drone
 sweep, but nothing in `sweep.py` or `sensitivity.py` checks whether that
 aircraft can actually fly the resulting missions, or what its sensor can see.

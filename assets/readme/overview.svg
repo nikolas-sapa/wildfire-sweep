@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 340" role="img" aria-labelledby="title desc">
+  <title id="title">Wildfire Sweep research overview</title>
+  <desc id="desc">Editorial cover for a reproducible UAV wildfire verification research baseline. An abstract network schematic is marked as conceptual and not deployed.</desc>
+  <rect width="1120" height="340" fill="#f8fafc"/>
+  <path d="M664 24v292" stroke="#dbe3ed" stroke-width="1"/>
+  <text x="62" y="58" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="16" font-weight="700" letter-spacing="2.2">UAV WILDFIRE VERIFICATION / RESEARCH</text>
+  <text x="62" y="137" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="64" font-weight="700" letter-spacing="-2.5">Wildfire sweep</text>
+  <text x="64" y="185" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="25" font-weight="500">How much drone coverage survives the wind?</text>
+  <text x="64" y="226" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="18">A reproducible baseline for alert-to-arrival research.</text>
+  <path d="M64 267h544" stroke="#dbe3ed" stroke-width="1"/>
+  <text x="64" y="301" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15" font-weight="650" letter-spacing="1.1">SIMULATION</text>
+  <circle cx="187" cy="296" r="3" fill="#006bff"/>
+  <text x="205" y="301" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15" font-weight="650" letter-spacing="1.1">RECORDED VIDEO</text>
+  <circle cx="375" cy="296" r="3" fill="#006bff"/>
+  <text x="393" y="301" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15" font-weight="650" letter-spacing="1.1">FIELD PROTOCOL</text>
+  <text x="707" y="56" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="1.6">NETWORK SCHEMATIC · NOT DEPLOYED</text>
+  <path d="M742 132 864 99 970 156 1055 91M742 132 818 239 970 156 1040 246" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 8"/>
+  <path d="M818 239 884 186 970 156" fill="none" stroke="#006bff" stroke-width="2.5"/>
+  <circle cx="742" cy="132" r="13" fill="#fff" stroke="#006bff" stroke-width="3"/>
+  <circle cx="864" cy="99" r="13" fill="#fff" stroke="#006bff" stroke-width="3"/>
+  <circle cx="970" cy="156" r="16" fill="#006bff"/>
+  <circle cx="818" cy="239" r="13" fill="#fff" stroke="#006bff" stroke-width="3"/>
+  <circle cx="1055" cy="91" r="13" fill="#fff" stroke="#006bff" stroke-width="3"/>
+  <circle cx="1040" cy="246" r="13" fill="#fff" stroke="#006bff" stroke-width="3"/>
+  <circle cx="970" cy="156" r="4" fill="#fff"/>
+  <text x="707" y="293" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="15">Conceptual coverage only · no live fleet</text>
+</svg>

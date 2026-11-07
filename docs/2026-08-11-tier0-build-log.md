@@ -1,5 +1,7 @@
 # SDD ledger — plan: docs/superpowers/plans/2026-08-11-tier0-parameter-sweep.md
 
+> Historical analysis (August/September 2026). Retained for provenance; assumptions and numerical framing may predate the current research track. Start with the current [research overview](../README.md) and [captured anchor](../research_results/2026-11-07-anchor/summary.csv).
+
 Branch: tier0-sweep (created off main at eeb4151 lineage; plan commit 8526b3b)
 Env: Python 3.14.5, numpy 2.4.4, matplotlib 3.10.8
 Governance: implementers EDIT ONLY. The orchestrator holds the commit boundary.

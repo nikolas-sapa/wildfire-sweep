@@ -1,5 +1,7 @@
 # Research pass 3 — cost model grounding
 
+> Historical analysis (August/September 2026). Retained for provenance; assumptions and numerical framing may predate the current research track. Start with the current [research overview](../README.md) and [captured anchor](../research_results/2026-11-07-anchor/summary.csv).
+
 Scope: replace the placeholder cost figures in `sweep.py`'s CONFIG with
 sourced numbers, or explicit assumptions where nothing citable exists. Four
 areas: unit economics, startup graveyard, Greek procurement/BVLOS, ignition
