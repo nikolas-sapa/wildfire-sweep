@@ -13,6 +13,7 @@ A reproducible research baseline for studying how docked UAV networks verify ext
 - [System architecture](#system-architecture)
 - [Captured anchor](#captured-anchor)
 - [Assumption stress study](#assumption-stress-study)
+- [Factorial extension](#factorial-extension)
 - [Reproduce](#reproduce)
 - [Recorded-video baseline](#recorded-video-baseline)
 - [Repository map](#repository-map)
@@ -101,6 +102,16 @@ Combined stress assumes 34.5 min endurance, 35% reserve and 180 s launch latency
 
 Density still helps, but the result depends strongly on operating assumptions. At 12 m/s under combined stress, pooled p90 is unreachable/infinite for both layouts. Read the [methods, paired intervals, limitations and resume-safe project description](docs/2026-11-08-robustness-study.md). Intervals describe Monte Carlo sampling error only.
 
+## Factorial extension
+
+The [full-factorial extension](docs/2026-11-08-factorial-study.md) completes all eight combinations of endurance, launch-latency and reserve stress in each of the four layout/wind contexts. It reuses the 20 frozen scenarios and simulates only the 12 missing pairwise-stress combinations, giving 32 cells and 28 main/interaction contrasts. It uses the same source alerts, not an independent replication.
+
+![Captured full-factorial timely-arrival shares across all eight stress combinations, with reused and newly simulated cells marked separately. Synthetic simulation, not field validation.](research_results/2026-11-08-factorial/factorial.png)
+
+At 25 bases and fixed 12 m/s wind, the endurance/reserve interaction is **-5.56 percentage points** (pointwise 95% Monte Carlo interval: -5.83 to -5.30), averaged over launch settings. Constraints do not combine additively, and the interaction changes with context.
+
+The [protocol](factorial_protocol.json) defines the estimator before execution. Main contrasts average over the other factors; pair terms are full differences-in-differences, not half-scaled DOE effects. Pointwise Monte Carlo intervals do not establish field performance or cover input/model uncertainty. See the [research roadmap](docs/research-roadmap.md) for evidence still needed.
+
 ## Reproduce
 
 ### Inspect the frozen capture
@@ -136,6 +147,15 @@ The renderer reads existing values only; it does not import the research or hist
 ```
 
 Both commands require fresh output paths. `make verify` runs the full local tests and historical self-checks.
+
+### Complete the factorial design
+
+```sh
+.venv/bin/python factorial.py --output research-runs/my-factorial
+.venv/bin/python render_factorial.py research-runs/my-factorial/summary.csv --output research-runs/my-factorial/factorial.png
+```
+
+The default source is the frozen `research_results/2026-11-08-robustness` capture. Retain it for complete replay. Both commands require fresh output paths.
 
 ### Historical self-checks
 
@@ -173,8 +193,10 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 | --- | --- |
 | [`research.py`](research.py) | Current synthetic wind-and-battery dispatch study. |
 | [`robustness.py`](robustness.py) and [`robustness_protocol.json`](robustness_protocol.json) | Paired assumption-stress study and its fixed protocol. |
+| [`factorial.py`](factorial.py) and [`factorial_protocol.json`](factorial_protocol.json) | Full-factorial extension and its fixed estimator protocol. |
 | [`render_study.py`](render_study.py) | Renderer for an existing captured summary. |
 | [`render_robustness.py`](render_robustness.py) | Capture-only renderer for the robustness summary. |
+| [`render_factorial.py`](render_factorial.py) | Capture-only renderer for the full-factorial summary. |
 | [`video_io.py`](video_io.py) and [`detection.py`](detection.py) | Local recorded-video adapter and exploratory RGB baseline. |
 | [`sweep.py`](sweep.py), [`suppression.py`](suppression.py), [`sensitivity.py`](sensitivity.py) | Historical analyses and their self-checks. |
 | [`test_research.py`](test_research.py), [`test_robustness.py`](test_robustness.py), [`test_robustness_results.py`](test_robustness_results.py), [`test_render_robustness.py`](test_render_robustness.py), and other `test_*.py` files | Tests for model mechanics, paired stress analysis, renderer validation, I/O, and frozen capture integrity. |
@@ -183,6 +205,7 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 | [`results.csv`](results.csv), [`suppression.csv`](suppression.csv), [`pareto.png`](pareto.png), [`suppression.png`](suppression.png) | Historical outputs; preserved as provenance. |
 | [`research_results/2026-11-07-anchor/`](research_results/2026-11-07-anchor/) | Published frozen anchor evidence. |
 | [`research_results/2026-11-08-robustness/summary.csv`](research_results/2026-11-08-robustness/summary.csv) | Published frozen assumption-stress capture and rendered chart. |
+| [`research_results/2026-11-08-factorial/`](research_results/2026-11-08-factorial/) | Full-factorial extension capture and rendered chart. |
 | `research-runs/` | Ignored local output area for new, non-overwriting runs. |
 | [`docs/`](docs/) | Historical build and research notes. |
 

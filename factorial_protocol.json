@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "study_type": "Synthetic full-factorial extension of the frozen assumption stress study",
+  "research_question": "How do endurance, launch latency and reserve stresses interact within the existing dispatch model?",
+  "source_capture": "research_results/2026-11-08-robustness",
+  "factor_order": ["endurance", "launch", "reserve"],
+  "factors": {
+    "endurance": {"reference": 46.0, "stressed": 34.5, "unit": "min"},
+    "launch": {"reference": 60.0, "stressed": 180.0, "unit": "s"},
+    "reserve": {"reference": 0.25, "stressed": 0.35, "unit": "fraction"}
+  },
+  "reused_conditions": {
+    "000": "reference",
+    "100": "shorter_endurance",
+    "010": "slower_launch",
+    "001": "larger_reserve",
+    "111": "combined"
+  },
+  "new_conditions": {
+    "110": "endurance_launch",
+    "101": "endurance_reserve",
+    "011": "launch_reserve"
+  },
+  "n_bases": [9, 25],
+  "wind_east_mps": [8.0, 12.0],
+  "airspeed_mps": 18.0,
+  "timely_threshold_s": 900.0,
+  "bootstrap_replicates": 1000,
+  "bootstrap_quantiles": [0.025, 0.975],
+  "bootstrap_seed": "[1, source_seed]",
+  "estimand": "For each nonempty factor subset, average its signed finite difference over all levels of the remaining factors; event-weight real alerts, including rejected missions",
+  "coefficient": "(-1) ** (len(subset) - sum(selected_levels)) / 2 ** (3 - len(subset))",
+  "units": "percentage points; two-factor terms are full differences-in-differences, not half-scaled orthogonal factorial effects",
+  "uncertainty": "1000 paired whole-season percentile bootstrap draws; 95% pointwise Monte Carlo intervals only, not simultaneous or input/model uncertainty",
+  "non_goals": [
+    "No regeneration of alerts or rerunning the 20 source scenarios",
+    "No new flight model, dispatch policy, observed weather or measured aircraft assumptions",
+    "No independent replication, global sensitivity analysis, optimization or field validation",
+    "No detector accuracy, autonomous flight or operational authorization claim"
+  ]
+}

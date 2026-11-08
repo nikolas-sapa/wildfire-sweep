@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "protocol": {
+    "schema_version": 1,
+    "study_type": "Synthetic full-factorial extension of the frozen assumption stress study",
+    "research_question": "How do endurance, launch latency and reserve stresses interact within the existing dispatch model?",
+    "source_capture": "research_results/2026-11-08-robustness",
+    "factor_order": [
+      "endurance",
+      "launch",
+      "reserve"
+    ],
+    "factors": {
+      "endurance": {
+        "reference": 46.0,
+        "stressed": 34.5,
+        "unit": "min"
+      },
+      "launch": {
+        "reference": 60.0,
+        "stressed": 180.0,
+        "unit": "s"
+      },
+      "reserve": {
+        "reference": 0.25,
+        "stressed": 0.35,
+        "unit": "fraction"
+      }
+    },
+    "reused_conditions": {
+      "000": "reference",
+      "100": "shorter_endurance",
+      "010": "slower_launch",
+      "001": "larger_reserve",
+      "111": "combined"
+    },
+    "new_conditions": {
+      "110": "endurance_launch",
+      "101": "endurance_reserve",
+      "011": "launch_reserve"
+    },
+    "n_bases": [
+      9,
+      25
+    ],
+    "wind_east_mps": [
+      8.0,
+      12.0
+    ],
+    "airspeed_mps": 18.0,
+    "timely_threshold_s": 900.0,
+    "bootstrap_replicates": 1000,
+    "bootstrap_quantiles": [
+      0.025,
+      0.975
+    ],
+    "bootstrap_seed": "[1, source_seed]",
+    "estimand": "For each nonempty factor subset, average its signed finite difference over all levels of the remaining factors; event-weight real alerts, including rejected missions",
+    "coefficient": "(-1) ** (len(subset) - sum(selected_levels)) / 2 ** (3 - len(subset))",
+    "units": "percentage points; two-factor terms are full differences-in-differences, not half-scaled orthogonal factorial effects",
+    "uncertainty": "1000 paired whole-season percentile bootstrap draws; 95% pointwise Monte Carlo intervals only, not simultaneous or input/model uncertainty",
+    "non_goals": [
+      "No regeneration of alerts or rerunning the 20 source scenarios",
+      "No new flight model, dispatch policy, observed weather or measured aircraft assumptions",
+      "No independent replication, global sensitivity analysis, optimization or field validation",
+      "No detector accuracy, autonomous flight or operational authorization claim"
+    ]
+  },
+  "legacy_config": {
+    "drone_cost": 21500.0,
+    "base_cost": 14600.0,
+    "install_cost": 12000.0,
+    "maintenance_frac": 0.25,
+    "hardware_life_yr": 3.0,
+    "opex_per_base_yr": 8000.0,
+    "ops_staff_yr": 60000.0,
+    "domain_km2": 3808.0,
+    "season_days": 120.0,
+    "cruise_mps": 20.0,
+    "dwell_s": 120.0,
+    "turnaround_s": 600.0,
+    "unserved_threshold_s": 900.0,
+    "max_unserved_share": 0.1,
+    "seasons_per_config": 200,
+    "seed": 20260811
+  },
+  "seasons": 200,
+  "seed": 20261108,
+  "real_alerts_per_scenario": 61084,
+  "source_capture": "research_results/2026-11-08-robustness",
+  "source_manifest_sha256": "981bc8c83e61e9e0e6d75b717b998947229d5f637614d2a6ab3005aa2f88c40f",
+  "source_artifact_sha256": {
+    "alerts.npz": "7727683610cb75b08a9cc5178e7323f27ce0817b984f6dabb78bd0bbb9ffa029",
+    "responses.npz": "86ee3e724894dea11b94bf33d5610ab4ad3ea7a8f8aea2a1ac5efe6cc0692e86",
+    "summary.csv": "9720e71fab0f784ac2c274d09df25d45fb9602da550dbf7cab8726409449f295",
+    "seasons.csv": "2ea5f7e9b5b8e968777ef1c5eec6991d8ee605b370ec01c8554689dea67fcbd5",
+    "comparisons.csv": "5765d68d23d56958b0dc9293e131ca48915c8400e3c9f056646c506da4171b66"
+  },
+  "reused_scenarios": {
+    "b9-w8-e0-l0-r0": "b9-w8-reference",
+    "b9-w8-e0-l0-r1": "b9-w8-larger_reserve",
+    "b9-w8-e0-l1-r0": "b9-w8-slower_launch",
+    "b9-w8-e1-l0-r0": "b9-w8-shorter_endurance",
+    "b9-w8-e1-l1-r1": "b9-w8-combined",
+    "b9-w12-e0-l0-r0": "b9-w12-reference",
+    "b9-w12-e0-l0-r1": "b9-w12-larger_reserve",
+    "b9-w12-e0-l1-r0": "b9-w12-slower_launch",
+    "b9-w12-e1-l0-r0": "b9-w12-shorter_endurance",
+    "b9-w12-e1-l1-r1": "b9-w12-combined",
+    "b25-w8-e0-l0-r0": "b25-w8-reference",
+    "b25-w8-e0-l0-r1": "b25-w8-larger_reserve",
+    "b25-w8-e0-l1-r0": "b25-w8-slower_launch",
+    "b25-w8-e1-l0-r0": "b25-w8-shorter_endurance",
+    "b25-w8-e1-l1-r1": "b25-w8-combined",
+    "b25-w12-e0-l0-r0": "b25-w12-reference",
+    "b25-w12-e0-l0-r1": "b25-w12-larger_reserve",
+    "b25-w12-e0-l1-r0": "b25-w12-slower_launch",
+    "b25-w12-e1-l0-r0": "b25-w12-shorter_endurance",
+    "b25-w12-e1-l1-r1": "b25-w12-combined"
+  },
+  "simulated_scenarios": [
+    "b9-w8-e0-l1-r1",
+    "b9-w8-e1-l0-r1",
+    "b9-w8-e1-l1-r0",
+    "b9-w12-e0-l1-r1",
+    "b9-w12-e1-l0-r1",
+    "b9-w12-e1-l1-r0",
+    "b25-w8-e0-l1-r1",
+    "b25-w8-e1-l0-r1",
+    "b25-w8-e1-l1-r0",
+    "b25-w12-e0-l1-r1",
+    "b25-w12-e1-l0-r1",
+    "b25-w12-e1-l1-r0"
+  ],
+  "python": "3.13.12",
+  "numpy": "2.2.6",
+  "git_parent_revision": "1053c2862a0522417d2a2c89db15f95444d55ba5",
+  "source_sha256": {
+    "factorial.py": "968ca6ae4bee9312c675e5e2157026cd0bb34cd5ced33fa985a03d3693c35c98",
+    "factorial_protocol.json": "9d890a7f0bfc800abadeb9d01b1ef5bf49e97becb2ca768de6bf42f038e9a1ac",
+    "robustness.py": "f45d32c63471cf324f5e40c6b47ae288b306e5dbdc8c77278b6950d117d13478",
+    "robustness_protocol.json": "014fa4b5f102febedf04f4506bfb9b7ff9049d25ef49b5d2ee005419e0989d2e",
+    "research.py": "45ddfd1837602061adc2914b575787498921a276110c6cbee33d312b38fa5301",
+    "sweep.py": "88b6fc6f35b068c813a19c800d608cea73e4bbacdae5bb8fa84074c4d2700d5e",
+    "requirements.txt": "235a633bd55c449510d4e59f0af96504fbde99cd953a11ff2d18812eb72c5ab6"
+  },
+  "artifact_sha256": {
+    "summary.csv": "519e33e7eb80f03f15daff824bb45c8be2a5ada9cb6d069c3bf0f9a58b0880ba",
+    "seasons.csv": "8b96f5d0b7a4b621f5ed0a416f9ce229b2451709ef2144d2a3d431c9556a292d",
+    "effects.csv": "fd03a32d54135a7efb51bdcd229629ccf9cabc03b5348a61caa09c25b48039ee",
+    "new_responses.npz": "71e19abdeb20362807335d90e610902caaf30239f560f1b239b021423ae43583"
+  },
+  "interpretation": [
+    "20 cells are copied from the source capture; only 12 missing cells are dispatched.",
+    "Same 200-season source inputs in the published study, not independent replication.",
+    "Main contrasts average across other factor levels; pair terms are full differences-in-differences.",
+    "Pointwise paired season-bootstrap intervals cover Monte Carlo sampling, not input/model uncertainty.",
+    "Hypothetical fixed-wind assumptions and proxy costs, not measured performance or operating advice.",
+    "All rejected real alerts remain in denominators; false alerts still consume fleet time.",
+    "Retain the referenced source capture; old alert/response arrays are not duplicated here."
+  ]
+}
