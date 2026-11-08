@@ -34,6 +34,7 @@ The project studies a docked fleet's response after an external alert arrives. I
 | --- | --- |
 | Synthetic wind-aware dispatch with fleet contention and battery-reserve constraints. | Live external-alert integration or upstream detector latency. |
 | A local RGB color/persistence baseline for recorded video. | Smoke detection, thermal inference, or a calibrated fire probability. |
+| Sampled event-episode evaluation that binds human labels to baseline predictions on a preassigned test split. | Independently labelled recordings, recording-clustered uncertainty, or detector accuracy evidence. |
 | A summary renderer that reads captured CSV values and refuses existing output paths. | An autonomous thermal confirmation-and-mapping pipeline. |
 | Captured manifests, scenario summaries, season rows, and a proposed field protocol. | Live aircraft control, deployment, or flight authorization. |
 
@@ -187,6 +188,26 @@ This is an assumed-threshold RGB color/persistence baseline, not smoke detection
 
 The processed FLAME demo is an I/O smoke test only. Its published [manifest](research_results/flame-demo/manifest.json), [predictions](research_results/flame-demo/predictions.csv), and [provenance](research_results/flame-demo/provenance.json) contain no labels or accuracy evidence. Do not redistribute the footage.
 
+### Event-episode evaluation
+
+![Conceptual recorded-video evaluation workflow: lawfully held local video, preassigned split, blinded blank label packet, human adjudication, separate baseline capture, and a hash- and time-bound event report. The report covers sampled visible-fire episodes, not detector accuracy or incident recall.](assets/readme/video-workflow.svg)
+
+The additive [`event_protocol.json`](event_protocol.json) workflow evaluates sampled visible-fire episodes on one fully labelled test recording. The split must be assigned before annotation; only a `test` packet may be evaluated.
+
+```sh
+.venv/bin/python annotation_packet.py LOCAL_VIDEO --recording-id event-001 --split test --sample-fps 1 --max-frames 600 --output research-runs/my-annotation
+```
+
+The packet is blinded: contact sheets plus a `labels.csv` with every `fire` cell blank, and no scores or predictions. A human reviewer completes a separate copy of `labels.csv`; the original packet is retained. There is no automated labelling and no fabricated human labels. Blank or uncertain cells fail evaluation rather than being excluded.
+
+```sh
+.venv/bin/python detection.py LOCAL_VIDEO --output research-runs/my-predictions --recording-id event-001 --sample-fps 1 --max-frames 600
+
+.venv/bin/python event_evaluation.py --predictions research-runs/my-predictions --packet research-runs/my-annotation --labels COMPLETED_LABELS.csv --annotator-id reviewer-01 --output research-runs/my-events
+```
+
+Each command requires a fresh output path and captures provenance (input, artifact and source hashes; sampled times). The evaluator reports episode counts, recall, alarm precision, false onsets per non-fire exposure hour, detected-onset delays and censor flags; zero denominators report null. It emits no confidence intervals, pass/fail verdict or incident-level recall. Metric semantics and limits are in the [video-evaluation quickstart](docs/2026-11-08-video-evaluation.md).
+
 ## Repository map
 
 | Path | Role |
@@ -198,6 +219,7 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 | [`render_robustness.py`](render_robustness.py) | Capture-only renderer for the robustness summary. |
 | [`render_factorial.py`](render_factorial.py) | Capture-only renderer for the full-factorial summary. |
 | [`video_io.py`](video_io.py) and [`detection.py`](detection.py) | Local recorded-video adapter and exploratory RGB baseline. |
+| [`annotation_packet.py`](annotation_packet.py), [`event_evaluation.py`](event_evaluation.py) and [`event_protocol.json`](event_protocol.json) | Blinded annotation packets, sampled event-episode evaluation and the fixed protocol. |
 | [`sweep.py`](sweep.py), [`suppression.py`](suppression.py), [`sensitivity.py`](sensitivity.py) | Historical analyses and their self-checks. |
 | [`test_research.py`](test_research.py), [`test_robustness.py`](test_robustness.py), [`test_robustness_results.py`](test_robustness_results.py), [`test_render_robustness.py`](test_render_robustness.py), and other `test_*.py` files | Tests for model mechanics, paired stress analysis, renderer validation, I/O, and frozen capture integrity. |
 | [`field_protocol.json`](field_protocol.json) | Proposed evidence protocol; not flight authorization. |
@@ -207,6 +229,7 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 | [`research_results/2026-11-08-robustness/summary.csv`](research_results/2026-11-08-robustness/summary.csv) | Published frozen assumption-stress capture and rendered chart. |
 | [`research_results/2026-11-08-factorial/`](research_results/2026-11-08-factorial/) | Full-factorial extension capture and rendered chart. |
 | `research-runs/` | Ignored local output area for new, non-overwriting runs. |
+| [`docs/2026-11-08-video-evaluation.md`](docs/2026-11-08-video-evaluation.md) | Recorded-video event-evaluation quickstart. |
 | [`docs/`](docs/) | Historical build and research notes. |
 
 ## Evidence and limitations
@@ -214,7 +237,7 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 - Fixed-wind synthetic scenarios are not forecast weather availability and are not field accuracy.
 - Constant airspeed and time budgets are not validated power, drag, terrain, gust, or measured battery-energy models.
 - Upstream detection is assumed before alert receipt. Its latency and missed alerts are outside the dispatch model.
-- The recorded-video baseline reports frame-level color/persistence behavior. Event-episode evaluation is not implemented.
+- The recorded-video lane includes sampled event-episode mechanics, but no independently labelled evaluation exists; one recording cannot establish detector accuracy or recording-clustered uncertainty.
 - A p90 that is unreachable/infinite is a result of retaining rejected alerts in the pooled denominator.
 - Field measurements, safety evidence, and regulatory approval are separate future gates.
 
@@ -222,7 +245,7 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 
 [`field_protocol.json`](field_protocol.json) is proposed research scope, not passed acceptance, license to fly, or flight authorization. It calls for a recorded-data baseline before authorized VLOS measurements, then a calibrated network study only after measured inputs are locked with provenance.
 
-Proposed recorded-data targets include at least 20 independent fire and 20 no-fire recordings across 3 sites and 2 capture dates, plus 2 negative-video hours. The protocol proposes event recall of at least 0.90, at most 1 false-alarm episode per negative-video hour, and p90 event-detection delay at most 10 s. These are targets, not results; current software reports frame metrics, and event matching/episode evaluation is not implemented.
+Proposed recorded-data targets include at least 20 independent fire and 20 no-fire recordings across 3 sites and 2 capture dates, plus 2 negative-video hours. The protocol proposes event recall of at least 0.90, at most 1 false-alarm episode per negative-video hour, and p90 event-detection delay at most 10 s. These are targets, not results; sampled event matching and episode mechanics are implemented, but they have not been run on independently labelled data.
 
 Any flight work requires a qualified operator, site approval, and a site-specific risk assessment. The protocol explicitly excludes intentionally ignited fires, suppression drops, public emergency deployment, and BVLOS until applicable authorization. Vendor endurance and wind ratings are upper limits, not routine planning targets.
 

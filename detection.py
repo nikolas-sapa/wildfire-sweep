@@ -123,7 +123,8 @@ def main():
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     manifest = {
-        "schema_version": 1, "baseline": "exploratory RGB color + consecutive-sample persistence",
+        "schema_version": 1, "status": "complete",
+        "baseline": "exploratory RGB color + consecutive-sample persistence",
         "config": asdict(config), "input_name": args.video.name, "input_sha256": digest.hexdigest(),
         "recording_id": args.recording_id, "sample_fps": args.sample_fps,
         "max_frames": args.max_frames, "decoded_frames": len(rows), "geometry": FRAME_GEOMETRY,
@@ -133,6 +134,9 @@ def main():
             for name in ("detection.py", "video_io.py")
         },
         "labels_sha256": hashlib.sha256(args.labels.read_bytes()).hexdigest() if args.labels else None,
+        "artifact_sha256": {
+            "predictions.csv": hashlib.sha256((args.output / "predictions.csv").read_bytes()).hexdigest(),
+        },
         "metrics": metrics,
         "limitations": [
             "Thresholds are declared engineering assumptions, not fitted or validated on drone data.",

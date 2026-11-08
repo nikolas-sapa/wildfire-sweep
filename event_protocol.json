@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scope": "One fully labelled sampled-video prefix; visible-fire episodes, not wildfire incidents or field performance",
+  "episode": "Maximal contiguous run of positive sampled labels or alarms, with half-open sample indices [start, end)",
+  "matching": "An alarm onset must lie inside a truth episode. Match the first such onset only; subsequent onsets in that episode are duplicates. An alarm starting before an episode receives no credit for later overlap.",
+  "tolerance_samples": 0,
+  "sampled_exposure_s": "n_samples / sample_fps, nominal sampled-bin exposure, not independently measured source duration",
+  "nonfire_exposure_s": "count(fire == 0) / sample_fps",
+  "event_recall": "matched truth episodes / truth episodes",
+  "alarm_precision": "matched alarm episodes / all alarm episodes; duplicates reduce precision",
+  "false_alarm_episodes": "Alarm onsets on samples labelled no visible fire; duplicates within visible fire are reported separately",
+  "false_alarms_per_nonfire_hour": "false_alarm_episodes * 3600 / nonfire_exposure_s",
+  "delay": "First matched alarm onset minus sampled truth onset, divided by sample_fps; only matched episodes enter delay quantiles",
+  "delay_quantile": "Nearest rank: sorted detected delays at ceil(p * n) - 1, for p=0.5 and p=0.9",
+  "zero_denominator": "null, never zero or perfect performance",
+  "censoring": "Retain episodes touching either observed-prefix edge; flag left/right censoring and report sampled-onset delays, not ignition delay",
+  "split": "Only a packet assigned test before annotation may be evaluated; recording, incident, site and date separation still require external governance",
+  "label_fields": ["recording_id", "split", "input_sha256", "sample_index", "sample_time_s", "fire"],
+  "labels": "Complete binary visible-fire labels at every decoded sample; blank/uncertain labels fail evaluation rather than being silently dropped",
+  "uncertainty": "No confidence intervals or acceptance verdict from one recording; recording-clustered uncertainty and independent held-out data remain future work",
+  "non_goals": [
+    "No threshold fitting, test-set retuning, model training or probability calibration",
+    "No downloaded/bundled datasets, weights or footage",
+    "No empirical detector accuracy, smoke-detection or generalization claim",
+    "No real-time service, flight integration or deployment"
+  ]
+}

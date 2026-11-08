@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 560" role="img" aria-labelledby="title desc">
+  <title id="title">Recorded-video event evaluation workflow</title>
+  <desc id="desc">Six-step conceptual workflow: lawfully held local video, preassigned split, blinded blank label packet, human adjudication, separate baseline capture, and a hash- and time-bound event report. The report covers sampled visible-fire episodes, not detector accuracy or field performance.</desc>
+  <rect width="1280" height="560" fill="#fff"/>
+  <text x="44" y="52" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">RECORDED-VIDEO EVENT EVALUATION</text>
+  <text x="44" y="88" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="26" font-weight="600">From local footage to a bounded event report.</text>
+  <text x="44" y="116" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="16">Conceptual workflow; every stage writes a fresh output and nothing overwrites an existing capture.</text>
+
+  <rect x="44" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="58" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">LOCAL INPUT</text>
+  <text x="58" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Lawfully held</text>
+  <text x="58" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">local video</text>
+  <text x="58" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Lawfully held</text>
+  <text x="58" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">footage only.</text>
+  <text x="58" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">No downloads or</text>
+  <text x="58" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">bundled data.</text>
+
+  <path d="M222 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="248" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="262" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">GOVERNANCE</text>
+  <text x="262" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Preassigned</text>
+  <text x="262" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">split</text>
+  <text x="262" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Assigned before</text>
+  <text x="262" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">annotation.</text>
+  <text x="262" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Group by recording,</text>
+  <text x="262" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">incident, site, date.</text>
+
+  <path d="M426 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="452" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="466" y="178" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">BLINDED PACKET</text>
+  <text x="466" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Blinded blank</text>
+  <text x="466" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">label packet</text>
+  <text x="466" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Sheets plus a blank</text>
+  <text x="466" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">fire column.</text>
+  <text x="466" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">No scores or</text>
+  <text x="466" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">predictions.</text>
+
+  <path d="M630 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="656" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="670" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">ADJUDICATION</text>
+  <text x="670" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Human</text>
+  <text x="670" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">adjudication</text>
+  <text x="670" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Reviewer fills a</text>
+  <text x="670" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">separate copy only.</text>
+  <text x="670" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Blank or uncertain</text>
+  <text x="670" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">fails, not dropped.</text>
+
+  <path d="M834 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="860" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="874" y="178" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">SEPARATE LANE</text>
+  <text x="874" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Baseline</text>
+  <text x="874" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">capture</text>
+  <text x="874" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Same video, ID, fps</text>
+  <text x="874" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">and frame limit.</text>
+  <text x="874" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Unchanged RGB</text>
+  <text x="874" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">thresholds.</text>
+
+  <path d="M1038 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="1064" y="150" width="172" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="1078" y="178" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">EVENT REPORT</text>
+  <text x="1078" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Bounded</text>
+  <text x="1078" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">event report</text>
+  <text x="1078" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Hash- and</text>
+  <text x="1078" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">time-bound report.</text>
+  <text x="1078" y="322" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Fresh output;</text>
+  <text x="1078" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">no overwrite.</text>
+
+  <path d="M44 415h1192" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 6"/>
+  <text x="44" y="446" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2">REPORT SCOPE AND LIMITS</text>
+  <text x="44" y="476" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Sampled visible-fire episodes, not incidents. Misses never count as zero delay; zero denominators report null.</text>
+  <text x="44" y="504" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Delays cover detected episodes on the sampled timeline only; blinding and a self-reported annotator ID do not guarantee independence.</text>
+  <text x="44" y="532" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Not detector accuracy, incident recall or field validation; one recording cannot establish generalization or recording-clustered uncertainty.</text>
+</svg>

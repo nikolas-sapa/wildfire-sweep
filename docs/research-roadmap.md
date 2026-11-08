@@ -5,13 +5,13 @@
 - [Synthetic dispatch study](../README.md#captured-anchor): assumed alerts, fixed winds and unmeasured aircraft inputs, not field performance.
 - [Assumption stress study](2026-11-08-robustness-study.md): paired changes to operating assumptions within the synthetic dispatch model.
 - [Full-factorial extension](2026-11-08-factorial-study.md): completes the declared stress combinations using the same source alerts. Reuse is not independent replication.
-- [Recorded-video RGB baseline](../README.md#recorded-video-baseline): color/persistence behavior, not established detector accuracy. Event-episode evaluation is still missing.
+- [Recorded-video RGB baseline](../README.md#recorded-video-baseline): color/persistence behavior, not established detector accuracy. Sampled [event-episode mechanics](2026-11-08-video-evaluation.md) are implemented; independent labelled data and recording-clustered uncertainty remain missing.
 - [Proposed field protocol](../field_protocol.json): a separate evidence plan, not flight authorization or completed field validation.
 
 ## Priorities
 
 1. Measure usable endurance and launch latency under a qualified, authorized, conservative VLOS protocol. This is a future evidence gate, not an instruction to fly now.
-2. Label independent recordings. Split by recording, site and date before threshold tuning; do not split frames from the same recording across partitions. Event-episode metrics remain missing.
+2. Label independent recordings. Split by recording, site and date before threshold tuning; do not split frames from the same recording across partitions. Event-episode mechanics exist; independent labels and recording-clustered uncertainty remain missing.
 3. Calibrate physical and time assumptions before adding historical weather and clustered-alert inputs.
 4. Freeze the analysis before collecting new independent-seed captures. Use fresh output paths and never overwrite existing captures.
 
