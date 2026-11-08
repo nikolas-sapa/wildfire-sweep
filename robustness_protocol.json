@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "study_type": "Synthetic assumption stress study, not field validation",
+  "research_question": "Does the benefit of a denser network persist when endurance, launch latency and reserve assumptions become more conservative?",
+  "default_seasons": 200,
+  "default_seed": 20261108,
+  "ignitions_per_season": 307.0,
+  "false_alarm_fraction": 0.15,
+  "timely_threshold_s": 900.0,
+  "airspeed_mps": 18.0,
+  "max_wind_mps": 12.0,
+  "wind_east_mps": [8.0, 12.0],
+  "layouts": [
+    {"nominal_spacing_km": 16.0, "n_bases": 9, "drones_per_base": 1},
+    {"nominal_spacing_km": 12.0, "n_bases": 25, "drones_per_base": 1}
+  ],
+  "conditions": [
+    {"name": "reference", "endurance_min": 46.0, "reserve_fraction": 0.25, "launch_latency_s": 60.0},
+    {"name": "shorter_endurance", "endurance_min": 34.5, "reserve_fraction": 0.25, "launch_latency_s": 60.0},
+    {"name": "slower_launch", "endurance_min": 46.0, "reserve_fraction": 0.25, "launch_latency_s": 180.0},
+    {"name": "larger_reserve", "endurance_min": 46.0, "reserve_fraction": 0.35, "launch_latency_s": 60.0},
+    {"name": "combined", "endurance_min": 34.5, "reserve_fraction": 0.35, "launch_latency_s": 180.0}
+  ],
+  "bootstrap_replicates": 1000,
+  "bootstrap_quantiles": [0.025, 0.975],
+  "random_streams": {
+    "alerts": "SeedSequence([0, season_index, seed])",
+    "bootstrap": "default_rng([1, seed]); identical season draws for both arms"
+  },
+  "primary_metric": "Pooled fraction of real alerts reached within 900 seconds of alert receipt, including rejected alerts in the denominator",
+  "comparisons": [
+    "Each non-reference condition minus reference within the same layout and wind: 16 paired contrasts",
+    "25 bases minus 9 bases within the same condition and wind: 10 paired contrasts"
+  ],
+  "uncertainty": "95% pointwise percentile season-cluster bootstrap intervals, Monte Carlo sampling error only; not simultaneous intervals or input uncertainty bounds",
+  "non_goals": [
+    "No new dispatch policy, physical model, detector evaluation or live flight integration",
+    "No empirical claim that endurance loses 25%, launch takes 180 seconds, or reserve should be 35%",
+    "No forecast-weather availability, field performance, optimization or regulatory claim",
+    "No changes to historical outputs or the 2026-11-07 anchor"
+  ]
+}

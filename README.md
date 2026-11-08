@@ -12,6 +12,7 @@ A reproducible research baseline for studying how docked UAV networks verify ext
 - [What is implemented](#what-is-implemented)
 - [System architecture](#system-architecture)
 - [Captured anchor](#captured-anchor)
+- [Assumption stress study](#assumption-stress-study)
 - [Reproduce](#reproduce)
 - [Recorded-video baseline](#recorded-video-baseline)
 - [Repository map](#repository-map)
@@ -83,6 +84,23 @@ At zero wind, physical results can differ slightly from legacy: battery constrai
 
 The 95% intervals use 1,000 season-cluster bootstrap draws. They represent Monte Carlo sampling uncertainty only, not input, model, or cost uncertainty.
 
+## Assumption stress study
+
+A second [captured study](research_results/2026-11-08-robustness/) tests shorter endurance, slower launches and larger reserves. It contains 20 scenarios over 200 shared synthetic seasons, with 61,084 real alerts per scenario and 26 paired comparisons.
+
+| Bases | Fixed wind | Reference timely share | Combined-stress timely share |
+| --- | ---: | ---: | ---: |
+| 9 | 8 m/s | 91.04% | 59.36% |
+| 25 | 8 m/s | 99.99% | 99.85% |
+| 9 | 12 m/s | 60.10% | 31.67% |
+| 25 | 12 m/s | 97.48% | 75.34% |
+
+Combined stress assumes 34.5 min endurance, 35% reserve and 180 s launch latency, versus 46 min, 25% and 60 s in the reference. Airspeed is 18 m/s throughout. These stress values are hypothetical, not measured derating or operating advice.
+
+![Captured timely-arrival shares for 9- and 25-base networks under reference and stressed assumptions at fixed 8 and 12 m/s winds. Synthetic simulation, not field validation.](research_results/2026-11-08-robustness/stress.png)
+
+Density still helps, but the result depends strongly on operating assumptions. At 12 m/s under combined stress, pooled p90 is unreachable/infinite for both layouts. Read the [methods, paired intervals, limitations and resume-safe project description](docs/2026-11-08-robustness-study.md). Intervals describe Monte Carlo sampling error only.
+
 ## Reproduce
 
 ### Inspect the frozen capture
@@ -109,6 +127,15 @@ The renderer reads existing values only; it does not import the research or hist
 ```sh
 .venv/bin/python render_study.py research-runs/my-study/summary.csv --output research-runs/my-study/service.png
 ```
+
+### Run a new assumption stress study
+
+```sh
+.venv/bin/python robustness.py --output research-runs/my-robustness --seasons 200 --seed 20261108
+.venv/bin/python render_robustness.py research-runs/my-robustness/summary.csv --output research-runs/my-robustness/stress.png
+```
+
+Both commands require fresh output paths. `make verify` runs the full local tests and historical self-checks.
 
 ### Historical self-checks
 
@@ -145,14 +172,17 @@ The processed FLAME demo is an I/O smoke test only. Its published [manifest](res
 | Path | Role |
 | --- | --- |
 | [`research.py`](research.py) | Current synthetic wind-and-battery dispatch study. |
+| [`robustness.py`](robustness.py) and [`robustness_protocol.json`](robustness_protocol.json) | Paired assumption-stress study and its fixed protocol. |
 | [`render_study.py`](render_study.py) | Renderer for an existing captured summary. |
+| [`render_robustness.py`](render_robustness.py) | Capture-only renderer for the robustness summary. |
 | [`video_io.py`](video_io.py) and [`detection.py`](detection.py) | Local recorded-video adapter and exploratory RGB baseline. |
 | [`sweep.py`](sweep.py), [`suppression.py`](suppression.py), [`sensitivity.py`](sensitivity.py) | Historical analyses and their self-checks. |
-| [`test_research.py`](test_research.py), [`test_detection.py`](test_detection.py), [`test_video_io.py`](test_video_io.py), [`test_render_study.py`](test_render_study.py), [`test_published_results.py`](test_published_results.py) | Tests for model mechanics, I/O, render validation, and frozen capture integrity. |
+| [`test_research.py`](test_research.py), [`test_robustness.py`](test_robustness.py), [`test_robustness_results.py`](test_robustness_results.py), [`test_render_robustness.py`](test_render_robustness.py), and other `test_*.py` files | Tests for model mechanics, paired stress analysis, renderer validation, I/O, and frozen capture integrity. |
 | [`field_protocol.json`](field_protocol.json) | Proposed evidence protocol; not flight authorization. |
 | [`requirements.txt`](requirements.txt) | Direct Python dependencies. FFmpeg is external. |
 | [`results.csv`](results.csv), [`suppression.csv`](suppression.csv), [`pareto.png`](pareto.png), [`suppression.png`](suppression.png) | Historical outputs; preserved as provenance. |
 | [`research_results/2026-11-07-anchor/`](research_results/2026-11-07-anchor/) | Published frozen anchor evidence. |
+| [`research_results/2026-11-08-robustness/summary.csv`](research_results/2026-11-08-robustness/summary.csv) | Published frozen assumption-stress capture and rendered chart. |
 | `research-runs/` | Ignored local output area for new, non-overwriting runs. |
 | [`docs/`](docs/) | Historical build and research notes. |
 
