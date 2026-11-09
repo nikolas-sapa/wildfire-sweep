@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" role="img" aria-labelledby="title desc">
+  <title id="title">Cohort evaluation workflow</title>
+  <desc id="desc">Five-stage conceptual workflow: declared cohort metadata, a leakage-guarded registry freeze, captured per-recording test reports bound at planned paths, pooled cluster aggregation with a seeded bootstrap, and a captured summary rendered read-only. A separate human governance gate supplies labels and declared independence that the tooling cannot verify. Aggregation mechanics only; no detector accuracy or field validation.</desc>
+  <rect width="1280" height="600" fill="#fff"/>
+  <text x="44" y="52" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="15" font-weight="700" letter-spacing="1.8">COHORT EVALUATION</text>
+  <text x="44" y="88" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="26" font-weight="600">From declared metadata to a bounded cohort summary.</text>
+  <text x="44" y="116" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="16">Conceptual workflow; a separate human gate supplies labels, and nothing overwrites an existing capture.</text>
+
+  <rect x="44" y="150" width="216" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="58" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">GOVERNANCE</text>
+  <text x="58" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Planned cohort</text>
+  <text x="58" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">metadata</text>
+  <text x="58" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Splits and clusters</text>
+  <text x="58" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">declared before</text>
+  <text x="58" y="312" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">review.</text>
+  <text x="58" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Anonymous IDs and</text>
+  <text x="58" y="366" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">ISO capture dates.</text>
+
+  <path d="M263 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="288" y="150" width="216" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="302" y="178" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">REGISTRY</text>
+  <text x="302" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Leakage-safe</text>
+  <text x="302" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">registry freeze</text>
+  <text x="302" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Guards apply to</text>
+  <text x="302" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">the whole CSV,</text>
+  <text x="302" y="312" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">not only test.</text>
+  <text x="302" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Packets verified;</text>
+  <text x="302" y="366" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">paths bound.</text>
+
+  <path d="M507 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="532" y="150" width="216" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="546" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">CAPTURED REPORTS</text>
+  <text x="546" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Bound captured</text>
+  <text x="546" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">test reports</text>
+  <text x="546" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Existing packet,</text>
+  <text x="546" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">baseline and event</text>
+  <text x="546" y="312" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">report pipeline.</text>
+  <text x="546" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Reports land at</text>
+  <text x="546" y="366" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">bound planned paths.</text>
+
+  <path d="M751 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="776" y="150" width="216" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="790" y="178" fill="#006bff" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">AGGREGATION</text>
+  <text x="790" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Cluster pool</text>
+  <text x="790" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">and bootstrap</text>
+  <text x="790" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Counts and exposure</text>
+  <text x="790" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">pooled; ratios are</text>
+  <text x="790" y="312" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">never averaged.</text>
+  <text x="790" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">1,000 seeded draws</text>
+  <text x="790" y="366" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">of G clusters.</text>
+
+  <path d="M995 265h22m-7-7 7 7-7 7" fill="none" stroke="#64748b" stroke-width="2"/>
+  <rect x="1020" y="150" width="216" height="230" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="1034" y="178" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.0">CAPTURED OUTPUT</text>
+  <text x="1034" y="212" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">Captured summary</text>
+  <text x="1034" y="234" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="700">and renderer</text>
+  <text x="1034" y="268" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">Five metric rows;</text>
+  <text x="1034" y="290" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">nulls stay</text>
+  <text x="1034" y="312" fill="#334155" font-family="Geist, system-ui, sans-serif" font-size="15">explicit.</text>
+  <text x="1034" y="344" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Reads the capture</text>
+  <text x="1034" y="366" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">only; no recompute.</text>
+
+  <path d="M44 415h1192" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 6"/>
+  <text x="44" y="446" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="13" font-weight="700" letter-spacing="1.2">SEPARATE GOVERNANCE LANE | HUMAN INDEPENDENCE GATE</text>
+  <text x="44" y="476" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="600">Predeclared groups</text>
+  <path d="M224 470h36m-8-8 8 8-8 8" fill="none" stroke="#64748b" stroke-width="2"/>
+  <text x="272" y="476" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="600">blank label packets</text>
+  <path d="M452 470h36m-8-8 8 8-8 8" fill="none" stroke="#64748b" stroke-width="2"/>
+  <text x="500" y="476" fill="#14243a" font-family="Geist, system-ui, sans-serif" font-size="18" font-weight="600">human adjudication</text>
+  <text x="44" y="504" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Hash, packet and group checks enforce declared consistency only; independence, near-duplicates and label truth are not verified.</text>
+  <text x="44" y="532" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Nominal 95% pointwise intervals need at least two informative clusters per metric; a computational minimum, not guaranteed coverage.</text>
+  <text x="44" y="560" fill="#64748b" font-family="Geist, system-ui, sans-serif" font-size="14">Aggregation mechanics over captured reports only; no independent data, detector accuracy or field validation. Captures are never rerun or overwritten.</text>
+</svg>

@@ -42,7 +42,7 @@
         "Report raw event counts, exposure hours and uncertainty clustered by recording.",
         "Report flame-visible and smoke-only cases separately; the RGB baseline does not detect smoke.",
         "Define an alarm episode as a maximal contiguous run of sampled alarms; never substitute positive-frame counts for episodes.",
-        "Current software reports sampled-frame and strict onset-matched visible-fire-episode metrics on one recording. Incident-level and recording-clustered evaluation remain unimplemented.",
+        "Current software reports sampled-frame and strict onset-matched visible-fire-episode metrics, plus declared-cluster cohort bootstrap mechanics. Incident-level evaluation, independent labelled evidence and verified cluster independence remain unimplemented.",
         "Failure to meet a target is a research finding, not permission to retune on the test set."
       ]
     },

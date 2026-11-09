@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scope": "Aggregate captured sampled-visible-fire episode reports from a declared held-out cohort, not field validation",
+  "cohort_fields": ["recording_id", "cluster_id", "site_id", "capture_date", "split", "packet_dir", "event_report_dir"],
+  "splits": ["train", "validation", "test"],
+  "split_guards": "No recording ID, source-video hash, cluster ID, site ID or capture date may cross splits. Source-video hashes must be unique even within a split. Group metadata is self-reported, not verified independence.",
+  "path_base": "Input CSV paths must be relative to its parent; frozen registry references are rebased relative to registry output directory",
+  "report_plan": "Train/validation report paths must be blank; test report paths are required but may not exist when registry is frozen",
+  "aggregation": "Pool captured event counts and negative sampled-bin exposure; do not average per-recording ratios",
+  "compatibility": "All test reports must use the same event protocol, scientific/decoder source hashes, detector configuration and sample_fps; different sampling rates change consecutive-frame persistence",
+  "metrics": ["event_recall", "alarm_precision", "false_alarms_per_nonfire_hour", "detected_delay_p50_s", "detected_delay_p90_s"],
+  "delay": "Pool detected-only delays; nearest rank, misses remain explicit counts and never become zero delay",
+  "resampling_unit": "Declared cluster_id; resample all G clusters with replacement G times, retaining every recording and event in each selected cluster",
+  "bootstrap_replicates": 1000,
+  "default_seed": 20261109,
+  "bootstrap_quantiles": [0.025, 0.975],
+  "minimum_informative_clusters_for_interval": 2,
+  "informative_cluster": "Positive truth denominator for recall, positive alarm denominator for precision, positive nonfire exposure for false-onset rate, at least one matched delay for delay quantiles",
+  "undefined_draws": "Omit zero-denominator draws separately per metric, report valid_bootstrap_draws; no interval when fewer than two informative clusters; fail if an interval-eligible metric has no defined draws",
+  "uncertainty": "Pointwise nominal 95% percentile cluster-bootstrap intervals; not simultaneous, input/model/label uncertainty, or a guarantee of empirical coverage, especially for small cohorts",
+  "non_goals": [
+    "No actual independently labelled footage is supplied or fabricated",
+    "No threshold tuning, model comparison, acceptance verdict or field accuracy claim",
+    "No rerunning captured detectors, single-recording evaluations or frozen simulations",
+    "No database, service, deployment, purchases, downloads or additional dependencies"
+  ]
+}

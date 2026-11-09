@@ -34,7 +34,7 @@ The project studies a docked fleet's response after an external alert arrives. I
 | --- | --- |
 | Synthetic wind-aware dispatch with fleet contention and battery-reserve constraints. | Live external-alert integration or upstream detector latency. |
 | A local RGB color/persistence baseline for recorded video. | Smoke detection, thermal inference, or a calibrated fire probability. |
-| Sampled event-episode evaluation that binds human labels to baseline predictions on a preassigned test split. | Independently labelled recordings, recording-clustered uncertainty, or detector accuracy evidence. |
+| Sampled event-episode evaluation plus a cohort registry, pooled aggregation and cluster-bootstrap interval mechanics over captured reports. | Independently labelled recordings, verified group independence, or detector accuracy evidence. |
 | A summary renderer that reads captured CSV values and refuses existing output paths. | An autonomous thermal confirmation-and-mapping pipeline. |
 | Captured manifests, scenario summaries, season rows, and a proposed field protocol. | Live aircraft control, deployment, or flight authorization. |
 
@@ -208,6 +208,26 @@ The packet is blinded: contact sheets plus a `labels.csv` with every `fire` cell
 
 Each command requires a fresh output path and captures provenance (input, artifact and source hashes; sampled times). The evaluator reports episode counts, recall, alarm precision, false onsets per non-fire exposure hour, detected-onset delays and censor flags; zero denominators report null. It emits no confidence intervals, pass/fail verdict or incident-level recall. Metric semantics and limits are in the [video-evaluation quickstart](docs/2026-11-08-video-evaluation.md).
 
+### Cohort evaluation
+
+![Conceptual cohort evaluation workflow: declared cohort metadata and splits are frozen by a leakage-guarded registry, captured per-recording test reports land at bound planned paths, pooled cluster aggregation with a seeded bootstrap produces a captured summary, and a read-only renderer draws it. A separate human gate supplies labels and declared independence that the tooling cannot verify. The figure shows workflow mechanics, not empirical evidence.](assets/readme/cohort-workflow.svg)
+
+The additive [`cohort_protocol.json`](cohort_protocol.json) workflow aggregates captured single-recording event reports over a declared cohort. It adds registry, pooled-metric and cluster-bootstrap mechanics only; it supplies no independent data, detector accuracy results or acceptance verdict.
+
+`COHORT.csv` uses exactly this seven-column header, declared before review; column semantics are in the quickstart:
+
+```csv
+recording_id,cluster_id,site_id,capture_date,split,packet_dir,event_report_dir
+```
+
+```sh
+.venv/bin/python cohort_registry.py COHORT.csv --output research-runs/my-cohort-registry
+.venv/bin/python cohort_evaluation.py research-runs/my-cohort-registry --output research-runs/my-cohort-results --seed 20261109
+.venv/bin/python render_cohort.py research-runs/my-cohort-results/summary.csv --output research-runs/my-cohort-results/cohort.png
+```
+
+The freeze binds blank annotation packets and planned test report paths; human labels, baseline captures and `event_evaluation.py` reports then land at those paths before aggregation. Registry and evaluation commands capture hashes and provenance; the renderer reads summary.csv only. Every output path must be fresh. Semantics and limits are in the [cohort-evaluation quickstart](docs/2026-11-09-cohort-evaluation.md).
+
 ## Repository map
 
 | Path | Role |
@@ -220,6 +240,8 @@ Each command requires a fresh output path and captures provenance (input, artifa
 | [`render_factorial.py`](render_factorial.py) | Capture-only renderer for the full-factorial summary. |
 | [`video_io.py`](video_io.py) and [`detection.py`](detection.py) | Local recorded-video adapter and exploratory RGB baseline. |
 | [`annotation_packet.py`](annotation_packet.py), [`event_evaluation.py`](event_evaluation.py) and [`event_protocol.json`](event_protocol.json) | Blinded annotation packets, sampled event-episode evaluation and the fixed protocol. |
+| [`cohort_registry.py`](cohort_registry.py), [`cohort_evaluation.py`](cohort_evaluation.py) and [`cohort_protocol.json`](cohort_protocol.json) | Frozen cohort registry with leakage guards, pooled metrics and seeded cluster-bootstrap intervals; fixed aggregation protocol. |
+| [`render_cohort.py`](render_cohort.py) | Capture-only renderer for a cohort summary. |
 | [`sweep.py`](sweep.py), [`suppression.py`](suppression.py), [`sensitivity.py`](sensitivity.py) | Historical analyses and their self-checks. |
 | [`test_research.py`](test_research.py), [`test_robustness.py`](test_robustness.py), [`test_robustness_results.py`](test_robustness_results.py), [`test_render_robustness.py`](test_render_robustness.py), and other `test_*.py` files | Tests for model mechanics, paired stress analysis, renderer validation, I/O, and frozen capture integrity. |
 | [`field_protocol.json`](field_protocol.json) | Proposed evidence protocol; not flight authorization. |
@@ -230,6 +252,7 @@ Each command requires a fresh output path and captures provenance (input, artifa
 | [`research_results/2026-11-08-factorial/`](research_results/2026-11-08-factorial/) | Full-factorial extension capture and rendered chart. |
 | `research-runs/` | Ignored local output area for new, non-overwriting runs. |
 | [`docs/2026-11-08-video-evaluation.md`](docs/2026-11-08-video-evaluation.md) | Recorded-video event-evaluation quickstart. |
+| [`docs/2026-11-09-cohort-evaluation.md`](docs/2026-11-09-cohort-evaluation.md) | Cohort registry and evaluation quickstart. |
 | [`docs/`](docs/) | Historical build and research notes. |
 
 ## Evidence and limitations
@@ -237,7 +260,7 @@ Each command requires a fresh output path and captures provenance (input, artifa
 - Fixed-wind synthetic scenarios are not forecast weather availability and are not field accuracy.
 - Constant airspeed and time budgets are not validated power, drag, terrain, gust, or measured battery-energy models.
 - Upstream detection is assumed before alert receipt. Its latency and missed alerts are outside the dispatch model.
-- The recorded-video lane includes sampled event-episode mechanics, but no independently labelled evaluation exists; one recording cannot establish detector accuracy or recording-clustered uncertainty.
+- The recorded-video lane includes sampled event-episode and cohort-aggregation mechanics, but no independently labelled evaluation exists; cluster-bootstrap intervals remain conditional on declared groups and do not verify independence or establish detector accuracy.
 - A p90 that is unreachable/infinite is a result of retaining rejected alerts in the pooled denominator.
 - Field measurements, safety evidence, and regulatory approval are separate future gates.
 
