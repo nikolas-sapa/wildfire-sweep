@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "study_type": "Held-out synthetic single-base outage study, not field validation",
+  "protocol": {
+    "schema_version": 1,
+    "study_type": "Held-out synthetic single-base outage study, not field validation",
+    "seed": 2026110901,
+    "training_seasons": 30,
+    "heldout_seasons": 200,
+    "ignitions_per_season": 307.0,
+    "false_alarm_fraction": 0.15,
+    "timely_threshold_s": 900.0,
+    "airspeed_mps": 18.0,
+    "endurance_min": 46.0,
+    "reserve_fraction": 0.25,
+    "launch_latency_s": 60.0,
+    "max_wind_mps": 12.0,
+    "wind_east_mps": [
+      8.0,
+      12.0
+    ],
+    "layouts": [
+      {
+        "nominal_spacing_km": 16.0,
+        "n_bases": 9,
+        "drones_per_base": 1
+      },
+      {
+        "nominal_spacing_km": 12.0,
+        "n_bases": 25,
+        "drones_per_base": 1
+      }
+    ],
+    "bootstrap_replicates": 1000,
+    "bootstrap_quantiles": [
+      0.025,
+      0.975
+    ],
+    "selection": "Minimum pooled training timely count, ties lowest original base index",
+    "outage": "One base and its drone unavailable for the entire simulated season",
+    "uncertainty": "Pointwise season-bootstrap Monte Carlo intervals, conditional on training selection; not input, selection, model or field uncertainty",
+    "non_goals": [
+      "No observed failure probabilities, field performance or detector accuracy",
+      "No relocation, spare aircraft, optimal real sites or equal-budget comparison",
+      "No changes to historical models, protocols, captures or plots"
+    ]
+  },
+  "protocol_sha256": "fc250b60d15e1ee9c9d10b929ec66173903ea26c605eed9c40e19c1c647f46d3",
+  "config": {
+    "drone_cost": 21500.0,
+    "base_cost": 14600.0,
+    "install_cost": 12000.0,
+    "maintenance_frac": 0.25,
+    "hardware_life_yr": 3.0,
+    "opex_per_base_yr": 8000.0,
+    "ops_staff_yr": 60000.0,
+    "domain_km2": 3808.0,
+    "season_days": 120.0,
+    "cruise_mps": 20.0,
+    "dwell_s": 120.0,
+    "turnaround_s": 600.0,
+    "unserved_threshold_s": 900.0,
+    "max_unserved_share": 0.1,
+    "seasons_per_config": 200,
+    "seed": 20260811
+  },
+  "source_sha256": {
+    "resilience.py": "2b1907bb6b2bec0b0109d88052026e6f36f626db7367641dbf4e6218a81db272",
+    "research.py": "45ddfd1837602061adc2914b575787498921a276110c6cbee33d312b38fa5301",
+    "robustness.py": "f45d32c63471cf324f5e40c6b47ae288b306e5dbdc8c77278b6950d117d13478",
+    "sweep.py": "88b6fc6f35b068c813a19c800d608cea73e4bbacdae5bb8fa84074c4d2700d5e",
+    "requirements.txt": "235a633bd55c449510d4e59f0af96504fbde99cd953a11ff2d18812eb72c5ab6"
+  },
+  "selection_sha256": "f42218d7e4761aea66b969fcbd613723fe6d3dd9ccf9b7387bf0d51f0415aef2",
+  "training_cases": 72,
+  "heldout_cases": 8,
+  "contrasts": 6,
+  "training_real_alerts": 9362,
+  "heldout_real_alerts": 61206,
+  "git_commit": "9e56ded63da2699280196916891d23807d1afdc4",
+  "git_dirty": true,
+  "python": "3.13.12",
+  "numpy": "2.2.6",
+  "artifact_sha256": {
+    "base_sites.csv": "6eeb8c925e1542112cbfa3f6f8839b9533cf4158d1929516e3c9c57ac38bbc5e",
+    "bootstrap_draws.npz": "b9ea673d20d863db5b91c83698e11ee8212a45282a4afe28b9bf7c9d290b2284",
+    "config.json": "ba24774804f8728b59b6fe73ca8aa0934e25c43c67cd0ec4a9b1b2eb7bd6dc82",
+    "contrasts.csv": "c0e657a9931ef14d7d7be4526f4ab13daf023ea2a7ad8d2e33c6c88147864ea8",
+    "heldout_alerts.npz": "267c0e982476c8e09a424af8a1067ca99a429a0c9be03b0d2bf08f59785cadcc",
+    "heldout_counts.csv": "d1bbfdf2dd23ef1645f249bdc5b0cfaf6ac45b41cc157fb29ed6d97bf8a7256f",
+    "heldout_responses.npz": "8614c1f9a8bf28a7e6510ee8c44149d1d9edf03841a0663b6e705aabb16667ad",
+    "protocol.json": "fc250b60d15e1ee9c9d10b929ec66173903ea26c605eed9c40e19c1c647f46d3",
+    "selection.csv": "f42218d7e4761aea66b969fcbd613723fe6d3dd9ccf9b7387bf0d51f0415aef2",
+    "summary.csv": "f6e8a90ac5aef7ef239d7a0f1fb677613e1752b9aaa891796e46bfbfbab48dfe",
+    "training_alerts.npz": "22cf26fd7d46ecaab65c01bd0b4b1d6df516e60922fdf6bfa1b05ae118b341c0",
+    "training_counts.csv": "182160340fd5335b473cf311ef2e3d899eaaf315d83043393d389bd79a5d3ae7",
+    "training_responses.npz": "2cb2dcf61404fa86068ffd41015b3f23304ef7bfe124c81b7ed99b3e29eaf2ed",
+    "training_summary.csv": "4aa5b765c9a8bca82e29ddae774de6075138b275980776b8b7aa4fa95668e26f"
+  },
+  "limitations": [
+    "Synthetic uniform alerts, square geometry, fixed hypothetical winds and aircraft inputs.",
+    "One base and its drone are unavailable throughout a season; no observed failure probabilities.",
+    "Selected sites are worst in training, not guaranteed worst on held-out data.",
+    "Pointwise Monte Carlo intervals condition on selection; no input, selection or field uncertainty.",
+    "Layouts use different infrastructure amounts; not equal-budget optimization.",
+    "No detector accuracy, ignition-to-alert latency, autonomous flight or deployment evidence."
+  ]
+}

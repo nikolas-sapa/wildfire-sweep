@@ -14,6 +14,7 @@ A reproducible research baseline for studying how docked UAV networks verify ext
 - [Captured anchor](#captured-anchor)
 - [Assumption stress study](#assumption-stress-study)
 - [Factorial extension](#factorial-extension)
+- [Held-out outage resilience](#held-out-outage-resilience)
 - [Reproduce](#reproduce)
 - [Recorded-video baseline](#recorded-video-baseline)
 - [Repository map](#repository-map)
@@ -33,6 +34,7 @@ The project studies a docked fleet's response after an external alert arrives. I
 | Implemented in this repository | Proposed or not implemented |
 | --- | --- |
 | Synthetic wind-aware dispatch with fleet contention and battery-reserve constraints. | Live external-alert integration or upstream detector latency. |
+| Held-out network-resilience study with training-selected single-base outages. | Measured outage probabilities, optimal real sites or equal-budget optimization. |
 | A local RGB color/persistence baseline for recorded video. | Smoke detection, thermal inference, or a calibrated fire probability. |
 | Sampled event-episode evaluation plus a cohort registry, pooled aggregation and cluster-bootstrap interval mechanics over captured reports. | Independently labelled recordings, verified group independence, or detector accuracy evidence. |
 | A summary renderer that reads captured CSV values and refuses existing output paths. | An autonomous thermal confirmation-and-mapping pipeline. |
@@ -112,6 +114,25 @@ The [full-factorial extension](docs/2026-11-08-factorial-study.md) completes all
 At 25 bases and fixed 12 m/s wind, the endurance/reserve interaction is **-5.56 percentage points** (pointwise 95% Monte Carlo interval: -5.83 to -5.30), averaged over launch settings. Constraints do not combine additively, and the interaction changes with context.
 
 The [protocol](factorial_protocol.json) defines the estimator before execution. Main contrasts average over the other factors; pair terms are full differences-in-differences, not half-scaled DOE effects. Pointwise Monte Carlo intervals do not establish field performance or cover input/model uncertainty. See the [research roadmap](docs/research-roadmap.md) for evidence still needed.
+
+## Held-out outage resilience
+
+The next research question is structural: what happens when a critical base is unavailable?
+
+Thirty training seasons identify a critical site separately for each layout/wind. The selections are frozen before generating **200 fresh held-out seasons**, containing **61,206 simulated true alerts**. Healthy and single-site-outage cases use the same alerts and unchanged flight model.
+
+| Nominal bases | Fixed east wind | Healthy within 15 min | One-base outage | Change |
+| ---: | ---: | ---: | ---: | ---: |
+| 9 | 8 m/s | 90.88% | 81.59% | -9.29 pp |
+| 25 | 8 m/s | 99.99% | 98.31% | -1.68 pp |
+| 9 | 12 m/s | 59.81% | 53.55% | -6.26 pp |
+| 25 | 12 m/s | 97.33% | 94.75% | -2.58 pp |
+
+![Held-out simulated service with healthy layouts and a training-selected one-base outage. Pointwise Monte Carlo intervals, not field uncertainty.](research_results/2026-11-09-resilience/figures-v2/service.png)
+
+At 12 m/s, the denser layout loses **3.69 percentage points less service** (pointwise MC95%: 3.49 to 3.87). It also has more infrastructure and loses a smaller fraction of its fleet: 25 becomes 24 active bases, versus 9 becoming 8. This is not an equal-budget or per-aircraft superiority claim.
+
+Read the [methods, site maps, intervals and limitations](docs/2026-11-09-resilience-study.md), [protocol](resilience_protocol.json) and [frozen capture](research_results/2026-11-09-resilience/). A training-selected critical site is not necessarily the held-out worst site. No observed failure probability, actual geographic siting or field performance is established.
 
 ## Reproduce
 

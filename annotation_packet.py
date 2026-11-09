@@ -7,6 +7,7 @@ import json
 import math
 import os
 import re
+import stat
 from numbers import Integral, Real
 from pathlib import Path
 
@@ -36,10 +37,27 @@ PURPOSE = "blind annotation packet"
 
 
 def _sha256_path(path: Path) -> str:
+    if not path.is_file():
+        raise FileNotFoundError(f"An existing regular input file is required: {path.name}")
     digest = hashlib.sha256()
     with path.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
+        info = os.fstat(handle.fileno())
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError(f"Input is not a regular file: {path.name}")
+        signature = (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+        remaining = info.st_size
+        while remaining:
+            block = handle.read(min(1024 * 1024, remaining))
+            if not block:
+                raise ValueError(f"Input changed while reading: {path.name}")
             digest.update(block)
+            remaining -= len(block)
+        if handle.read(1):
+            raise ValueError(f"Input grew while reading: {path.name}")
+        for after in (os.fstat(handle.fileno()), path.stat()):
+            actual = (after.st_dev, after.st_ino, after.st_size, after.st_mtime_ns, after.st_ctime_ns)
+            if actual != signature:
+                raise ValueError(f"Input changed while reading: {path.name}")
     return digest.hexdigest()
 
 
@@ -132,6 +150,8 @@ def create_packet(
     _validate_request(recording_id, split, sample_fps, max_frames)
     video_path = Path(video)
     output_path = Path(output)
+    if output_path.exists() or output_path.is_symlink():
+        raise FileExistsError(f"Refusing existing output: {output_path}")
     input_sha256 = _sha256_path(video_path)
     output_path.mkdir(parents=True, exist_ok=False)
 

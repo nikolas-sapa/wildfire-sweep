@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "study_type": "Held-out synthetic single-base outage study, not field validation",
+  "seed": 2026110901,
+  "training_seasons": 30,
+  "heldout_seasons": 200,
+  "ignitions_per_season": 307.0,
+  "false_alarm_fraction": 0.15,
+  "timely_threshold_s": 900.0,
+  "airspeed_mps": 18.0,
+  "endurance_min": 46.0,
+  "reserve_fraction": 0.25,
+  "launch_latency_s": 60.0,
+  "max_wind_mps": 12.0,
+  "wind_east_mps": [8.0, 12.0],
+  "layouts": [
+    {"nominal_spacing_km": 16.0, "n_bases": 9, "drones_per_base": 1},
+    {"nominal_spacing_km": 12.0, "n_bases": 25, "drones_per_base": 1}
+  ],
+  "bootstrap_replicates": 1000,
+  "bootstrap_quantiles": [0.025, 0.975],
+  "selection": "Minimum pooled training timely count, ties lowest original base index",
+  "outage": "One base and its drone unavailable for the entire simulated season",
+  "uncertainty": "Pointwise season-bootstrap Monte Carlo intervals, conditional on training selection; not input, selection, model or field uncertainty",
+  "non_goals": [
+    "No observed failure probabilities, field performance or detector accuracy",
+    "No relocation, spare aircraft, optimal real sites or equal-budget comparison",
+    "No changes to historical models, protocols, captures or plots"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "drone_cost": 21500.0,
+  "base_cost": 14600.0,
+  "install_cost": 12000.0,
+  "maintenance_frac": 0.25,
+  "hardware_life_yr": 3.0,
+  "opex_per_base_yr": 8000.0,
+  "ops_staff_yr": 60000.0,
+  "domain_km2": 3808.0,
+  "season_days": 120.0,
+  "cruise_mps": 20.0,
+  "dwell_s": 120.0,
+  "turnaround_s": 600.0,
+  "unserved_threshold_s": 900.0,
+  "max_unserved_share": 0.1,
+  "seasons_per_config": 200,
+  "seed": 20260811
+}

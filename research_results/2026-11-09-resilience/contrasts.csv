@@ -1,0 +1,7 @@
+contrast,kind,n_bases,wind_east_mps,candidate,reference,delta_timely_pp,mc95_low_pp,mc95_high_pp
+b9-w8-off0_minus_healthy,outage,9,8.0,b9-w8-off0,b9-w8-off-1,-9.285037414632553,-9.517002817107807,-9.051753289188103
+b9-w12-off0_minus_healthy,outage,9,12.0,b9-w12-off0,b9-w12-off-1,-6.264091755710225,-6.436769110154616,-6.069281346298238
+b25-w8-off0_minus_healthy,outage,25,8.0,b25-w8-off0,b25-w8-off-1,-1.6828415514818809,-1.7870214475965385,-1.5918749136104653
+b25-w12-off0_minus_healthy,outage,25,12.0,b25-w12-off0,b25-w12-off-1,-2.5781786099402018,-2.7084063296019605,-2.4537345707169838
+loss25_minus_loss9-w8,loss_difference,,8.0,outage25_minus_healthy25,outage9_minus_healthy9,7.602195863150672,7.3650628382904095,7.821125295953642
+loss25_minus_loss9-w12,loss_difference,,12.0,outage25_minus_healthy25,outage9_minus_healthy9,3.6859131457700225,3.486539168167319,3.874631762861478

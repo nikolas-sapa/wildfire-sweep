@@ -64,7 +64,9 @@ The API raises `ValueError` for invalid content, digest mismatch or mutation det
 
 - The root argument may resolve through a directory alias, but all further access is relative to a pinned root directory descriptor.
 - `manifest.json` and each artifact open relative to that descriptor with `O_RDONLY | O_NOFOLLOW | O_NONBLOCK` and must be regular files per fstat: no symlink following, no path traversal, no FIFO or socket reads. Platforms lacking these flags fail loudly rather than degrading silently.
-- Artifacts hash in 1 MiB chunks, never whole-file reads. File identity and metadata (device, inode, size, mtime_ns, ctime_ns; not atime) are compared before and after reading, and all inputs are checked again against the pinned root before the receipt is returned, so a file swapped mid-read fails.
+- Each artifact's initial fstat size is its read byte budget. Reads request at most 1 MiB at a time and never more than the remaining budget, so no whole-file reads and no following continued growth. Short reads consume only the bytes actually returned. EOF before the budget is spent means the file shrank and fails with `ValueError`. After the budget is spent, a single one-byte EOF probe detects appended data: any byte returned means the file grew and also fails with `ValueError`. Growth and truncation are rejected, never silently ignored or hashed as a partial prefix.
+- File identity and metadata (device, inode, size, mtime_ns, ctime_ns; not atime) are compared before and after reading, and all inputs are checked again against the pinned root before the receipt is returned, so a file swapped mid-read fails.
+- The budget scales with each file's own initial size, so it is not a maximum supported file size: large stable files still verify. It bounds bytes read, not elapsed time; it is not a deadline, not an atomic snapshot and not an authenticity claim.
 - Artifact contents are never parsed. Source/protocol hash fields inside the manifest and the capture's original inputs are not revalidated.
 
 ## What the receipt does not mean

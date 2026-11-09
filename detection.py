@@ -110,10 +110,17 @@ def _file_snapshot(path, keep_bytes=False):
             raise ValueError(f"Input is not a regular file: {path.name}")
         signature = _file_signature(info)
         digest, chunks = hashlib.sha256(), []
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
+        remaining = info.st_size
+        while remaining:
+            block = handle.read(min(1024 * 1024, remaining))
+            if not block:
+                raise ValueError(f"Input changed while reading: {path.name}")
             digest.update(block)
             if keep_bytes:
                 chunks.append(block)
+            remaining -= len(block)
+        if handle.read(1):
+            raise ValueError(f"Input grew while reading: {path.name}")
         if (_file_signature(os.fstat(handle.fileno())) != signature
                 or _file_signature(path.stat()) != signature):
             raise ValueError(f"Input changed while reading: {path.name}")

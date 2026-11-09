@@ -125,11 +125,15 @@ def _hash_artifact(root_fd, name, signatures):
     fd, signature = _open_regular(root_fd, name)
     try:
         digest = hashlib.sha256()
-        while True:
-            data = os.read(fd, READ_CHUNK_BYTES)
+        remaining = signature[2]
+        while remaining:
+            data = os.read(fd, min(READ_CHUNK_BYTES, remaining))
             if not data:
-                break
+                raise ValueError("input changed while reading: %r" % name)
             digest.update(data)
+            remaining -= len(data)
+        if os.read(fd, 1):
+            raise ValueError("input grew while reading: %r" % name)
         _require_stable(fd, signature, name)
     finally:
         os.close(fd)

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "input_manifest_sha256": "26088cb4c5a4780d71a104136b898c17b0f4e1f53c5e934e2dd74f698473ff41",
+  "source_sha256": {
+    "render_resilience.py": "d1604b0c2f88acaa2636db7fd057602618a4336f191c60f196826eb5ced9a21f"
+  },
+  "artifact_sha256": {
+    "service.png": "dcfbe6d1d7a44d2aa6dec37394f7b46cc8eb156591dc21e3c629b39f21119e14",
+    "sites.png": "ce249b9b244100e814f18a09c9bc4a593e07ee552c65db6e410440486682bd8c"
+  },
+  "limitations": [
+    "Renders only the frozen captured summary, contrasts, selection, sites and config; no simulation or scoring is rerun.",
+    "Pointwise Monte Carlo intervals condition on the training-selected site; not input, selection, model or field uncertainty.",
+    "Selected site is worst in training, not a real optimal site or a failure-probability claim.",
+    "Synthetic grid coordinates, not an actual Attica map; not field validation."
+  ]
+}

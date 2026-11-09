@@ -31,6 +31,7 @@ ALLOWED_IMPORTS = {
     "os",
     "pathlib",
     "re",
+    "stat",
     "sys",
     "typing",
     "matplotlib",

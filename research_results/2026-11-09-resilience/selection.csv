@@ -1,0 +1,5 @@
+nominal_spacing_km,n_bases,drones_per_base,wind_east_mps,offline_base,case_id,training_timely,training_real_alerts,selection_rule
+16.0,9,1,8.0,0,b9-w8-off0,7633,9362,"Minimum pooled training timely count, ties lowest original base index"
+16.0,9,1,12.0,0,b9-w12-off0,5038,9362,"Minimum pooled training timely count, ties lowest original base index"
+12.0,25,1,8.0,0,b25-w8-off0,9174,9362,"Minimum pooled training timely count, ties lowest original base index"
+12.0,25,1,12.0,0,b25-w12-off0,8876,9362,"Minimum pooled training timely count, ties lowest original base index"
