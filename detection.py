@@ -2,9 +2,12 @@ import argparse
 import csv
 from dataclasses import asdict, dataclass
 import hashlib
+import io
 import json
 import math
+import os
 from pathlib import Path
+import stat
 
 import numpy as np
 
@@ -94,7 +97,30 @@ def validate_labels(rows, recording_id, sample_count):
     return [selected[index] for index in range(sample_count)]
 
 
-def main():
+def _file_signature(info):
+    return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+
+def _file_snapshot(path, keep_bytes=False):
+    if not path.is_file():
+        raise FileNotFoundError(f"An existing regular input file is required: {path.name}")
+    with path.open("rb") as handle:
+        info = os.fstat(handle.fileno())
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError(f"Input is not a regular file: {path.name}")
+        signature = _file_signature(info)
+        digest, chunks = hashlib.sha256(), []
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+            if keep_bytes:
+                chunks.append(block)
+        if (_file_signature(os.fstat(handle.fileno())) != signature
+                or _file_signature(path.stat()) != signature):
+            raise ValueError(f"Input changed while reading: {path.name}")
+    return digest.hexdigest(), signature, b"".join(chunks) if keep_bytes else None
+
+
+def main(argv=None):
     from video_io import FRAME_GEOMETRY, iter_video_frames
 
     parser = argparse.ArgumentParser(description="Exploratory RGB fire-color baseline, not a smoke or safety detector")
@@ -104,53 +130,79 @@ def main():
     parser.add_argument("--sample-fps", type=float, default=1.0)
     parser.add_argument("--max-frames", type=int, default=600)
     parser.add_argument("--labels", type=Path)
-    args = parser.parse_args()
-    config = CandidateConfig()
-    frames = iter_video_frames(args.video, args.sample_fps, args.max_frames)
-    rows = list(predict_frames(frames, config))
-    metrics = None
-    if args.labels is not None:
-        with args.labels.open(newline="") as handle:
-            labels = validate_labels(list(csv.DictReader(handle)), args.recording_id, len(rows))
-        metrics = frame_metrics(labels, [r["alarm"] for r in rows])
-    args.output.mkdir(parents=True, exist_ok=False)
-    with (args.output / "predictions.csv").open("x", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["recording_id"] + list(rows[0]))
-        writer.writeheader()
-        writer.writerows({"recording_id": args.recording_id, **row} for row in rows)
-    digest = hashlib.sha256()
-    with args.video.open("rb") as handle:
-        for block in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(block)
-    manifest = {
-        "schema_version": 1, "status": "complete",
-        "baseline": "exploratory RGB color + consecutive-sample persistence",
-        "config": asdict(config), "input_name": args.video.name, "input_sha256": digest.hexdigest(),
-        "recording_id": args.recording_id, "sample_fps": args.sample_fps,
-        "max_frames": args.max_frames, "decoded_frames": len(rows), "geometry": FRAME_GEOMETRY,
-        "numpy": np.__version__,
-        "source_sha256": {
-            name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-            for name in ("detection.py", "video_io.py")
-        },
-        "labels_sha256": hashlib.sha256(args.labels.read_bytes()).hexdigest() if args.labels else None,
-        "artifact_sha256": {
-            "predictions.csv": hashlib.sha256((args.output / "predictions.csv").read_bytes()).hexdigest(),
-        },
-        "metrics": metrics,
-        "limitations": [
-            "Thresholds are declared engineering assumptions, not fitted or validated on drone data.",
-            "Pixel fraction is not probability/confidence. Orange objects and sunlight can trigger it.",
-            "Smoke, obscured flames, thermal imagery, tiny distant fires and camera motion are not modelled.",
-            "Persistence delays alarms and does not track spatially consistent fire regions.",
-            "No labels means no accuracy claim. One recording cannot establish generalisation.",
-            "Sample times use the resampled video timeline, not source sensor capture timestamps.",
-            "No autonomous dispatch, camera control, network service or flight integration.",
-        ],
-    }
-    (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2, allow_nan=False) + "\n")
-    print(f"Wrote {len(rows)} sampled-frame predictions to {args.output}; labels {'evaluated' if metrics else 'not supplied'}")
+    args = parser.parse_args(argv)
+    if args.output.exists() or args.output.is_symlink():
+        parser.error(f"Refusing existing output: {args.output}")
+    if not args.recording_id.strip():
+        parser.error("Supply a nonempty recording ID")
+    if not math.isfinite(args.sample_fps) or not 0 < args.sample_fps <= 30:
+        parser.error("sample_fps must be finite and in (0, 30]")
+    if not 1 <= args.max_frames <= 100000:
+        parser.error("max_frames must be an integer in [1, 100000]")
+    try:
+        video = args.video.resolve()
+        video_snapshot = _file_snapshot(video)
+        source_paths = {name: Path(__file__).with_name(name).resolve()
+                        for name in ("detection.py", "video_io.py")}
+        source_snapshots = {name: _file_snapshot(path) for name, path in source_paths.items()}
+        labels_path = args.labels.resolve() if args.labels is not None else None
+        labels_snapshot = _file_snapshot(labels_path, keep_bytes=True) if labels_path else None
+        config = CandidateConfig()
+        frames = iter_video_frames(video, args.sample_fps, args.max_frames)
+        try:
+            rows = list(predict_frames(frames, config))
+        finally:
+            frames.close()
+        metrics = None
+        if labels_snapshot is not None:
+            try:
+                with io.StringIO(labels_snapshot[2].decode("utf-8"), newline="") as handle:
+                    labels = validate_labels(list(csv.DictReader(handle)), args.recording_id, len(rows))
+            except (csv.Error, KeyError, TypeError) as error:
+                raise ValueError("Malformed completed-label CSV") from error
+            metrics = frame_metrics(labels, [row["alarm"] for row in rows])
+        checks = [(video, video_snapshot)]
+        checks.extend((source_paths[name], snapshot) for name, snapshot in source_snapshots.items())
+        if labels_snapshot is not None:
+            checks.append((labels_path, labels_snapshot))
+        for path, original in checks:
+            if _file_snapshot(path)[:2] != original[:2]:
+                raise ValueError(f"Input changed during capture: {path.name}")
+        args.output.mkdir(parents=True, exist_ok=False)
+        with (args.output / "predictions.csv").open("x", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=["recording_id"] + list(rows[0]))
+            writer.writeheader()
+            writer.writerows({"recording_id": args.recording_id, **row} for row in rows)
+        manifest = {
+            "schema_version": 1, "status": "complete",
+            "baseline": "exploratory RGB color + consecutive-sample persistence",
+            "config": asdict(config), "input_name": args.video.name, "input_sha256": video_snapshot[0],
+            "recording_id": args.recording_id, "sample_fps": args.sample_fps,
+            "max_frames": args.max_frames, "decoded_frames": len(rows), "geometry": FRAME_GEOMETRY,
+            "numpy": np.__version__,
+            "source_sha256": {name: snapshot[0] for name, snapshot in source_snapshots.items()},
+            "labels_sha256": labels_snapshot[0] if labels_snapshot else None,
+            "artifact_sha256": {
+                "predictions.csv": hashlib.sha256((args.output / "predictions.csv").read_bytes()).hexdigest(),
+            },
+            "metrics": metrics,
+            "limitations": [
+                "Thresholds are declared engineering assumptions, not fitted or validated on drone data.",
+                "Pixel fraction is not probability/confidence. Orange objects and sunlight can trigger it.",
+                "Smoke, obscured flames, thermal imagery, tiny distant fires and camera motion are not modelled.",
+                "Persistence delays alarms and does not track spatially consistent fire regions.",
+                "No labels means no accuracy claim. One recording cannot establish generalisation.",
+                "Sample times use the resampled video timeline, not source sensor capture timestamps.",
+                "No autonomous dispatch, camera control, network service or flight integration.",
+            ],
+        }
+        with (args.output / "manifest.json").open("x") as handle:
+            handle.write(json.dumps(manifest, indent=2, allow_nan=False) + "\n")
+        print(f"Wrote {len(rows)} sampled-frame predictions to {args.output}; labels {'evaluated' if metrics else 'not supplied'}")
+    except (OSError, ValueError, RuntimeError) as error:
+        parser.error(str(error))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

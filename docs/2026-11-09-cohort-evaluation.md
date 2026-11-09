@@ -59,6 +59,8 @@ Each test report must land at exactly the `event_report_dir` path the frozen reg
 
 The evaluator requires every planned test report to exist, and binds each report's artifact hashes, exact packet digest and video identity against the frozen registry. All reports must share the same event protocol, detector configuration, `sample_fps`, scientific source fingerprints and decoder source fingerprints; a different sampling rate fundamentally changes consecutive-frame persistence, and incompatible captures fail rather than being rerun. Output is `summary.csv`, `records.csv`, `report.json`, `cluster_draws.npz` and `manifest.json` in a fresh directory, with checksums and provenance recorded. `cluster_draws.npz` stores the exact resampled cluster index matrix and ordered IDs, and `report.json` records canonical per-record numeric inputs, so the aggregation can be audited without regenerating detector outputs.
 
+The event report's blank-packet label digest must also match the registered packet's verified manifest. Predictions and completed-label digests remain upstream provenance declarations, not inputs independently reopened by cohort aggregation. Retain those source captures and completed labels for audit; neither these checks nor a byte-integrity receipt authenticate human labels.
+
 ## Step 5: Render the captured summary
 
 ```sh

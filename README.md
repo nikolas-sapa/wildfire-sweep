@@ -123,6 +123,8 @@ The published summary and chart are already available above. Inspecting them doe
 
 Use Python 3.10 or newer. These commands create a fresh local environment and output directory:
 
+The full test suite also requires externally installed FFmpeg on your command path; Python dependencies alone are insufficient.
+
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
@@ -167,6 +169,17 @@ The original sweep scripts remain available for provenance. Their `--check` mode
 .venv/bin/python suppression.py --check
 .venv/bin/python sensitivity.py --check
 ```
+
+### Verify a capture's listed bytes
+
+The additive integrity layer checks that the files a complete schema-v1 `manifest.json` lists still hash to their declared digests, then emits a fresh receipt. It runs no detector, evaluation, simulation or renderer code.
+
+```sh
+.venv/bin/python verify_capture.py CAPTURE_DIR
+.venv/bin/python verify_capture.py CAPTURE_DIR --output research-runs/NEW_RECEIPT.json
+```
+
+The output path is checked before any input is read; its parent must exist and the receipt file must be new. A verified receipt means the listed bytes did not change; it is no evidence of completeness, authenticity, label truth, split independence, detector accuracy or scientific validity. Semantics and limits are in the [capture-integrity quickstart](docs/2026-11-09-capture-integrity.md).
 
 ## Recorded-video baseline
 
@@ -242,17 +255,23 @@ The freeze binds blank annotation packets and planned test report paths; human l
 | [`annotation_packet.py`](annotation_packet.py), [`event_evaluation.py`](event_evaluation.py) and [`event_protocol.json`](event_protocol.json) | Blinded annotation packets, sampled event-episode evaluation and the fixed protocol. |
 | [`cohort_registry.py`](cohort_registry.py), [`cohort_evaluation.py`](cohort_evaluation.py) and [`cohort_protocol.json`](cohort_protocol.json) | Frozen cohort registry with leakage guards, pooled metrics and seeded cluster-bootstrap intervals; fixed aggregation protocol. |
 | [`render_cohort.py`](render_cohort.py) | Capture-only renderer for a cohort summary. |
+| [`capture_integrity.py`](capture_integrity.py) and [`verify_capture.py`](verify_capture.py) | Byte-integrity receipt layer and CLI for listed capture artifacts. |
 | [`sweep.py`](sweep.py), [`suppression.py`](suppression.py), [`sensitivity.py`](sensitivity.py) | Historical analyses and their self-checks. |
 | [`test_research.py`](test_research.py), [`test_robustness.py`](test_robustness.py), [`test_robustness_results.py`](test_robustness_results.py), [`test_render_robustness.py`](test_render_robustness.py), and other `test_*.py` files | Tests for model mechanics, paired stress analysis, renderer validation, I/O, and frozen capture integrity. |
 | [`field_protocol.json`](field_protocol.json) | Proposed evidence protocol; not flight authorization. |
 | [`requirements.txt`](requirements.txt) | Direct Python dependencies. FFmpeg is external. |
-| [`results.csv`](results.csv), [`suppression.csv`](suppression.csv), [`pareto.png`](pareto.png), [`suppression.png`](suppression.png) | Historical outputs; preserved as provenance. |
+| [`pareto.png`](pareto.png), [`suppression.png`](suppression.png); local `results.csv`, `suppression.csv` | Historical plots are included. Ignored root CSV outputs may exist locally but are not included in a fresh clone. |
 | [`research_results/2026-11-07-anchor/`](research_results/2026-11-07-anchor/) | Published frozen anchor evidence. |
 | [`research_results/2026-11-08-robustness/summary.csv`](research_results/2026-11-08-robustness/summary.csv) | Published frozen assumption-stress capture and rendered chart. |
 | [`research_results/2026-11-08-factorial/`](research_results/2026-11-08-factorial/) | Full-factorial extension capture and rendered chart. |
 | `research-runs/` | Ignored local output area for new, non-overwriting runs. |
 | [`docs/2026-11-08-video-evaluation.md`](docs/2026-11-08-video-evaluation.md) | Recorded-video event-evaluation quickstart. |
 | [`docs/2026-11-09-cohort-evaluation.md`](docs/2026-11-09-cohort-evaluation.md) | Cohort registry and evaluation quickstart. |
+| [`docs/2026-11-09-capture-integrity.md`](docs/2026-11-09-capture-integrity.md) | Capture byte-integrity quickstart. |
+| [`docs/data-collection-checklist.md`](docs/data-collection-checklist.md) | Software-side collection and handoff checklist. |
+| [`docs/responsible-data-handling.md`](docs/responsible-data-handling.md) | Handling notes for recordings, labels and rights records. |
+| [`docs/reproducibility-runbook.md`](docs/reproducibility-runbook.md) | Runbook for reproducing checks, captures and receipts. |
+| [`docs/research-project-brief.md`](docs/research-project-brief.md) | One-page project description and evidence summary. |
 | [`docs/`](docs/) | Historical build and research notes. |
 
 ## Evidence and limitations

@@ -262,10 +262,16 @@ def _read_report(registry, row, event_protocol, event_protocol_digest):
             or manifest.get("protocol") != event_protocol):
         raise ValueError("Test report identity, status or event protocol disagrees with registry")
     inputs = _hash_map(manifest.get("input_manifest_sha256"), ("annotation", "predictions"))
-    _hash_map(manifest.get("input_artifact_sha256"),
-              ("predictions.csv", "packet_labels.csv", "completed_labels.csv"))
+    input_artifacts = _hash_map(manifest.get("input_artifact_sha256"),
+                                ("predictions.csv", "packet_labels.csv", "completed_labels.csv"))
     if inputs["annotation"] != row["packet_manifest_sha256"]:
         raise ValueError("Event report does not bind to the registered annotation packet")
+    packet_content = (registry / row["packet_dir"] / "manifest.json").read_bytes()
+    if _digest_bytes(packet_content) != row["packet_manifest_sha256"]:
+        raise ValueError("Registered annotation packet manifest changed")
+    packet = json.loads(packet_content)
+    if input_artifacts["packet_labels.csv"] != packet["artifact_sha256"]["labels.csv"]:
+        raise ValueError("Event report does not bind to the registered packet labels")
     sources = _hash_map(manifest.get("source_sha256"),
                         ("event_evaluation.py", "event_protocol.json", "detection.py"))
     if sources["event_protocol.json"] != event_protocol_digest:

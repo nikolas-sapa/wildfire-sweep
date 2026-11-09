@@ -92,6 +92,16 @@ class CohortCaptureTests(unittest.TestCase):
             run_cohort(self.registry, self.output)
         self.assertFalse(self.output.exists())
 
+    def test_report_packet_labels_binding_fails(self):
+        path = self.root / "event-r2/manifest.json"
+        manifest = json.loads(path.read_text())
+        self.assertNotEqual(manifest["input_artifact_sha256"]["packet_labels.csv"], "a"*64)
+        manifest["input_artifact_sha256"]["packet_labels.csv"] = "a"*64
+        path.write_text(json.dumps(manifest))
+        with self.assertRaisesRegex(ValueError, "packet labels"):
+            run_cohort(self.registry, self.output)
+        self.assertFalse(self.output.exists())
+
     def test_incompatible_configs_sources_and_rates_fail(self):
         path = self.root / "event-r2/manifest.json"
         original = path.read_bytes()
