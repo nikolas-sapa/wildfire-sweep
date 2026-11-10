@@ -1,0 +1,677 @@
+{
+  "calm_and_closure": [
+    {
+      "airspeed_mps": 18.0,
+      "case_id": "b9-w0-calm-reference-offnone",
+      "endurance_min": 46.0,
+      "heading_deg": null,
+      "late_cells": 0,
+      "launch_latency_s": 60.0,
+      "n_bases": 9,
+      "offline_bases": [],
+      "profile": "reference",
+      "reachable_area_fraction": 1.0,
+      "reference_case_id": "b9-w0-calm-reference-offnone",
+      "reserve_fraction": 0.25,
+      "timely_area_fraction": 1.0,
+      "timely_area_loss_pp": 0.0,
+      "timely_area_percent": 100.0,
+      "timely_cells": 6400,
+      "total_cells": 6400,
+      "unreachable_cells": 0,
+      "weather_closed_cells": 0,
+      "wind_mps": [
+        0.0,
+        0.0
+      ],
+      "wind_speed_mps": 0.0
+    },
+    {
+      "airspeed_mps": 18.0,
+      "case_id": "b9-w13-h000-reference-offnone",
+      "endurance_min": 46.0,
+      "heading_deg": 0,
+      "late_cells": 0,
+      "launch_latency_s": 60.0,
+      "n_bases": 9,
+      "offline_bases": [],
+      "profile": "reference",
+      "reachable_area_fraction": 0.0,
+      "reference_case_id": "b9-w13-h000-reference-offnone",
+      "reserve_fraction": 0.25,
+      "timely_area_fraction": 0.0,
+      "timely_area_loss_pp": 0.0,
+      "timely_area_percent": 0.0,
+      "timely_cells": 0,
+      "total_cells": 6400,
+      "unreachable_cells": 0,
+      "weather_closed_cells": 6400,
+      "wind_mps": [
+        13.0,
+        0.0
+      ],
+      "wind_speed_mps": 13.0
+    },
+    {
+      "airspeed_mps": 18.0,
+      "case_id": "b25-w0-calm-reference-offnone",
+      "endurance_min": 46.0,
+      "heading_deg": null,
+      "late_cells": 0,
+      "launch_latency_s": 60.0,
+      "n_bases": 25,
+      "offline_bases": [],
+      "profile": "reference",
+      "reachable_area_fraction": 1.0,
+      "reference_case_id": "b25-w0-calm-reference-offnone",
+      "reserve_fraction": 0.25,
+      "timely_area_fraction": 1.0,
+      "timely_area_loss_pp": 0.0,
+      "timely_area_percent": 100.0,
+      "timely_cells": 6400,
+      "total_cells": 6400,
+      "unreachable_cells": 0,
+      "weather_closed_cells": 0,
+      "wind_mps": [
+        0.0,
+        0.0
+      ],
+      "wind_speed_mps": 0.0
+    },
+    {
+      "airspeed_mps": 18.0,
+      "case_id": "b25-w13-h000-reference-offnone",
+      "endurance_min": 46.0,
+      "heading_deg": 0,
+      "late_cells": 0,
+      "launch_latency_s": 60.0,
+      "n_bases": 25,
+      "offline_bases": [],
+      "profile": "reference",
+      "reachable_area_fraction": 0.0,
+      "reference_case_id": "b25-w13-h000-reference-offnone",
+      "reserve_fraction": 0.25,
+      "timely_area_fraction": 0.0,
+      "timely_area_loss_pp": 0.0,
+      "timely_area_percent": 0.0,
+      "timely_cells": 0,
+      "total_cells": 6400,
+      "unreachable_cells": 0,
+      "weather_closed_cells": 6400,
+      "wind_mps": [
+        13.0,
+        0.0
+      ],
+      "wind_speed_mps": 13.0
+    }
+  ],
+  "capture_sha256": {
+    "160": "9a72f72a0fe2501f7f3b9159564dba70b357159a975e7282c2f98f2d1e6cbc23",
+    "40": "b73d15d04d47d8b07c6a5d55ae475504bd8bd630ce096d277b5fd0afb389feee",
+    "80": "8ee40a8a503a3d498a2299216c8e66f4b6412a57eb93e33b5663f8b6026a3ed1"
+  },
+  "default_grid_n": 80,
+  "kind": "captured-coverage-analysis",
+  "limitations": [
+    "Synthetic square, hypothetical aircraft and fixed wind; not real geography or field validation.",
+    "Equal-area cell-center approximation; not a season response rate or ignition probability.",
+    "Each point is an independent single alert with all available drones initially idle; no queueing.",
+    "Selected two-site outages are not exhaustive or worst-pair optimization.",
+    "No terrain, time-varying weather, upstream detection latency, detector accuracy or flight control.",
+    "Resolution differences are numerical sensitivity, not confidence intervals.",
+    "Hashes establish source/artifact consistency, not authenticity or independent scientific validation."
+  ],
+  "networks": [
+    {
+      "by_heading": [
+        {
+          "heading_deg": 0,
+          "healthy_case_id": "b9-w12-h000-reference-offnone",
+          "healthy_timely_area_percent": 60.3125,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h000-reference-off0_1",
+          "largest_selected_double_loss_pp": 12.859375,
+          "largest_single_loss_base_ids": [
+            2
+          ],
+          "largest_single_loss_case_id": "b9-w12-h000-reference-off2",
+          "largest_single_loss_pp": 6.4531250000000036
+        },
+        {
+          "heading_deg": 45,
+          "healthy_case_id": "b9-w12-h045-reference-offnone",
+          "healthy_timely_area_percent": 63.796875,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h045-reference-off0_1",
+          "largest_selected_double_loss_pp": 14.468749999999996,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b9-w12-h045-reference-off0",
+          "largest_single_loss_pp": 7.234374999999993
+        },
+        {
+          "heading_deg": 90,
+          "healthy_case_id": "b9-w12-h090-reference-offnone",
+          "healthy_timely_area_percent": 60.3125,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h090-reference-off0_1",
+          "largest_selected_double_loss_pp": 13.156250000000004,
+          "largest_single_loss_base_ids": [
+            6
+          ],
+          "largest_single_loss_case_id": "b9-w12-h090-reference-off6",
+          "largest_single_loss_pp": 6.4531250000000036
+        },
+        {
+          "heading_deg": 135,
+          "healthy_case_id": "b9-w12-h135-reference-offnone",
+          "healthy_timely_area_percent": 63.796875,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h135-reference-off0_1",
+          "largest_selected_double_loss_pp": 14.265624999999998,
+          "largest_single_loss_base_ids": [
+            1
+          ],
+          "largest_single_loss_case_id": "b9-w12-h135-reference-off1",
+          "largest_single_loss_pp": 7.234374999999993
+        },
+        {
+          "heading_deg": 180,
+          "healthy_case_id": "b9-w12-h180-reference-offnone",
+          "healthy_timely_area_percent": 60.3125,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h180-reference-off0_1",
+          "largest_selected_double_loss_pp": 12.875000000000004,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b9-w12-h180-reference-off0",
+          "largest_single_loss_pp": 6.4531250000000036
+        },
+        {
+          "heading_deg": 225,
+          "healthy_case_id": "b9-w12-h225-reference-offnone",
+          "healthy_timely_area_percent": 63.796875,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            4
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h225-reference-off0_4",
+          "largest_selected_double_loss_pp": 13.999999999999996,
+          "largest_single_loss_base_ids": [
+            5
+          ],
+          "largest_single_loss_case_id": "b9-w12-h225-reference-off5",
+          "largest_single_loss_pp": 7.234374999999993
+        },
+        {
+          "heading_deg": 270,
+          "healthy_case_id": "b9-w12-h270-reference-offnone",
+          "healthy_timely_area_percent": 60.3125,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h270-reference-off0_1",
+          "largest_selected_double_loss_pp": 13.125000000000004,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b9-w12-h270-reference-off0",
+          "largest_single_loss_pp": 6.4531250000000036
+        },
+        {
+          "heading_deg": 315,
+          "healthy_case_id": "b9-w12-h315-reference-offnone",
+          "healthy_timely_area_percent": 63.796875,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            4
+          ],
+          "largest_selected_double_loss_case_id": "b9-w12-h315-reference-off0_4",
+          "largest_selected_double_loss_pp": 14.218749999999996,
+          "largest_single_loss_base_ids": [
+            3
+          ],
+          "largest_single_loss_case_id": "b9-w12-h315-reference-off3",
+          "largest_single_loss_pp": 7.234374999999993
+        }
+      ],
+      "healthy_max_percent": 63.796875,
+      "healthy_min_percent": 60.3125,
+      "healthy_stress_heading0": [
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b9-w12-h000-reference-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 1512,
+          "launch_latency_s": 60.0,
+          "n_bases": 9,
+          "offline_bases": [],
+          "profile": "reference",
+          "reachable_area_fraction": 0.839375,
+          "reference_case_id": "b9-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.603125,
+          "timely_area_loss_pp": 0.0,
+          "timely_area_percent": 60.3125,
+          "timely_cells": 3860,
+          "total_cells": 6400,
+          "unreachable_cells": 1028,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b9-w12-h000-short_endurance-offnone",
+          "endurance_min": 36.0,
+          "heading_deg": 0,
+          "late_cells": 622,
+          "launch_latency_s": 60.0,
+          "n_bases": 9,
+          "offline_bases": [],
+          "profile": "short_endurance",
+          "reachable_area_fraction": 0.55875,
+          "reference_case_id": "b9-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.4615625,
+          "timely_area_loss_pp": 14.156250000000004,
+          "timely_area_percent": 46.15625,
+          "timely_cells": 2954,
+          "total_cells": 6400,
+          "unreachable_cells": 2824,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b9-w12-h000-larger_reserve-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 992,
+          "launch_latency_s": 60.0,
+          "n_bases": 9,
+          "offline_bases": [],
+          "profile": "larger_reserve",
+          "reachable_area_fraction": 0.676875,
+          "reference_case_id": "b9-w12-h000-reference-offnone",
+          "reserve_fraction": 0.35,
+          "timely_area_fraction": 0.521875,
+          "timely_area_loss_pp": 8.125000000000004,
+          "timely_area_percent": 52.1875,
+          "timely_cells": 3340,
+          "total_cells": 6400,
+          "unreachable_cells": 2068,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b9-w12-h000-slow_launch-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 1816,
+          "launch_latency_s": 180.0,
+          "n_bases": 9,
+          "offline_bases": [],
+          "profile": "slow_launch",
+          "reachable_area_fraction": 0.839375,
+          "reference_case_id": "b9-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.555625,
+          "timely_area_loss_pp": 4.749999999999998,
+          "timely_area_percent": 55.5625,
+          "timely_cells": 3556,
+          "total_cells": 6400,
+          "unreachable_cells": 1028,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b9-w12-h000-combined-offnone",
+          "endurance_min": 36.0,
+          "heading_deg": 0,
+          "late_cells": 452,
+          "launch_latency_s": 180.0,
+          "n_bases": 9,
+          "offline_bases": [],
+          "profile": "combined",
+          "reachable_area_fraction": 0.40875,
+          "reference_case_id": "b9-w12-h000-reference-offnone",
+          "reserve_fraction": 0.35,
+          "timely_area_fraction": 0.338125,
+          "timely_area_loss_pp": 26.5,
+          "timely_area_percent": 33.8125,
+          "timely_cells": 2164,
+          "total_cells": 6400,
+          "unreachable_cells": 3784,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        }
+      ],
+      "n_bases": 9
+    },
+    {
+      "by_heading": [
+        {
+          "heading_deg": 0,
+          "healthy_case_id": "b25-w12-h000-reference-offnone",
+          "healthy_timely_area_percent": 97.34375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h000-reference-off0_1",
+          "largest_selected_double_loss_pp": 5.281249999999993,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b25-w12-h000-reference-off0",
+          "largest_single_loss_pp": 2.6406249999999964
+        },
+        {
+          "heading_deg": 45,
+          "healthy_case_id": "b25-w12-h045-reference-offnone",
+          "healthy_timely_area_percent": 99.609375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h045-reference-off0_1",
+          "largest_selected_double_loss_pp": 7.703125,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b25-w12-h045-reference-off0",
+          "largest_single_loss_pp": 4.078124999999999
+        },
+        {
+          "heading_deg": 90,
+          "healthy_case_id": "b25-w12-h090-reference-offnone",
+          "healthy_timely_area_percent": 97.34375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h090-reference-off0_1",
+          "largest_selected_double_loss_pp": 6.640625,
+          "largest_single_loss_base_ids": [
+            0
+          ],
+          "largest_single_loss_case_id": "b25-w12-h090-reference-off0",
+          "largest_single_loss_pp": 2.6406249999999964
+        },
+        {
+          "heading_deg": 135,
+          "healthy_case_id": "b25-w12-h135-reference-offnone",
+          "healthy_timely_area_percent": 99.609375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h135-reference-off0_1",
+          "largest_selected_double_loss_pp": 5.921874999999998,
+          "largest_single_loss_base_ids": [
+            4
+          ],
+          "largest_single_loss_case_id": "b25-w12-h135-reference-off4",
+          "largest_single_loss_pp": 4.078124999999999
+        },
+        {
+          "heading_deg": 180,
+          "healthy_case_id": "b25-w12-h180-reference-offnone",
+          "healthy_timely_area_percent": 97.34375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h180-reference-off0_1",
+          "largest_selected_double_loss_pp": 4.359374999999998,
+          "largest_single_loss_base_ids": [
+            24
+          ],
+          "largest_single_loss_case_id": "b25-w12-h180-reference-off24",
+          "largest_single_loss_pp": 2.6406249999999964
+        },
+        {
+          "heading_deg": 225,
+          "healthy_case_id": "b25-w12-h225-reference-offnone",
+          "healthy_timely_area_percent": 99.609375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h225-reference-off0_1",
+          "largest_selected_double_loss_pp": 4.437500000000005,
+          "largest_single_loss_base_ids": [
+            24
+          ],
+          "largest_single_loss_case_id": "b25-w12-h225-reference-off24",
+          "largest_single_loss_pp": 4.078124999999999
+        },
+        {
+          "heading_deg": 270,
+          "healthy_case_id": "b25-w12-h270-reference-offnone",
+          "healthy_timely_area_percent": 97.34375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h270-reference-off0_1",
+          "largest_selected_double_loss_pp": 4.656249999999995,
+          "largest_single_loss_base_ids": [
+            20
+          ],
+          "largest_single_loss_case_id": "b25-w12-h270-reference-off20",
+          "largest_single_loss_pp": 2.6406249999999964
+        },
+        {
+          "heading_deg": 315,
+          "healthy_case_id": "b25-w12-h315-reference-offnone",
+          "healthy_timely_area_percent": 99.609375,
+          "largest_selected_double_loss_base_ids": [
+            0,
+            1
+          ],
+          "largest_selected_double_loss_case_id": "b25-w12-h315-reference-off0_1",
+          "largest_selected_double_loss_pp": 4.7812500000000036,
+          "largest_single_loss_base_ids": [
+            20
+          ],
+          "largest_single_loss_case_id": "b25-w12-h315-reference-off20",
+          "largest_single_loss_pp": 4.078124999999999
+        }
+      ],
+      "healthy_max_percent": 99.609375,
+      "healthy_min_percent": 97.34375,
+      "healthy_stress_heading0": [
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b25-w12-h000-reference-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 170,
+          "launch_latency_s": 60.0,
+          "n_bases": 25,
+          "offline_bases": [],
+          "profile": "reference",
+          "reachable_area_fraction": 1.0,
+          "reference_case_id": "b25-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.9734375,
+          "timely_area_loss_pp": 0.0,
+          "timely_area_percent": 97.34375,
+          "timely_cells": 6230,
+          "total_cells": 6400,
+          "unreachable_cells": 0,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b25-w12-h000-short_endurance-offnone",
+          "endurance_min": 36.0,
+          "heading_deg": 0,
+          "late_cells": 530,
+          "launch_latency_s": 60.0,
+          "n_bases": 25,
+          "offline_bases": [],
+          "profile": "short_endurance",
+          "reachable_area_fraction": 1.0,
+          "reference_case_id": "b25-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.9171875,
+          "timely_area_loss_pp": 5.624999999999991,
+          "timely_area_percent": 91.71875,
+          "timely_cells": 5870,
+          "total_cells": 6400,
+          "unreachable_cells": 0,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b25-w12-h000-larger_reserve-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 290,
+          "launch_latency_s": 60.0,
+          "n_bases": 25,
+          "offline_bases": [],
+          "profile": "larger_reserve",
+          "reachable_area_fraction": 1.0,
+          "reference_case_id": "b25-w12-h000-reference-offnone",
+          "reserve_fraction": 0.35,
+          "timely_area_fraction": 0.9546875,
+          "timely_area_loss_pp": 1.8749999999999933,
+          "timely_area_percent": 95.46875,
+          "timely_cells": 6110,
+          "total_cells": 6400,
+          "unreachable_cells": 0,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b25-w12-h000-slow_launch-offnone",
+          "endurance_min": 46.0,
+          "heading_deg": 0,
+          "late_cells": 280,
+          "launch_latency_s": 180.0,
+          "n_bases": 25,
+          "offline_bases": [],
+          "profile": "slow_launch",
+          "reachable_area_fraction": 1.0,
+          "reference_case_id": "b25-w12-h000-reference-offnone",
+          "reserve_fraction": 0.25,
+          "timely_area_fraction": 0.95625,
+          "timely_area_loss_pp": 1.7187499999999911,
+          "timely_area_percent": 95.625,
+          "timely_cells": 6120,
+          "total_cells": 6400,
+          "unreachable_cells": 0,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        },
+        {
+          "airspeed_mps": 18.0,
+          "case_id": "b25-w12-h000-combined-offnone",
+          "endurance_min": 36.0,
+          "heading_deg": 0,
+          "late_cells": 1000,
+          "launch_latency_s": 180.0,
+          "n_bases": 25,
+          "offline_bases": [],
+          "profile": "combined",
+          "reachable_area_fraction": 0.9375,
+          "reference_case_id": "b25-w12-h000-reference-offnone",
+          "reserve_fraction": 0.35,
+          "timely_area_fraction": 0.78125,
+          "timely_area_loss_pp": 19.218749999999996,
+          "timely_area_percent": 78.125,
+          "timely_cells": 5000,
+          "total_cells": 6400,
+          "unreachable_cells": 400,
+          "weather_closed_cells": 0,
+          "wind_mps": [
+            12.0,
+            0.0
+          ],
+          "wind_speed_mps": 12.0
+        }
+      ],
+      "n_bases": 25
+    }
+  ],
+  "resolution": {
+    "comparison_grid_n": 160,
+    "max_abs_g40_minus_g160_pp": 3.6328125000000044,
+    "max_abs_g80_minus_g160_pp": 0.9374999999999911,
+    "not_an_error_bound": true
+  },
+  "scenario_count": 388,
+  "schema_version": 1,
+  "source_sha256": {
+    "coverage_capture.py": "cacdfd2a9ffdd1644f486e746215e803df7c313d8d10e1823048e214e2787bd9",
+    "coverage_engine.py": "23279995443b22e2a67ac7cac574a6dfd1ae5306f4ec2d9888696b8295d6844d",
+    "coverage_scenarios.py": "4ac710ed3ed6239fd3744ff612f76921b1583bcb4db44d1bc3360c2a09ab3273",
+    "research.py": "45ddfd1837602061adc2914b575787498921a276110c6cbee33d312b38fa5301",
+    "simulator_engine.py": "54e1512f162926c3a309f3f0d9009892c9a56de291a0fc4eeb63ed6180459b0e",
+    "simulator_protocol.json": "34d9421233591efa6da5364b7449a669dc480ab23363581f5bb3ca947a53e280",
+    "sweep.py": "88b6fc6f35b068c813a19c800d608cea73e4bbacdae5bb8fa84074c4d2700d5e"
+  }
+}

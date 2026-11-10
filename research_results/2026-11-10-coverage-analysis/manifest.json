@@ -1,0 +1,15 @@
+{
+  "analysis_source_sha256": "f93665b3ff3dac4367d0a6b2ef56a074a1c7864240fa5edecc47ce8b694098e0",
+  "capture_sha256": {
+    "160": "9a72f72a0fe2501f7f3b9159564dba70b357159a975e7282c2f98f2d1e6cbc23",
+    "40": "b73d15d04d47d8b07c6a5d55ae475504bd8bd630ce096d277b5fd0afb389feee",
+    "80": "8ee40a8a503a3d498a2299216c8e66f4b6412a57eb93e33b5663f8b6026a3ed1"
+  },
+  "files": {
+    "analysis.json": "1a9b27c9464a4197e7665a65ed0954ee19998bae7f76b6e3ff4a2d4dc4025c6a",
+    "resolution.csv": "25d19114edd297f70c49ab08b9d6ad0448170c850e137ec3224598360abc2334",
+    "summary.csv": "52c4176ed5d79f2078a033d4a3f7bc60f0e3fc4f0b58d49d190182f7fe5f34ba"
+  },
+  "kind": "coverage-analysis-receipt",
+  "schema_version": 1
+}
