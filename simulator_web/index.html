@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A local synthetic mission sandbox and frozen-season replay explorer."
+    >
+    <title>Wildfire Sweep / Mission Lab</title>
+    <link
+      rel="preload"
+      href="fonts/geist-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <a class="app-wordmark" href="/" aria-label="Wildfire Sweep Mission Lab">
+        <span>WILDFIRE SWEEP</span>
+        <span class="app-wordmark-divider">/</span>
+        <span>MISSION LAB</span>
+      </a>
+      <div class="app-header-note">
+        <span>LOCAL RESEARCH TOOL</span>
+        <span>Synthetic scenarios. Not field validation.</span>
+      </div>
+      <nav class="app-mode-switch" aria-label="Lab mode">
+        <button
+          type="button"
+          class="app-button"
+          data-slot="button"
+          data-mode="mission"
+          aria-pressed="true"
+        >
+          Mission sandbox
+        </button>
+        <button
+          type="button"
+          class="app-button app-button-secondary"
+          data-slot="button"
+          data-mode="replay"
+          aria-pressed="false"
+        >
+          Frozen replay
+        </button>
+      </nav>
+    </header>
+
+    <main class="app-main">
+      <section class="app-intro" aria-labelledby="page-title">
+        <p class="app-kicker">SIMULATION / RECORDED EVIDENCE</p>
+        <h1 id="page-title">Mission Lab</h1>
+        <p class="app-intro-copy">
+          Explore a single synthetic alert, or inspect a season already captured
+          by the study. Sandbox changes never alter frozen evidence.
+        </p>
+      </section>
+
+      <div class="app-workbench">
+        <section
+          id="controls"
+          class="controls-panel"
+          data-panel="mission"
+          aria-labelledby="controls-title"
+        >
+          <div class="app-section-heading">
+            <p class="app-kicker">01 / INPUTS</p>
+            <h2 id="controls-title">Mission conditions</h2>
+          </div>
+          <p class="app-panel-note">
+            One alert, initially idle drones. No queueing or season-wide rate.
+          </p>
+          <p class="controls-loading">Loading model defaults...</p>
+        </section>
+
+        <section
+          id="map"
+          class="map-panel"
+          aria-labelledby="map-title"
+        >
+          <div class="app-section-heading">
+            <p class="app-kicker">MODEL SPACE</p>
+            <h2 id="map-title">Synthetic service area</h2>
+          </div>
+          <p class="map-loading">
+            Coordinates are model-space values, not a real map.
+          </p>
+        </section>
+
+        <section
+          id="mission-results"
+          class="mission-panel"
+          data-panel="mission"
+          aria-labelledby="mission-title"
+        >
+          <div class="app-section-heading">
+            <p class="app-kicker">02 / RESPONSE</p>
+            <h2 id="mission-title">Mission result</h2>
+          </div>
+          <p class="mission-loading">Waiting for the first local result.</p>
+        </section>
+
+        <section
+          id="replay-controls"
+          class="replay-panel"
+          data-panel="replay"
+          aria-labelledby="replay-title"
+          hidden
+        >
+          <div class="app-section-heading">
+            <p class="app-kicker">01 / CAPTURED SEASON</p>
+            <h2 id="replay-title">Replay controls</h2>
+          </div>
+          <p class="replay-loading">Loading frozen cases and seasons...</p>
+        </section>
+      </div>
+
+      <section
+        id="evidence"
+        class="evidence-panel"
+        aria-labelledby="evidence-title"
+      >
+        <div class="app-section-heading">
+          <p class="app-kicker">FROZEN STUDY</p>
+          <h2 id="evidence-title">Recorded evidence</h2>
+        </div>
+        <p class="evidence-loading">Loading verified captured evidence...</p>
+      </section>
+
+      <section
+        id="export"
+        class="export-panel"
+        aria-labelledby="export-title"
+      >
+        <div>
+          <p class="app-kicker">LOCAL FILE</p>
+          <h2 id="export-title">Export this snapshot</h2>
+          <p>Exports the received result, inputs, and source provenance.</p>
+        </div>
+      </section>
+
+      <section
+        id="session"
+        class="session-panel"
+        aria-labelledby="session-title"
+      >
+        <div>
+          <p class="app-kicker">LOCAL FILE</p>
+          <h2 id="session-title">Session save and restore</h2>
+          <p>
+            Saves inputs and provenance only; restoring always requests
+            fresh local results.
+          </p>
+        </div>
+      </section>
+
+      <p id="status" class="app-status" role="status" aria-live="polite">
+        Loading local model metadata and frozen study.
+      </p>
+    </main>
+
+    <footer class="app-footer">
+      <span>Wildfire Sweep research prototype</span>
+      <span>No live fleet, detector, or flight control.</span>
+    </footer>
+  </body>
+</html>

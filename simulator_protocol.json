@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "Local synthetic mission sandbox, not field validation",
+  "capture": "research_results/2026-11-09-resilience",
+  "timely_threshold_s": 900.0,
+  "max_wind_mps": 12.0,
+  "layouts": [
+    {"n_bases": 9, "nominal_spacing_km": 16.0},
+    {"n_bases": 25, "nominal_spacing_km": 12.0}
+  ],
+  "defaults": {
+    "n_bases": 9,
+    "offline_base": null,
+    "point_fraction": [0.62, 0.56],
+    "wind_mps": [12.0, 0.0],
+    "airspeed_mps": 18.0,
+    "endurance_min": 46.0,
+    "reserve_fraction": 0.25,
+    "launch_latency_s": 60.0
+  },
+  "parameter_limits": {
+    "airspeed_mps": [1.0, 40.0],
+    "wind_component_mps": [-30.0, 30.0],
+    "endurance_min": [1.0, 120.0],
+    "reserve_fraction": [0.0, 0.9],
+    "launch_latency_s": [0.0, 600.0]
+  },
+  "limitations": [
+    "Synthetic square and hypothetical aircraft/weather inputs, not real geography or operating advice.",
+    "Mission sandbox evaluates one alert with initially idle drones; no queueing or season-wide rate.",
+    "Captured replay includes fleet contention but contains no saved base assignments or flight trajectories.",
+    "Recorded replay outcomes and study metrics are frozen; sandbox changes do not update them.",
+    "No detector accuracy, thermal confirmation, upstream alert latency, flight authorization or live control."
+  ]
+}
