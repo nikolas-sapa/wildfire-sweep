@@ -108,7 +108,7 @@ test runner. Verified locally with Node.js v26.11.1; nothing is installed or
 changed:
 
 ```sh
-node --test simulator_web/tests/
+node --test simulator_web/tests/*.test.mjs
 ```
 
 These checks exercise validation and pairing mechanics against small fixtures.

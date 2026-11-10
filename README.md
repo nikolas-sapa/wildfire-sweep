@@ -154,7 +154,7 @@ The interface can also save the current session inputs to a local JSON file and 
 Mechanics tests for the pure browser modules are optional and run under the standalone Node.js test runner, separate from the Python suite:
 
 ```sh
-node --test simulator_web/tests/
+node --test simulator_web/tests/*.test.mjs
 ```
 
 ## Coverage Atlas
@@ -183,7 +183,7 @@ The CLI prints the same catalog and per-case payloads served at `/api/coverage/c
 The capture directory must already exist; a missing or corrupt capture is reported as unavailable, and no interface here regenerates it. Node mechanics tests are optional locally; CI requires both browser-module suites on Node 22:
 
 ```sh
-node --test simulator_web/tests/ coverage_web/tests/
+node --test simulator_web/tests/*.test.mjs coverage_web/tests/*.test.mjs
 ```
 
 ## Reproduce

@@ -45,4 +45,4 @@ jobs:
         with:
           node-version: 22
       - name: Run native Node tests
-        run: node --test simulator_web/tests/ coverage_web/tests/
+        run: node --test simulator_web/tests/*.test.mjs coverage_web/tests/*.test.mjs

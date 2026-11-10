@@ -184,7 +184,7 @@ They are separate from the Python suite and use the installed native Node.js
 test runner; nothing is installed or changed:
 
 ```sh
-node --test coverage_web/tests/
+node --test coverage_web/tests/*.test.mjs
 ```
 
 These checks exercise validation, session and state mechanics against small
