@@ -16,6 +16,7 @@ A reproducible research baseline for studying how docked UAV networks verify ext
 - [Factorial extension](#factorial-extension)
 - [Held-out outage resilience](#held-out-outage-resilience)
 - [Mission Lab](#mission-lab)
+- [Coverage Atlas](#coverage-atlas)
 - [Reproduce](#reproduce)
 - [Recorded-video baseline](#recorded-video-baseline)
 - [Repository map](#repository-map)
@@ -154,6 +155,35 @@ Mechanics tests for the pure browser modules are optional and run under the stan
 
 ```sh
 node --test simulator_web/tests/
+```
+
+## Coverage Atlas
+
+The same local server also serves a captured spatial-coverage explorer. With the server running, open [http://127.0.0.1:8765/coverage/](http://127.0.0.1:8765/coverage/).
+
+The atlas reads a lead-generated capture (default `research_results/2026-11-10-coverage-atlas-v1`) of 388 bounded scenarios evaluated on an 80x80 grid of equal-area cell centers. Coverage is the fraction of those cell centers reached within 900 seconds by an initially idle network after one alert. It is a spatial cell-center approximation, not the season-level timely shares reported above, and not an ignition-risk estimate, forecast, detector result, geographic map or field-performance claim. The inventory is fixed, not exhaustive: 9- and 25-base layouts crossed with eight headings at the 12 m/s model weather limit, each with a healthy reference and every single-site outage (288 scenarios); two selected outage pairs per heading and layout (32; not a worst-pair search); four healthy stress profiles of 36 min endurance, 35% reserve and 180 s launch latency (64); plus two calm reference cases and two 13 m/s weather-closed cases.
+
+See the [coverage study report](docs/2026-11-10-coverage-study.md), [methods and limitations](docs/coverage-atlas.md), and [scenario inventory](docs/coverage-scenario-inventory.md). At 12 m/s toward east (heading 0), stored reference coverage is 60.3% for 9 bases and 97.3% for 25; the combined stress profile stores 33.8% and 78.1%, respectively. These are spatial cell-center values, not season-level shares.
+
+![Captured spatial coverage for the reference and combined stress profiles](research_results/2026-11-10-coverage-figures/stress.png)
+
+The CLI prints the same catalog and per-case payloads served at `/api/coverage/catalog` and `/api/coverage?case=ID`:
+
+```sh
+.venv/bin/python coverage_client.py --base-url http://127.0.0.1:8765 catalog
+.venv/bin/python coverage_client.py --base-url http://127.0.0.1:8765 case --case CASE_ID
+```
+
+`--base-url` accepts the same loopback addresses as `simulator_client.py`. An escaped Markdown inventory of an existing capture can also be rendered to a fresh output path:
+
+```sh
+.venv/bin/python render_coverage.py --capture research_results/2026-11-10-coverage-atlas-v1 --output research-runs/atlas-inventory.md
+```
+
+The capture directory must already exist; a missing or corrupt capture is reported as unavailable, and no interface here regenerates it. Node mechanics tests are optional locally; CI requires both browser-module suites on Node 22:
+
+```sh
+node --test simulator_web/tests/ coverage_web/tests/
 ```
 
 ## Reproduce

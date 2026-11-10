@@ -1,0 +1,42 @@
+{
+  "domain_side_km": 61.70899448216605,
+  "files": {
+    "coverage.npz": "1e2bd230881da2614dcb69771d8b675476c31ed38c203ca88be94e5da8b838b5",
+    "scenarios.json": "b2476acb914acb58209b82470dd7b6737edd3834e73fd92d75e04dd97e77d468",
+    "summary.csv": "5d4e4a69d35eb12865d12d86dc62a694ed262fc212745f4d4d14825a3a09b69d"
+  },
+  "grid": {
+    "locations": "cell-centers",
+    "north": "positive-y",
+    "order": "y-major-x-fast"
+  },
+  "grid_n": 160,
+  "kind": "wildfire-coverage-atlas-capture",
+  "limitations": [
+    "Synthetic square, hypothetical aircraft and fixed wind; not real geography or field validation.",
+    "Equal-area cell-center approximation; not a season response rate or ignition probability.",
+    "Each point is an independent single alert with all available drones initially idle; no queueing.",
+    "Selected two-site outages are not exhaustive or worst-pair optimization.",
+    "No terrain, time-varying weather, upstream detection latency, detector accuracy or flight control.",
+    "Resolution differences are numerical sensitivity, not confidence intervals.",
+    "Hashes establish source/artifact consistency, not authenticity or independent scientific validation."
+  ],
+  "outcome_codes": {
+    "late": 1,
+    "timely": 2,
+    "unreachable": 0,
+    "weather_closed": 3
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "coverage_capture.py": "cacdfd2a9ffdd1644f486e746215e803df7c313d8d10e1823048e214e2787bd9",
+    "coverage_engine.py": "23279995443b22e2a67ac7cac574a6dfd1ae5306f4ec2d9888696b8295d6844d",
+    "coverage_scenarios.py": "4ac710ed3ed6239fd3744ff612f76921b1583bcb4db44d1bc3360c2a09ab3273",
+    "research.py": "45ddfd1837602061adc2914b575787498921a276110c6cbee33d312b38fa5301",
+    "simulator_engine.py": "54e1512f162926c3a309f3f0d9009892c9a56de291a0fc4eeb63ed6180459b0e",
+    "simulator_protocol.json": "34d9421233591efa6da5364b7449a669dc480ab23363581f5bb3ca947a53e280",
+    "sweep.py": "88b6fc6f35b068c813a19c800d608cea73e4bbacdae5bb8fa84074c4d2700d5e"
+  },
+  "study_id": "2026-11-10-coverage-atlas-v1",
+  "timely_threshold_s": 900.0
+}

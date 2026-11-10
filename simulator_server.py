@@ -1,10 +1,12 @@
 import argparse
 import json
 import mimetypes
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path, PurePosixPath
 from urllib.parse import SplitResult, parse_qsl, unquote, urlsplit
 
+from coverage_data import CoverageData
 from simulator_data import ExplorerData
 from simulator_engine import run_mission
 
@@ -27,7 +29,32 @@ STATIC_FILES = frozenset(
         "fonts/geist-latin.woff2",
     }
 )
+COVERAGE_WEB_ROOT = Path(__file__).resolve().parent / "coverage_web"
+COVERAGE_FILES = frozenset(
+    {
+        "index.html",
+        "styles.css",
+        "app.js",
+        "map.js",
+        "controls.js",
+        "table.js",
+        "details.js",
+        "comparison.js",
+        "export.js",
+        "session.js",
+        "api.js",
+        "state.js",
+        "legend.js",
+        "data_contract.js",
+    }
+)
 MAX_REQUEST_BYTES = 4096
+FAVICON_SVG = (
+    b'<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" '
+    b'viewBox="0 0 32 32"><rect width="32" height="32" rx="7" '
+    b'fill="#006bff"/><path d="M12 5v22M20 5v22M5 12h22M5 20h22" '
+    b'fill="none" stroke="#fff" stroke-width="2"/></svg>'
+)
 
 
 def _json_object(pairs: list[tuple[str, object]]) -> dict[str, object]:
@@ -150,12 +177,27 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
         return path
 
     def _known_path(self, path: str) -> bool:
-        routes = {"/", "/index.html", "/api/catalog", "/api/replay", "/api/mission"}
+        routes = {
+            "/",
+            "/index.html",
+            "/api/catalog",
+            "/api/replay",
+            "/api/mission",
+            "/api/coverage/catalog",
+            "/api/coverage",
+            "/coverage",
+            "/coverage/",
+            "/favicon.ico",
+        }
         static = path.startswith("/") and not path.startswith("//") and path[1:] in STATIC_FILES
-        return path in routes or static
+        coverage = path.startswith("/coverage/") and path[len("/coverage/"):] in COVERAGE_FILES
+        return path in routes or static or coverage
 
     def _method_error(self) -> None:
         if not self._local_origin():
+            return
+        if self._target_starts_with_double_slash():
+            self._error(404, "not found")
             return
         parsed = self._parsed_target()
         if parsed is None:
@@ -169,6 +211,10 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
         else:
             self._error(404, "not found")
 
+    def _target_starts_with_double_slash(self) -> bool:
+        parts = self.raw_requestline.split()
+        return len(parts) > 1 and parts[1].startswith(b"//")
+
     def _serve_static(self, path: str) -> None:
         if path in ("/", "/index.html"):
             filename = "index.html"
@@ -177,11 +223,24 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
         else:
             self._error(404, "not found")
             return
-        if filename not in STATIC_FILES:
+        self._serve_file(self.server.web_root, STATIC_FILES, filename)
+
+    def _serve_coverage_static(self, path: str) -> None:
+        if path in ("/coverage", "/coverage/"):
+            filename = "index.html"
+        elif path.startswith("/coverage/"):
+            filename = path[len("/coverage/"):]
+        else:
             self._error(404, "not found")
             return
-        target = self.server.web_root.joinpath(*PurePosixPath(filename).parts)
-        current = self.server.web_root
+        self._serve_file(self.server.coverage_web_root, COVERAGE_FILES, filename)
+
+    def _serve_file(self, root: Path, allowlist: frozenset[str], filename: str) -> None:
+        if filename not in allowlist:
+            self._error(404, "not found")
+            return
+        target = root.joinpath(*PurePosixPath(filename).parts)
+        current = root
         for part in PurePosixPath(filename).parts:
             current = current / part
             if current.is_symlink():
@@ -189,7 +248,7 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
                 return
         try:
             resolved = target.resolve(strict=True)
-            resolved.relative_to(self.server.web_root)
+            resolved.relative_to(root)
         except (OSError, ValueError):
             self._error(404, "not found")
             return
@@ -214,6 +273,9 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
     def _dispatch(self) -> None:
         if not self._local_origin():
             return
+        if self._target_starts_with_double_slash():
+            self._error(404, "not found")
+            return
         parsed = self._parsed_target()
         if parsed is None:
             self._error(400, "invalid request target")
@@ -223,6 +285,9 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
             self._error(404, "not found")
             return
         if self.command == "GET":
+            if path == "/favicon.ico":
+                self._send_bytes(200, "image/svg+xml", FAVICON_SVG)
+                return
             if path == "/api/catalog":
                 if parsed.query:
                     self._error(400, "catalog does not accept query parameters")
@@ -261,6 +326,61 @@ class MissionRequestHandler(BaseHTTPRequestHandler):
                 return
             if path == "/api/mission":
                 self._error(405, "method not allowed")
+                return
+            if path == "/api/coverage/catalog":
+                if parsed.query:
+                    self._error(400, "coverage catalog does not accept query parameters")
+                    return
+                try:
+                    payload = self.server.coverage_data().catalog()
+                except (ValueError, OSError):
+                    self._error(503, "coverage capture unavailable")
+                except Exception:
+                    self._error(500, "internal server error")
+                else:
+                    self._send_json(200, payload)
+                return
+            if path == "/api/coverage":
+                try:
+                    params = parse_qsl(
+                        parsed.query,
+                        keep_blank_values=True,
+                        strict_parsing=True,
+                    )
+                except ValueError:
+                    self._error(400, "invalid coverage query")
+                    return
+                if len(params) != 1 or params[0][0] != "case":
+                    self._error(400, "case must appear exactly once")
+                    return
+                case_id = params[0][1]
+                try:
+                    catalog = self.server.coverage_data().catalog()
+                except (ValueError, OSError):
+                    self._error(503, "coverage capture unavailable")
+                    return
+                except Exception:
+                    self._error(500, "internal server error")
+                    return
+                try:
+                    case_ids = {entry["case_id"] for entry in catalog["cases"]}
+                except (TypeError, KeyError):
+                    self._error(500, "internal server error")
+                    return
+                if case_id not in case_ids:
+                    self._error(400, "unknown coverage case")
+                    return
+                try:
+                    payload = self.server.coverage_data().case(case_id)
+                except (ValueError, OSError):
+                    self._error(503, "coverage capture unavailable")
+                except Exception:
+                    self._error(500, "internal server error")
+                else:
+                    self._send_json(200, payload)
+                return
+            if path == "/coverage" or path.startswith("/coverage/"):
+                self._serve_coverage_static(path)
                 return
             self._serve_static(path)
             return
@@ -356,20 +476,36 @@ class MissionHTTPServer(ThreadingHTTPServer):
         server_address: tuple[str, int],
         data: ExplorerData | None,
         web_root: str | Path,
+        *,
+        coverage_root: str | Path | None = None,
     ) -> None:
         self.data = data if data is not None else ExplorerData()
         self.web_root = Path(web_root).resolve()
+        self.coverage_web_root = Path(COVERAGE_WEB_ROOT).resolve()
+        self._coverage_root = coverage_root
+        self._coverage = None
+        self._coverage_lock = threading.Lock()
         super().__init__(server_address, MissionRequestHandler)
+
+    def coverage_data(self) -> CoverageData:
+        with self._coverage_lock:
+            if self._coverage is None:
+                self._coverage = CoverageData(self._coverage_root)
+            return self._coverage
 
 
 def make_server(
     port: int = 0,
     data: ExplorerData | None = None,
     web_root: str | Path = WEB_ROOT,
+    *,
+    coverage_root: str | Path | None = None,
 ) -> ThreadingHTTPServer:
     if not 0 <= port <= 65535:
         raise ValueError("port must be between 0 and 65535")
-    return MissionHTTPServer(("127.0.0.1", port), data, web_root)
+    return MissionHTTPServer(
+        ("127.0.0.1", port), data, web_root, coverage_root=coverage_root
+    )
 
 
 def main() -> int:

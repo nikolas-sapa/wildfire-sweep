@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A local, read-only atlas of captured spatial-coverage results from a synthetic wildfire-response study."
+    >
+    <title>Wildfire Sweep / Coverage Atlas</title>
+    <link
+      rel="preload"
+      href="/fonts/geist-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    >
+    <link rel="stylesheet" href="/coverage/styles.css">
+    <script type="module" src="/coverage/app.js"></script>
+  </head>
+  <body>
+    <a class="cov-skip" href="#cov-main">Skip to coverage atlas</a>
+
+    <header class="cov-header">
+      <a class="cov-wordmark" href="/" aria-label="Wildfire Sweep Mission Lab">
+        <span>WILDFIRE SWEEP</span>
+        <span class="cov-wordmark-divider">/</span>
+        <span>COVERAGE ATLAS</span>
+      </a>
+      <div class="cov-header-note">
+        <span>LOCAL RESEARCH TOOL</span>
+        <span>Captured spatial coverage. Not field validation.</span>
+      </div>
+      <nav class="cov-header-nav" aria-label="Site">
+        <a class="cov-button" href="/">Mission Lab</a>
+      </nav>
+    </header>
+
+    <main class="cov-main" id="cov-main">
+      <section class="cov-hero" aria-labelledby="cov-title">
+        <p class="cov-kicker">CAPTURED STUDY / SPATIAL COVERAGE</p>
+        <h1 id="cov-title">Coverage Atlas</h1>
+        <p class="cov-hero-copy">
+          A read-only atlas of one captured study. Spatial coverage is the
+          fraction of equal-area cell centers an initially idle drone network
+          reaches within 900 seconds.
+        </p>
+        <dl class="cov-hero-notes">
+          <div class="cov-hero-note">
+            <dt>Spatial coverage</dt>
+            <dd>
+              Cell-center reach fraction on an equal-area model grid, not a
+              season success rate or ignition-risk estimate.
+            </dd>
+          </div>
+          <div class="cov-hero-note">
+            <dt>Idle grid</dt>
+            <dd>
+              Every case is a single alert against an initially idle network.
+              No queueing or fleet contention.
+            </dd>
+          </div>
+          <div class="cov-hero-note">
+            <dt>Captured only</dt>
+            <dd>
+              Stored cells, counts, and fractions shown exactly as received.
+              The browser recomputes nothing.
+            </dd>
+          </div>
+          <div class="cov-hero-note">
+            <dt>Non-field limits</dt>
+            <dd>
+              Synthetic model output, not field validated. Not a forecast,
+              detector result, geographic map, or flight-control system.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="cov-layout">
+        <section
+          id="cov-controls"
+          class="cov-panel"
+          aria-labelledby="cov-controls-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">01 / CASES</p>
+            <h2 id="cov-controls-title">Case selection</h2>
+          </div>
+          <p class="cov-panel-note">
+            Choose a captured case. An optional second case enables a
+            side-by-side comparison.
+          </p>
+          <div data-cov-mount="controls">
+            <p class="cov-loading">Loading the captured case catalog...</p>
+          </div>
+        </section>
+
+        <section
+          id="cov-map"
+          class="cov-panel"
+          aria-labelledby="cov-map-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">02 / PRIMARY</p>
+            <h2 id="cov-map-title">Primary coverage map</h2>
+          </div>
+          <p class="cov-panel-note">
+            The stored outcome for each equal-area cell center. Model-space
+            coordinates, not a geographic map.
+          </p>
+          <div data-cov-mount="map">
+            <p class="cov-loading">
+              The coverage map appears once a captured case loads.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="cov-compare"
+          class="cov-panel"
+          aria-labelledby="cov-compare-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">03 / COMPARISON</p>
+            <h2 id="cov-compare-title">Comparison coverage</h2>
+          </div>
+          <p class="cov-panel-note">
+            An optional second captured case beside the primary selection.
+            Both panes share one capture and one grid.
+          </p>
+          <div data-cov-mount="compare">
+            <p class="cov-loading">No comparison case selected.</p>
+          </div>
+        </section>
+
+        <section
+          id="cov-details"
+          class="cov-panel"
+          aria-labelledby="cov-details-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">04 / CELL</p>
+            <h2 id="cov-details-title">Selected cell details</h2>
+          </div>
+          <p class="cov-panel-note">
+            Stored outcome, response time, and serving base for the selected
+            cell. Unserved cells stay null, never zero.
+          </p>
+          <div data-cov-mount="details">
+            <p class="cov-loading">
+              Select a cell on a loaded map to inspect its stored result.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="cov-legend"
+          class="cov-panel"
+          aria-labelledby="cov-legend-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">READING</p>
+            <h2 id="cov-legend-title">Outcome legend</h2>
+          </div>
+          <p class="cov-panel-note">
+            Four stored outcomes per cell on a cell-center approximation, one
+            alert against an idle grid.
+          </p>
+          <div data-cov-mount="legend">
+            <p class="cov-loading">
+              The legend appears when the captured catalog loads.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="cov-table"
+          class="cov-panel"
+          aria-labelledby="cov-table-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">INVENTORY</p>
+            <h2 id="cov-table-title">Scenario inventory</h2>
+          </div>
+          <p class="cov-panel-note">
+            Captured cases with their stored summary counts and fractions.
+            Selecting a row loads that case.
+          </p>
+          <div data-cov-mount="table">
+            <p class="cov-loading">Loading the scenario inventory...</p>
+          </div>
+        </section>
+
+        <section
+          id="cov-export"
+          class="cov-panel"
+          aria-labelledby="cov-export-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">LOCAL FILE</p>
+            <h2 id="cov-export-title">Export snapshot</h2>
+          </div>
+          <p class="cov-panel-note">
+            Downloads the exact received JSON for the selected case, plus the
+            comparison payload when one is loaded.
+          </p>
+          <div data-cov-mount="export">
+            <p class="cov-loading">
+              Export becomes available after a case loads.
+            </p>
+          </div>
+        </section>
+
+        <section
+          id="cov-session"
+          class="cov-panel"
+          aria-labelledby="cov-session-title"
+        >
+          <div class="cov-panel-heading">
+            <p class="cov-kicker">LOCAL FILE</p>
+            <h2 id="cov-session-title">Session save and restore</h2>
+          </div>
+          <p class="cov-panel-note">
+            Saves the selection and capture fingerprint only. Restoring always
+            requests fresh payloads, never stored results.
+          </p>
+          <div data-cov-mount="session">
+            <p class="cov-loading">
+              Session controls appear with the captured catalog.
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <p id="cov-status" class="cov-status" role="status" aria-live="polite">
+        Loading the captured coverage catalog...
+      </p>
+    </main>
+
+    <footer class="cov-footer">
+      <span>Wildfire Sweep research prototype</span>
+      <span>Captured synthetic coverage. Not field validated.</span>
+    </footer>
+  </body>
+</html>

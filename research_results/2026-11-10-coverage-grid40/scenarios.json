@@ -1,0 +1,6850 @@
+[
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h000-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 0,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h045-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 45,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h090-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 90,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h135-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 135,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h180-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 180,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h225-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 225,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h270-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 270,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-reference-off0_4",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [
+      0,
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w12-h315-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 315,
+    "launch_latency_s": 180.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w0-calm-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": null,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      0.0
+    ],
+    "wind_speed_mps": 0.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b9-w13-h000-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 9,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      13.0,
+      0.0
+    ],
+    "wind_speed_mps": 13.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h000-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 0,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 45,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h045-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 45,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 90,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h090-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 90,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 135,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h135-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 135,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 180,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h180-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 180,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -12.0,
+      0.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 225,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h225-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 225,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      -8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 270,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h270-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 270,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      0.0,
+      -12.0
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off0",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off1",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off2",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      2
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off3",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      3
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off4",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      4
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off5",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      5
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off6",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      6
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off7",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      7
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off8",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      8
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off9",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      9
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off10",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      10
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off11",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      11
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off12",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off13",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      13
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off14",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      14
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off15",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      15
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off16",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      16
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off17",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      17
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off18",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      18
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off19",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      19
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off20",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      20
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off21",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      21
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off22",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      22
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off23",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      23
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off24",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      24
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off0_1",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      1
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-reference-off0_12",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [
+      0,
+      12
+    ],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-short_endurance-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "short_endurance",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-larger_reserve-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "larger_reserve",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-slow_launch-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 315,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "slow_launch",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w12-h315-combined-offnone",
+    "endurance_min": 36.0,
+    "heading_deg": 315,
+    "launch_latency_s": 180.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "combined",
+    "reserve_fraction": 0.35,
+    "wind_mps": [
+      8.48528137423857,
+      -8.48528137423857
+    ],
+    "wind_speed_mps": 12.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w0-calm-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": null,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      0.0,
+      0.0
+    ],
+    "wind_speed_mps": 0.0
+  },
+  {
+    "airspeed_mps": 18.0,
+    "case_id": "b25-w13-h000-reference-offnone",
+    "endurance_min": 46.0,
+    "heading_deg": 0,
+    "launch_latency_s": 60.0,
+    "n_bases": 25,
+    "offline_bases": [],
+    "profile": "reference",
+    "reserve_fraction": 0.25,
+    "wind_mps": [
+      13.0,
+      0.0
+    ],
+    "wind_speed_mps": 13.0
+  }
+]
