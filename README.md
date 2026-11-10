@@ -15,6 +15,7 @@ A reproducible research baseline for studying how docked UAV networks verify ext
 - [Assumption stress study](#assumption-stress-study)
 - [Factorial extension](#factorial-extension)
 - [Held-out outage resilience](#held-out-outage-resilience)
+- [Mission Lab](#mission-lab)
 - [Reproduce](#reproduce)
 - [Recorded-video baseline](#recorded-video-baseline)
 - [Repository map](#repository-map)
@@ -39,6 +40,7 @@ The project studies a docked fleet's response after an external alert arrives. I
 | Sampled event-episode evaluation plus a cohort registry, pooled aggregation and cluster-bootstrap interval mechanics over captured reports. | Independently labelled recordings, verified group independence, or detector accuracy evidence. |
 | A summary renderer that reads captured CSV values and refuses existing output paths. | An autonomous thermal confirmation-and-mapping pipeline. |
 | Captured manifests, scenario summaries, season rows, and a proposed field protocol. | Live aircraft control, deployment, or flight authorization. |
+| A local Mission Lab for one-alert sandbox requests and frozen-season replay. | Field performance, detector accuracy, or flight control. |
 
 ## System architecture
 
@@ -133,6 +135,26 @@ Thirty training seasons identify a critical site separately for each layout/wind
 At 12 m/s, the denser layout loses **3.69 percentage points less service** (pointwise MC95%: 3.49 to 3.87). It also has more infrastructure and loses a smaller fraction of its fleet: 25 becomes 24 active bases, versus 9 becoming 8. This is not an equal-budget or per-aircraft superiority claim.
 
 Read the [methods, site maps, intervals and limitations](docs/2026-11-09-resilience-study.md), [protocol](resilience_protocol.json) and [frozen capture](research_results/2026-11-09-resilience/). A training-selected critical site is not necessarily the held-out worst site. No observed failure probability, actual geographic siting or field performance is established.
+
+## Mission Lab
+
+Start the local interface:
+
+```sh
+.venv/bin/python simulator_server.py
+```
+
+Open [http://127.0.0.1:8765](http://127.0.0.1:8765) and see the [local simulator guide](docs/local-simulator.md).
+
+The sandbox evaluates one alert with initially idle drones. Frozen replay reads recorded seasons that include fleet contention; the capture contains no saved base assignments or flight trajectories, so the map retains captured base sites and shows alert locations and outcomes without assigned routes. Sandbox inputs never change frozen evidence. This adds no empirical finding, field validation, detector-accuracy claim, or live flight control.
+
+The interface can also save the current session inputs to a local JSON file and restore them later. A saved session records validated inputs and provenance only, never received results; restoring issues a fresh local request, and the saved provenance must match the running catalog before anything is applied. In replay mode, a captured healthy/outage pair that shares layout and wind can render side by side on one shared playback clock. See the [local simulator guide](docs/local-simulator.md) for behavior and limits.
+
+Mechanics tests for the pure browser modules are optional and run under the standalone Node.js test runner, separate from the Python suite:
+
+```sh
+node --test simulator_web/tests/
+```
 
 ## Reproduce
 
@@ -269,6 +291,10 @@ The freeze binds blank annotation packets and planned test report paths; human l
 | [`research.py`](research.py) | Current synthetic wind-and-battery dispatch study. |
 | [`robustness.py`](robustness.py) and [`robustness_protocol.json`](robustness_protocol.json) | Paired assumption-stress study and its fixed protocol. |
 | [`factorial.py`](factorial.py) and [`factorial_protocol.json`](factorial_protocol.json) | Full-factorial extension and its fixed estimator protocol. |
+| [`simulator_engine.py`](simulator_engine.py) and [`simulator_data.py`](simulator_data.py) | Single-alert sandbox engine and verified frozen-season reader. |
+| [`simulator_server.py`](simulator_server.py), [`simulator_client.py`](simulator_client.py), and [`simulator_web/`](simulator_web/) | Local Mission Lab API, CLI and browser modules, including JSON export. |
+| [`docs/local-simulator.md`](docs/local-simulator.md) | Mission Lab commands, modes and limitations. |
+| [`test_simulator_server.py`](test_simulator_server.py), [`test_simulator_assets.py`](test_simulator_assets.py) and [`test_simulator_client.py`](test_simulator_client.py) | Local transport, static-asset and CLI tests. |
 | [`render_study.py`](render_study.py) | Renderer for an existing captured summary. |
 | [`render_robustness.py`](render_robustness.py) | Capture-only renderer for the robustness summary. |
 | [`render_factorial.py`](render_factorial.py) | Capture-only renderer for the full-factorial summary. |
